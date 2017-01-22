@@ -24,6 +24,23 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'scrooloose/syntastic'
+Plugin 'tmhedberg/SimpylFold'
+Plugin 'Valloric/YouCompleteMe'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
+
+" NerdTree configs
+let NERDTreeShowHidden=1
+let NERDTreeDirArrowExpandable = '▷'
+let NERDTreeDirArrowCollapsible = '▼'
+
+" syntastic highlighting
+let python_highlight_all=1
+syntax on
+
+" SimplyFold docstrings
+let g:SimplyFold_docstring_preview=1
+
+" YouCompleteMe configs
+let g:ycm_autoclose_preview_window_after_completion=1
