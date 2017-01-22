@@ -1,1 +1,29 @@
-/Users/PANDA/.vimrc
+filetype plugin indent on
+set tabstop=4
+set shiftwidth=4
+set expandtab
+set nu
+set rnu
+set ruler
+
+source ~/.vim/plugins.vim
+source ~/.vim/keymaps.vim
+
+" visual block no timeout
+set timeoutlen=1000 ttimeoutlen=0
+" global clipboard
+set clipboard=unnamed
+" backspace
+set backspace=indent,eol,start
+
+" Color schemes
+syntax enable
+"colorscheme lightning
+"colorscheme autumn
+"colorscheme asmdev
+"colorscheme monokai
+"colorscheme molokai
+"colorscheme solarized
+"colorscheme codeschool
+colorscheme janah
+

@@ -1,0 +1,10 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =8
+let g:netrw_dirhist_1='/Users/PANDA/.theano'
+let g:netrw_dirhist_2='/Users/PANDA/Desktop/Projects/pickup-lines/data'
+let g:netrw_dirhist_3='/Users/PANDA/Desktop/kaggle/statefarm_image_challenge'
+let g:netrw_dirhist_4='/Users/PANDA/Desktop/Projects/autoencoder'
+let g:netrw_dirhist_5='/Users/PANDA/Desktop/cs231n/assignments/assignment2/cs231n/datasets/cifar-10-batches-py'
+let g:netrw_dirhist_6='/Users/PANDA/Downloads/train'
+let g:netrw_dirhist_7='/Users/PANDA/Dropbox/a'
+let g:netrw_dirhist_8='/Users/PANDA/.vim'

@@ -1,1 +1,34 @@
-/Users/PANDA/.tmux.conf
+set -g default-terminal "screen-256color"
+
+# Bind prefix to ctrl-space
+# unbind C-b
+# set -g prefix C-Space
+# bind Space send-prefix
+
+# split window and fix path for tmux 1.9
+bind | split-window -h -c "#{pane_current_path}"
+bind - split-window -v -c "#{pane_current_path}"
+
+# synchronize all panes in a window
+bind y setw synchronize-panes
+
+# pane movement shortcuts
+bind h select-pane -L
+bind j select-pane -D
+bind k select-pane -U
+bind l select-pane -R
+
+# Resize pane shortcuts
+bind -r H resize-pane -L 10
+bind -r J resize-pane -D 10
+bind -r K resize-pane -U 10
+bind -r L resize-pane -R 10
+
+# Update window title
+set -g set-titles on		
+set -g set-titles-string '#T - #I:#W'
+
+
+
+# Mouse support
+setw -g mouse on
