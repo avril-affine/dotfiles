@@ -6,6 +6,9 @@ set nu
 set rnu
 set ruler
 
+" Show filename with one window open
+set laststatus=2
+
 source ~/.vim/plugins.vim
 source ~/.vim/keymaps.vim
 
