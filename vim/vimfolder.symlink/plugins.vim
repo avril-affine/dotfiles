@@ -41,6 +41,7 @@ syntax on
 
 " SimplyFold docstrings
 let g:SimplyFold_docstring_preview=1
+autocmd BufWinEnter * let &foldlevel = max(map(range(1, line('$')), 'foldlevel(v:val)'))
 
 " YouCompleteMe configs
 let g:ycm_autoclose_preview_window_after_completion=1
@@ -54,3 +55,4 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+
