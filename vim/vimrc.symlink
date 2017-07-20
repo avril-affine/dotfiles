@@ -8,6 +8,7 @@ set ruler
 
 " Show filename with one window open
 set laststatus=2
+set statusline+=%F%=%l,%c
 
 source ~/.vim/plugins.vim
 source ~/.vim/keymaps.vim
