@@ -7,6 +7,13 @@ ln -s $(pwd)/tmux/tmux.conf.symlink ~/.tmux.conf
 ln -s $(pwd)/vim/vimrc.symlink ~/.vimrc
 ln -s $(pwd)/vim/vimfolder.symlink/ ~/.vim
 
+# Neovim
+mkdir -p "$HOME/.config"
+ln -s ~/.vim ~/.config/nvim
+ln -s ~/.vimrc ~/.config/nvim/init.vim
+
+pip install neovim
+
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
 # Install plugins from Vundle

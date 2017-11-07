@@ -16,7 +16,7 @@ source ~/.vim/keymaps.vim
 " visual block no timeout
 set timeoutlen=1000 ttimeoutlen=0
 " global clipboard
-set clipboard=unnamedplus
+set clipboard=unnamed
 " backspace
 set backspace=indent,eol,start
 
@@ -31,3 +31,9 @@ syntax enable
 "colorscheme codeschool
 colorscheme janah
 
+" Figure out the system Python for Neovim.
+if exists("$VIRTUAL_ENV")
+    let g:python3_host_prog=substitute(system("which -a python3 | head -n2 | tail -n1"), "\n", '', 'g')
+else
+    let g:python3_host_prog=substitute(system("which python3"), "\n", '', 'g')
+endif
