@@ -29,3 +29,9 @@ nmap <silent> <leader>y :NERDTreeFind<cr>
 
 " YouCompleteMe goto
 map <leader>g :YcmCompleter GoToDefinitionElseDeclaration<cr>
+
+" Syntastic
+map <leader>c :lclose<cr>
+
+" fugitive
+map <leader>b :Gblame<cr>
