@@ -1,11 +1,13 @@
 #!/bin/bash
 
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
 if [ -e "$HOME/.vimrc" ]; then mv "$HOME/.vimrc" "$HOME/.vimrc.bak"; fi
 if [ -e "$HOME/.vim" ]; then mv "$HOME/.vim" "$HOME/.vim.bak"; fi
 
-ln -s $(pwd)/tmux/tmux.conf.symlink ~/.tmux.conf
-ln -s $(pwd)/vim/vimrc.symlink ~/.vimrc
-ln -s $(pwd)/vim/vimfolder.symlink/ ~/.vim
+ln -s "$DIR/tmux/tmux.conf.symlink" ~/.tmux.conf
+ln -s "$DIR/vim/vimrc.symlink" ~/.vimrc
+ln -s "$DIR/vim/vimfolder.symlink/" ~/.vim
 
 # Neovim
 mkdir -p "$HOME/.config"
@@ -29,3 +31,7 @@ else
 fi
 ./install.py --clang-completer
 cd $OLDPWD
+
+# .bashrc additions
+
+cat "$DIR/bashrc" >> "$HOME/.bashrc"
