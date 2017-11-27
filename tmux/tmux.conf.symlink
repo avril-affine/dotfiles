@@ -28,11 +28,11 @@ bind -r L resize-pane -R 10
 set -g set-titles on		
 set -g set-titles-string '#T - #I:#W'
 
-# disable mouse control by default - change 'off' to 'on' to enable by default.
-setw -g mode-mouse off
-set-option -g mouse-resize-pane off
-set-option -g mouse-select-pane off
-set-option -g mouse-select-window off
+# # enable mouse control by default - change 'off' to 'on' to enable by default.
+setw -g mode-mouse on
+set-option -g mouse-resize-pane on
+set-option -g mouse-select-pane on
+set-option -g mouse-select-window on
 # toggle mouse mode to allow mouse copy/paste
 # set mouse on with prefix m
 bind m \
