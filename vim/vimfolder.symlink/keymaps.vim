@@ -32,7 +32,7 @@ map <leader>g :YcmCompleter GoToDefinitionElseDeclaration<cr>
 
 " Syntastic
 map <leader>c :lclose<cr>
-map <leader>c :lopen<cr>
+map <leader>o :lopen<cr>
 
 " fugitive
 map <leader>b :Gblame<cr>
