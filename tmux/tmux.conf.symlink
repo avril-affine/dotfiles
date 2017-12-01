@@ -30,6 +30,10 @@ set -g set-titles-string '#T - #I:#W'
 
 # Use vi key bindings
 set-window-option -g mode-keys vi
+bind-key -Tcopy-mode-vi 'v' send -X begin-selection
+bind-key -Tcopy-mode-vi 'y' send -X copy-pipe-and-cancel "reattach-to-user-namespace pbcopy"
+bind-key -Tcopy-mode-vi Escape send -X cancel
+bind-key -Tcopy-mode-vi V send -X rectangle-toggle
 
 # # enable mouse control by default - change 'off' to 'on' to enable by default.
 setw -g mode-mouse on
