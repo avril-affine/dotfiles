@@ -39,22 +39,13 @@ bind-key -Tcopy-mode-vi Escape send -X cancel
 bind-key -Tcopy-mode-vi V send -X rectangle-toggle
 
 # # enable mouse control by default - change 'off' to 'on' to enable by default.
-setw -g mode-mouse on
-set-option -g mouse-resize-pane on
-set-option -g mouse-select-pane on
-set-option -g mouse-select-window on
+setw -g mouse on
 # toggle mouse mode to allow mouse copy/paste
 # set mouse on with prefix m
 bind m \
-    set -g mode-mouse on \;\
-    set -g mouse-resize-pane on \;\
-    set -g mouse-select-pane on \;\
-    set -g mouse-select-window on \;\
+    set -g mouse on \;\
     display 'Mouse: ON'
 # set mouse off with prefix M
 bind M \
-    set -g mode-mouse off \;\
-    set -g mouse-resize-pane off \;\
-    set -g mouse-select-pane off \;\
-    set -g mouse-select-window off \;\
+    set -g mouse off \;\
     display 'Mouse: OFF'
