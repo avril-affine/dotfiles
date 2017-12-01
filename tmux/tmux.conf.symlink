@@ -1,5 +1,8 @@
 set -g default-terminal "screen-256color"
 
+# Start window numbering at 1. This makes it easier to switch windows.
+set -g base-index 1
+
 # Bind prefix to ctrl-space
 # unbind C-b
 # set -g prefix C-Space
