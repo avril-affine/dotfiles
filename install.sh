@@ -33,5 +33,7 @@ fi
 cd $OLDPWD
 
 # .bashrc additions
-
 cat "$DIR/bashrc" >> "$HOME/.bashrc"
+
+# pylint
+ln -s "$DIR/pylintrc" ~/.pylintrc
