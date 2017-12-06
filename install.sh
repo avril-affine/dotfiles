@@ -37,3 +37,6 @@ cat "$DIR/bashrc" >> "$HOME/.bashrc"
 
 # pylint
 ln -s "$DIR/pylintrc" ~/.pylintrc
+
+# .gitconfig
+ln -s "$DIR/gitconfig" ~/.gitconfig
