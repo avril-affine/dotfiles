@@ -1,0 +1,18 @@
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[user]
+	name = kenny
+	email = kkihara1@gmail.com
+[core]
+	editor = nvim
+[diff]
+	tool = vimdiff3
+[difftool]
+	prompt = false
+[alias]
+	d = difftool
+[mergetool]
+	path = nvim
