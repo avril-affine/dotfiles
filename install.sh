@@ -43,6 +43,10 @@ else
         /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
     fi
 
+    # Install xquartz
+    brew install caskroom/cask/brew-cask
+    brew cask install xquartz
+
     # YouCompleteMe
     brew install cmake
 
