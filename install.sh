@@ -2,12 +2,56 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-if [ -e "$HOME/.vimrc" ]; then mv "$HOME/.vimrc" "$HOME/.vimrc.bak"; fi
-if [ -e "$HOME/.vim" ]; then mv "$HOME/.vim" "$HOME/.vim.bak"; fi
+if [ -e "$HOME/.tmux.conf" ]; then mv "$HOME/.tmux.conf" "$HOME/.tmux.conf.bkp"; fi
+if [ -e "$HOME/.tmux.conf.local" ]; then mv "$HOME/.tmux.conf.local" "$HOME/.tmux.conf.local.bkp"; fi
+if [ -e "$HOME/.vimrc" ]; then mv "$HOME/.vimrc" "$HOME/.vimrc.bkp"; fi
+if [ -e "$HOME/.vim" ]; then mv "$HOME/.vim" "$HOME/.vim.bkp"; fi
 
 ln -s "$DIR/tmux/tmux.conf.symlink" ~/.tmux.conf
+ln -s "$DIR/tmux/tmux.conf.local.symlink" ~/.tmux.conf.local
 ln -s "$DIR/vim/vimrc.symlink" ~/.vimrc
 ln -s "$DIR/vim/vimfolder.symlink/" ~/.vim
+
+# Package dependencies / OS specific stuff
+if uname -s | grep --quiet Linux; then
+    # YouCompleteMe
+    sudo apt-get install -y build-essential cmake
+    sudo apt-get install -y python-dev python3-dev python-pip python3-pip
+
+    # tmux
+    sudo apt-get install -y automake
+    sudo apt-get install -y build-essential
+    sudo apt-get install -y pkg-config
+    sudo apt-get install -y libevent-dev
+    sudo apt-get install -y libncurses5-dev
+
+    # Neovim
+    sudo apt-get install software-properties-common
+    sudo add-apt-repository ppa:neovim-ppa/stable
+    sudo apt-get update
+    sudo apt-get install -y neovim
+    sudo update-alternatives --install /usr/bin/vi vi /usr/bin/nvim 60
+    sudo update-alternatives --config vi
+    sudo update-alternatives --install /usr/bin/vim vim /usr/bin/nvim 60
+    sudo update-alternatives --config vim
+    sudo update-alternatives --install /usr/bin/editor editor /usr/bin/nvim 60
+    sudo update-alternatives --config editor
+else
+    # Install Homebrew
+    which -s brew
+    if [[ $? != 0 ]] ; then
+        /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    fi
+
+    # YouCompleteMe
+    brew install cmake
+
+    # vim
+    brew install reattach-to-user-namespace
+
+    # Neovim
+    brew install neovim
+fi
 
 # Neovim
 mkdir -p "$HOME/.config"
@@ -16,19 +60,12 @@ ln -s ~/.vimrc ~/.config/nvim/init.vim
 
 pip install neovim
 
-git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-
 # Install plugins from Vundle
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 vim +PluginInstall +qall
 
-# Install YouCompleteMe
+# YouCompleteMe
 cd ~/.vim/bundle/YouCompleteMe
-if uname -s | grep --quiet Linux; then
-    sudo apt-get install build-essential cmake
-    sudo apt-get install python-dev python3-dev
-else
-    brew install cmake
-fi
 ./install.py --clang-completer
 cd $OLDPWD
 
@@ -40,3 +77,12 @@ ln -s "$DIR/pylintrc" ~/.pylintrc
 
 # .gitconfig
 ln -s "$DIR/gitconfig" ~/.gitconfig
+
+# tmux 2.6
+git clone https://github.com/tmux/tmux.git
+cd tmux
+git reset --hard 2c6af068d7f024b3c725777f78ee4feb1813bcf9
+sh autogen.sh
+./configure && make
+cd $OLDPWD
+rm -rf tmux
