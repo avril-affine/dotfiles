@@ -18,3 +18,4 @@ alias tks="tmux kill-session -t"
 
 # git
 alias gco="git checkout"
+alias gsh="git stash"
