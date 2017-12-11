@@ -16,7 +16,7 @@ source ~/.vim/keymaps.vim
 " visual block no timeout
 set timeoutlen=1000 ttimeoutlen=0
 " global clipboard
-set clipboard=unnamed
+set clipboard=unnamedplus
 " backspace
 set backspace=indent,eol,start
 
