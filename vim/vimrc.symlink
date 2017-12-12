@@ -14,7 +14,9 @@ source ~/.vim/plugins.vim
 source ~/.vim/keymaps.vim
 
 " visual block no timeout
-set timeoutlen=1000 ttimeoutlen=0
+set notimeout
+set ttimeout
+set timeoutlen=10
 " global clipboard
 set clipboard=unnamedplus
 " backspace
