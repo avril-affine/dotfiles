@@ -12,6 +12,8 @@
 	tool = vimdiff3
 [difftool]
 	prompt = false
+    # Be able to abort all diffs with `:cq` or `:cquit`
+    trustExitCode = true
 [alias]
 	d = difftool
 [mergetool]
