@@ -65,3 +65,4 @@ let g:ycm_python_binary_path=substitute(system("which python3"), "\n", '', 'g')
 " vim-airline
 let g:airline_section_x=0
 let g:airline_section_y=0
+let g:airline_section_z = airline#section#create(['%l:%c ', "\u2630 ", ' %3p%%'])
