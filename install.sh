@@ -74,7 +74,8 @@ cd ~/.vim/bundle/YouCompleteMe
 cd $OLDPWD
 
 # .bashrc additions
-cat "$DIR/bashrc" >> "$HOME/.bashrc"
+cat "$DIR/bash/bashrc" >> "$HOME/.bashrc"
+ln -s "$DIR/bash/aliases.sh" "$HOME/.aliases.sh"
 
 # pylint
 ln -s "$DIR/pylintrc" ~/.pylintrc
