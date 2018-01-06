@@ -1,5 +1,29 @@
 [MASTER]
 
+# Disabled warnings.
+disable=bad-whitespace,
+        missing-docstring,
+        too-many-arguments
+
+
+# Names to ignore. Common to pandas, tensorpack, etc.
+good-names=df,
+           dp,
+           ds
+
+# Ignore modules that import in __init__.py because pylint does not parse.
+ignored-modules=tensorpack,
+                tensorpack.callbacks,
+                tensorpack.dataflow,
+                tensorpack.graph_builder,
+                tensorpack.input_source,
+                tensorpack.models,
+                tensorpack.predict,
+                tensorpack.tfutils,
+                tensorpack.train,
+                tensorpack.user_ops,
+                tensorpack.utils
+
 # Pickle collected data for later comparisons.
 persistent=yes
 
@@ -10,6 +34,3 @@ jobs=2
 # active Python interpreter and may run arbitrary code.
 unsafe-load-any-extension=no
 
-disable=bad-whitespace,
-        missing-docstring,
-        too-many-arguments
