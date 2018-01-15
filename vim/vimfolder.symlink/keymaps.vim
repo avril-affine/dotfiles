@@ -29,6 +29,7 @@ nmap <silent> <leader>y :NERDTreeFind<cr>
 
 " YouCompleteMe goto
 map <leader>g :YcmCompleter GoToDefinitionElseDeclaration<cr>
+map <leader>f :YcmCompleter GoToReferences<cr>
 
 " Syntastic
 map <leader>c :lclose<cr>
