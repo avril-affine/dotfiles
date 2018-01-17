@@ -8,8 +8,6 @@ alias tks="tmux kill-session -t"
 
 # git
 alias g="git"
-alias gco="git checkout"
-alias gsh="git stash"
 
 # grep
 alias grep="grep --color=auto --exclude-dir=.mypy_cache"
