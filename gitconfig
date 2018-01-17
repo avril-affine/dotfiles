@@ -16,5 +16,12 @@
     trustExitCode = true
 [alias]
 	d = difftool
+    co = checkout
+    br = branch
+    cm = commit
+    st = status
+    ps = push
+    pl = pull
+    last = log -1 HEAD
 [mergetool]
 	path = nvim
