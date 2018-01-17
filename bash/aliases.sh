@@ -7,6 +7,7 @@ alias tat="tmux attach -t"
 alias tks="tmux kill-session -t"
 
 # git
+alias g="git"
 alias gco="git checkout"
 alias gsh="git stash"
 
