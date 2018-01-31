@@ -4,22 +4,23 @@
 disable=bad-whitespace,
         missing-docstring,
         too-many-arguments,
-        fixme
+        fixme,
+        invalid-name
 
 
 # Names to ignore. Common to pandas, tensorpack, etc.
-good-names=df,
-           dp,
-           ds,
-           i,
-           j,
-           k,
-           x,
-           y,
-           z,
-           w,
-           h,
-           f
+# good-names=df,
+#            dp,
+#            ds,
+#            i,
+#            j,
+#            k,
+#            x,
+#            y,
+#            z,
+#            w,
+#            h,
+#            f
 
 # Ignore modules that import in __init__.py because pylint does not parse.
 ignored-modules=tensorpack,
