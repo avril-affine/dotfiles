@@ -5,7 +5,8 @@ disable=bad-whitespace,
         missing-docstring,
         too-many-arguments,
         fixme,
-        invalid-name
+        invalid-name,
+        bad-continuation
 
 
 # Names to ignore. Common to pandas, tensorpack, etc.
