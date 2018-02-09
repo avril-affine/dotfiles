@@ -55,6 +55,10 @@ else
 
     # Neovim
     brew install neovim
+
+    # tmux dependencies: aclocal and libevent
+    brew install automake
+    brew install libevent
 fi
 
 # Neovim
@@ -84,10 +88,16 @@ ln -s "$DIR/pylintrc" ~/.pylintrc
 ln -s "$DIR/gitconfig" ~/.gitconfig
 
 # tmux 2.6
-git clone https://github.com/tmux/tmux.git
-cd tmux
+git clone https://github.com/tmux/tmux.git ~/tmux
+cd ~/tmux
 git reset --hard 2c6af068d7f024b3c725777f78ee4feb1813bcf9
 sh autogen.sh
-./configure && make
+if uname -s | grep --quiet Linux; then
+    ./configure && make
+else
+    DIR="/usr/local/"
+    ./configure CFLAGS="-I$DIR/include" LDFLAGS="-L$DIR/lib" && make
+fi
+cp ./tmux /usr/local/bin/tmux
 cd $OLDPWD
-rm -rf tmux
+rm -rf ~/tmux
