@@ -31,7 +31,8 @@ syntax enable
 "colorscheme molokai
 "colorscheme solarized
 "colorscheme codeschool
-colorscheme janah
+"colorscheme janah
+colorscheme panda
 
 " Figure out the system Python for Neovim.
 let g:python3_host_prog=substitute(system("which python3"), "\n", '', 'g')
