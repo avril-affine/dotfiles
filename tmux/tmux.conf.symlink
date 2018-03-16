@@ -32,6 +32,9 @@ set -g history-limit 20000                # boost history
 # reload configuration
 bind r source-file ~/.tmux.conf \; display '~/.tmux.conf sourced'
 
+# synchronize typing
+bind y set-window-option synchronize-panes
+
 
 # -- display -------------------------------------------------------------------
 
