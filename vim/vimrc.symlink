@@ -6,6 +6,10 @@ set nu
 set rnu
 set ruler
 
+" Underline current line
+set cursorline
+hi CursorLine gui=underline cterm=underline ctermfg=None guifg=None
+
 " Show filename with one window open
 set laststatus=2
 set statusline+=%F%=%l,%c
