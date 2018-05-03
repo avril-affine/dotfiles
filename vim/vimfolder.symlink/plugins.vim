@@ -67,3 +67,19 @@ let g:ycm_python_binary_path=substitute(system("which python3"), "\n", '', 'g')
 let g:airline_section_x=0
 let g:airline_section_y=0
 let g:airline_section_z = airline#section#create(['%l:%c ', "\u2630 ", ' %3p%%'])
+
+" The Silver Searcher
+if executable('ag')
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+
+    " bind \ (backward slash) to grep shortcut
+    command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
+    nnoremap \ :Ag<SPACE>
+endif

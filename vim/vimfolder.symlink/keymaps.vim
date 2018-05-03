@@ -29,7 +29,6 @@ nmap <silent> <leader>y :NERDTreeFind<cr>
 
 " YouCompleteMe goto
 map <leader>g :YcmCompleter GoToDefinitionElseDeclaration<cr>
-map <leader>f :YcmCompleter GoToReferences<cr>
 
 " Syntastic
 map <leader>c :lclose<cr>
@@ -37,3 +36,6 @@ map <leader>o :lopen<cr>
 
 " fugitive
 map <leader>b :Gblame<cr>
+
+" bind <leader>f to grep word under cursor
+nnoremap <leader>f :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>

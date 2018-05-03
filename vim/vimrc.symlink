@@ -8,6 +8,9 @@ set ruler
 
 " Underline current line
 set cursorline
+hi clear CursorLine
+hi CursorLine gui=underline cterm=underline ctermfg=None guifg=None
+hi clear CursorLine
 hi CursorLine gui=underline cterm=underline ctermfg=None guifg=None
 
 " Show filename with one window open
