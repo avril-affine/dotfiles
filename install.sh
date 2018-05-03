@@ -59,6 +59,9 @@ else
     # tmux dependencies: aclocal and libevent
     brew install automake
     brew install libevent
+
+    # ag
+    brew install the_silver_searcher
 fi
 
 # Neovim
