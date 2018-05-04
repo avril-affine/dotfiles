@@ -6,13 +6,6 @@ set nu
 set rnu
 set ruler
 
-" Underline current line
-set cursorline
-hi clear CursorLine
-hi CursorLine gui=underline cterm=underline ctermfg=None guifg=None
-hi clear CursorLine
-hi CursorLine gui=underline cterm=underline ctermfg=None guifg=None
-
 " Show filename with one window open
 set laststatus=2
 set statusline+=%F%=%l,%c
@@ -43,3 +36,13 @@ colorscheme panda
 
 " Figure out the system Python for Neovim.
 let g:python3_host_prog=substitute(system("which python3"), "\n", '', 'g')
+
+" Underline current line
+set cursorline
+hi clear CursorLine
+hi CursorLine gui=underline cterm=underline
+augroup CursorLine
+    au!
+    au VimEnter,WinEnter,BufWinEnter * setlocal cursorline
+    au WinLeave * setlocal nocursorline
+augroup END
