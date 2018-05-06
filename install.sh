@@ -36,6 +36,9 @@ if uname -s | grep --quiet Linux; then
     sudo update-alternatives --config vim
     sudo update-alternatives --install /usr/bin/editor editor /usr/bin/nvim 60
     sudo update-alternatives --config editor
+
+    # ag
+    apt-get install silversearcher-ag
 else
     # Install Homebrew
     which -s brew
