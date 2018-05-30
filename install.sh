@@ -85,8 +85,9 @@ cd ~/.vim/bundle/YouCompleteMe
 cd $OLDPWD
 
 # .bashrc additions
-cat "$DIR/bash/bashrc" >> "$HOME/.bashrc"
+ln -s "$DIR/bash/bashrc" "$HOME/.bashrc.local"
 ln -s "$DIR/bash/aliases.sh" "$HOME/.aliases.sh"
+echo "source $HOME/.bashrc.local" >> "$HOME/.bashrc"
 
 # pylint
 ln -s "$DIR/pylintrc" ~/.pylintrc
@@ -102,8 +103,7 @@ sh autogen.sh
 if uname -s | grep --quiet Linux; then
     ./configure && make
 else
-    DIR="/usr/local/"
-    ./configure CFLAGS="-I$DIR/include" LDFLAGS="-L$DIR/lib" && make
+    ./configure CFLAGS="-I/usr/local/include" LDFLAGS="-L/usr/local/lib" && make
 fi
 cp ./tmux /usr/local/bin/tmux
 cd $OLDPWD
