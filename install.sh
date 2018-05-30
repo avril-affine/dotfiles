@@ -39,7 +39,7 @@ if uname -s | grep --quiet Linux; then
     sudo update-alternatives --config editor
 
     # ag
-    apt-get install silversearcher-ag
+    sudo apt-get install silversearcher-ag
 else
     # Install Homebrew
     which -s brew
