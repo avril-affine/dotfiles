@@ -40,6 +40,11 @@ if uname -s | grep --quiet Linux; then
 
     # ag
     sudo apt-get install silversearcher-ag
+
+    # rg
+    # Find updates here: https://github.com/BurntSushi/ripgrep/releases/latest
+    curl -LO https://github.com/BurntSushi/ripgrep/releases/download/0.8.1/ripgrep_0.8.1_amd64.deb
+    sudo dpkg -i ripgrep_0.8.1_amd64.deb
 else
     # Install Homebrew
     which -s brew
@@ -66,6 +71,9 @@ else
 
     # ag
     brew install the_silver_searcher
+
+    # ripgrep
+    brew install ripgrep
 fi
 
 # Neovim
