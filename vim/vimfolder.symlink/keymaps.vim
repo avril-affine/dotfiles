@@ -39,3 +39,18 @@ map <leader>b :Gblame<cr>
 
 " bind <leader>f to grep word under cursor
 nnoremap <leader>f :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+
+" Zoom / Restore window.
+function! s:ZoomToggle() abort
+    if exists('t:zoomed') && t:zoomed
+        execute t:zoom_winrestcmd
+        let t:zoomed = 0
+    else
+        let t:zoom_winrestcmd = winrestcmd()
+        resize
+        vertical resize
+        let t:zoomed = 1
+    endif
+endfunction
+command! ZoomToggle call s:ZoomToggle()
+nnoremap <silent> <leader>z :ZoomToggle<CR>
