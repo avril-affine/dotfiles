@@ -11,6 +11,7 @@ ln -s "$DIR/tmux/tmux.conf.symlink" ~/.tmux.conf
 ln -s "$DIR/tmux/tmux.conf.local.symlink" ~/.tmux.conf.local
 ln -s "$DIR/vim/vimrc.symlink" ~/.vimrc
 ln -s "$DIR/vim/vimfolder.symlink/" ~/.vim
+ln -s "$DIR/sshrc" ~/.ssh/rc
 
 # Package dependencies / OS specific stuff
 if uname -s | grep --quiet Linux; then
