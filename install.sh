@@ -11,7 +11,7 @@ ln -s "$DIR/tmux/tmux.conf.symlink" ~/.tmux.conf
 ln -s "$DIR/tmux/tmux.conf.local.symlink" ~/.tmux.conf.local
 ln -s "$DIR/vim/vimrc.symlink" ~/.vimrc
 ln -s "$DIR/vim/vimfolder.symlink/" ~/.vim
-ln -s "$DIR/sshrc" ~/.ssh/rc
+ln -s "$DIR/bash/sshrc" ~/.ssh/rc
 
 # Package dependencies / OS specific stuff
 if uname -s | grep --quiet Linux; then
@@ -37,6 +37,14 @@ if uname -s | grep --quiet Linux; then
     sudo update-alternatives --config vim
     sudo update-alternatives --install /usr/bin/editor editor /usr/bin/nvim 60
     sudo update-alternatives --config editor
+
+    # ag
+    sudo apt-get install silversearcher-ag
+
+    # rg
+    # Find updates here: https://github.com/BurntSushi/ripgrep/releases/latest
+    curl -LO https://github.com/BurntSushi/ripgrep/releases/download/0.8.1/ripgrep_0.8.1_amd64.deb
+    sudo dpkg -i ripgrep_0.8.1_amd64.deb
 else
     # Install Homebrew
     which -s brew
@@ -63,6 +71,9 @@ else
 
     # ag
     brew install the_silver_searcher
+
+    # ripgrep
+    brew install ripgrep
 fi
 
 # Neovim
@@ -82,8 +93,9 @@ cd ~/.vim/bundle/YouCompleteMe
 cd $OLDPWD
 
 # .bashrc additions
-cat "$DIR/bash/bashrc" >> "$HOME/.bashrc"
+ln -s "$DIR/bash/bashrc" "$HOME/.bashrc.local"
 ln -s "$DIR/bash/aliases.sh" "$HOME/.aliases.sh"
+echo "source $HOME/.bashrc.local" >> "$HOME/.bashrc"
 
 # pylint
 ln -s "$DIR/pylintrc" ~/.pylintrc
@@ -99,8 +111,7 @@ sh autogen.sh
 if uname -s | grep --quiet Linux; then
     ./configure && make
 else
-    DIR="/usr/local/"
-    ./configure CFLAGS="-I$DIR/include" LDFLAGS="-L$DIR/lib" && make
+    ./configure CFLAGS="-I/usr/local/include" LDFLAGS="-L/usr/local/lib" && make
 fi
 cp ./tmux /usr/local/bin/tmux
 cd $OLDPWD

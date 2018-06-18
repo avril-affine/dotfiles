@@ -53,3 +53,7 @@ augroup BgHighlight
     au VimEnter,WinEnter,BufWinEnter * set relativenumber
     autocmd WinLeave * set norelativenumber
 augroup END
+
+" Highlight search
+set hlsearch
+hi Search cterm=None ctermbg=DarkRed ctermfg=LightBlue
