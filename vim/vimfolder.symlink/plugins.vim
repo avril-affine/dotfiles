@@ -29,6 +29,7 @@ Plugin 'Valloric/YouCompleteMe'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'Yggdroot/indentLine'
+Plugin 'RRethy/vim-illuminate'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -83,3 +84,4 @@ if executable('rg')
     command -nargs=+ -complete=file -bar Rg silent! grep! <args>|cwindow|redraw!
     nnoremap \ :Rg<SPACE>
 endif
+
