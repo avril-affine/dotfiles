@@ -56,7 +56,7 @@ augroup END
 
 " Highlight search
 set hlsearch
-hi Search cterm=None ctermbg=DarkRed ctermfg=LightBlue
+hi Search cterm=None ctermbg=LightYellow ctermfg=DarkRed
 
 " vim-illuminate
 hi illuminatedWord ctermbg=DarkGray guibg=DarkGray
