@@ -37,9 +37,6 @@ map <leader>o :lopen<cr>
 " fugitive
 map <leader>b :Gblame<cr>
 
-" bind <leader>f to grep word under cursor
-nnoremap <leader>f :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
-
 " Zoom / Restore window.
 function! s:ZoomToggle() abort
     if exists('t:zoomed') && t:zoomed
