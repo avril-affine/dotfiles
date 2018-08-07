@@ -30,6 +30,7 @@ Plugin 'Yggdroot/indentLine'
 Plugin 'RRethy/vim-illuminate'
 Plugin 'w0rp/ale'
 Plugin 'davidhalter/jedi-vim'
+Plugin 'ervandew/supertab'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -75,3 +76,7 @@ let g:jedi#rename_command = "<leader>r"
 " ale
 let g:ale_linters = {'python': ['pylint']}
 let g:ale_python_pylint_options = "--rcfile ~/.pylintrc"
+
+" supertab
+let g:SuperTabDefaultCompletionType = "<c-n>"
+let g:SuperTabContextDefaultCompletionType = "<c-n>"
