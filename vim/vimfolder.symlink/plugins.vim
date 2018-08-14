@@ -31,6 +31,7 @@ Plugin 'RRethy/vim-illuminate'
 Plugin 'w0rp/ale'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'ervandew/supertab'
+Plugin 'fisadev/vim-isort'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -80,3 +81,6 @@ let g:ale_python_pylint_options = "--rcfile ~/.pylintrc"
 " supertab
 let g:SuperTabDefaultCompletionType = "<c-n>"
 let g:SuperTabContextDefaultCompletionType = "<c-n>"
+
+" isort
+let g:vim_isort_map = "<C-i>"
