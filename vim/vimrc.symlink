@@ -10,8 +10,12 @@ set ruler
 set laststatus=2
 set statusline+=%F%=%l,%c
 
+let mapleader =','
+
+" Toggle paste without autoindent
+set pastetoggle=<leader>v
+
 source ~/.vim/plugins.vim
-source ~/.vim/keymaps.vim
 
 " visual block no timeout
 set notimeout
@@ -23,7 +27,6 @@ set clipboard=unnamedplus
 set backspace=indent,eol,start
 
 " Color schemes
-syntax enable
 "colorscheme lightning
 "colorscheme autumn
 "colorscheme asmdev
@@ -59,4 +62,39 @@ set hlsearch
 hi Search cterm=None ctermbg=LightYellow ctermfg=DarkRed
 
 " vim-illuminate
+" FIXME: only works when placed here.
 hi illuminatedWord ctermbg=DarkGray guibg=DarkGray
+
+" Window movement keys
+function! WinMove(key)
+  let t:curwin = winnr()
+  exec "wincmd ".a:key
+  if (t:curwin == winnr()) "we havent moved
+    if (match(a:key,'[jk]')) "were we going up/down
+      wincmd v
+    else
+      wincmd s
+    endif
+    exec "wincmd ".a:key
+  endif
+endfunction
+
+map <silent> <C-h> :call WinMove('h')<cr>
+map <silent> <C-k> :call WinMove('k')<cr>
+map <silent> <C-l> :call WinMove('l')<cr>
+map <silent> <C-j> :call WinMove('j')<cr>
+
+" Zoom / Restore window.
+function! s:ZoomToggle() abort
+    if exists('t:zoomed') && t:zoomed
+        execute t:zoom_winrestcmd
+        let t:zoomed = 0
+    else
+        let t:zoom_winrestcmd = winrestcmd()
+        resize
+        vertical resize
+        let t:zoomed = 1
+    endif
+endfunction
+command! ZoomToggle call s:ZoomToggle()
+nnoremap <silent> <leader>z :ZoomToggle<CR>
