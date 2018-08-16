@@ -1,3 +1,5 @@
 vim/vimfolder.symlink/bundle/*
 vim/vimfolder.symlink/init.vim
 vim/vimfolder.symlink/.netrwhist
+vim/vimfolder.symlink/autoload/*
+vim/vimfolder.symlink/plugged/*
