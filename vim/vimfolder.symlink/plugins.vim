@@ -77,7 +77,13 @@ autocmd BufLeave *.json let g:indentLine_enabled = 1
 " -----------------------------------------------------------------------------
 " Autocomplete
 " -----------------------------------------------------------------------------
-"
+
+" deoplete
+let g:deoplete#enable_at_startup = 1
+inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"     " tab-complete
+autocmd CompleteDone * pclose!                              " close preview when done
+
+" LanguageClient
 " Required for operations modifying multiple buffers like rename.
 set hidden
 
@@ -88,8 +94,10 @@ let g:LanguageClient_serverCommands = {
 nnoremap <silent> <leader>f :call LanguageClient_contextMenu()<CR>
 " Or map each action separately
 nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
-nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+nnoremap <silent> <leader>d :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> <leader>g :call LanguageClient#textDocument_implementation()<CR>
+nnoremap <silent> <leader>f :call LanguageClient#textDocument_references()<CR>
+nnoremap <silent> <leader>r :call LanguageClient#textDocument_rename()<CR>
 
 " -----------------------------------------------------------------------------
 " Python
