@@ -98,3 +98,6 @@ function! s:ZoomToggle() abort
 endfunction
 command! ZoomToggle call s:ZoomToggle()
 nnoremap <silent> <leader>z :ZoomToggle<CR>
+
+" close location and preview windows
+nnoremap <silent> <leader>c :lclose<cr>:pclose<cr>
