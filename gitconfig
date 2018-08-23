@@ -7,7 +7,7 @@
 	name = kenny
 	email = kkihara1@gmail.com
 [core]
-	editor = nvim
+	editor = vim
 [diff]
 	tool = vimdiff3
 [difftool]
@@ -24,4 +24,4 @@
     pl = pull
     last = log -1 HEAD
 [mergetool]
-	path = nvim
+	path = vim
