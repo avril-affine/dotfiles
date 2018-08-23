@@ -52,11 +52,10 @@ endif
 nnoremap <leader>b :Gblame<cr>
 
 " NERDTree
-let NERDTreeShowHidden=1
+let NERDTreeShowHidden=0
 let NERDTreeDirArrowExpandable = '▷'
 let NERDTreeDirArrowCollapsible = '▼'
 nnoremap <silent> <leader>k :NERDTreeToggle<cr>
-nnoremap <silent> <leader>y :NERDTreeFind<cr>
 
 " vim-airline
 let g:airline_section_x=0   " clear section
