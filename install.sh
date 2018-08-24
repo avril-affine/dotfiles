@@ -66,7 +66,12 @@ else
     fi
 
     # tmux-vim copy
-    brew list reattach-to-user-namespace || brew install reattach-to-user-namespace
+    if ! brew info reattach-to-user-namespace &> /dev/null; then
+        echo "Installing reattach-to-user-namespace..."
+        brew install reattach-to-user-namespace
+    else
+        echo "Skipping reattach-to-user-namespace. Already installed..."
+    fi
 
     # Neovim
     which -s nvim
@@ -78,8 +83,18 @@ else
     fi
 
     # tmux dependencies: aclocal and libevent
-    brew list automake || brew install automake
-    brew list libevent || brew install libevent
+    if ! brew info automake &> /dev/null; then
+        echo "Installing automake..."
+        brew install automake
+    else
+        echo "Skipping automake. Already installed..."
+    fi
+    if ! brew info libevent &> /dev/null; then
+        echo "Installing libevent..."
+        brew install libevent
+    else
+        echo "Skipping libevent. Already installed..."
+    fi
 
     # ripgrep
     which -s rg
