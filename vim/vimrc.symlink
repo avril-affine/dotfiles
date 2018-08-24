@@ -101,3 +101,13 @@ nnoremap <silent> <leader>z :ZoomToggle<CR>
 
 " close location and preview windows
 nnoremap <silent> <leader>c :lclose<cr>:pclose<cr>
+
+" ripgrep with CtrlP
+if executable('rg')
+  " Use rg over grep
+  set grepprg=rg\ --vimgrep\ --no-heading\ --smart-case
+
+  " bind \ (backward slash) to grep shortcut
+  command -nargs=+ -complete=file -bar Rg silent! grep! <args>|cwindow|redraw!
+  nnoremap \ :Rg<SPACE>
+endif
