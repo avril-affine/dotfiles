@@ -49,14 +49,20 @@ else
     # Install Homebrew
     which -s brew
     if [[ $? != 0 ]] ; then
+        echo "Install homebrew..."
         /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    else
+        echo "Skipping homebrew. Already installed..."
     fi
 
     # Install xquartz
     which -s xterm
     if [[ $? != 0 ]] ; then
+        echo "Installing xquartz..."
         brew install caskroom/cask/brew-cask
         brew cask install xquartz
+    else
+        echo "Skipping xquartz. Already installed..."
     fi
 
     # tmux-vim copy
@@ -65,7 +71,10 @@ else
     # Neovim
     which -s nvim
     if [[ $? != 0 ]] ; then
+        echo "Installing neovim..."
         brew install neovim
+    else
+        echo "Skipping neovim. Already installed..."
     fi
 
     # tmux dependencies: aclocal and libevent
@@ -75,7 +84,10 @@ else
     # ripgrep
     which -s rg
     if [[ $? != 0 ]] ; then
+        echo "Installing ripgrep..."
         brew install ripgrep
+    else
+        echo "Skipping ripgrep. Already installed..."
     fi
 fi
 
