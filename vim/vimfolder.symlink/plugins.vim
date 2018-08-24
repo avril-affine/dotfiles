@@ -18,7 +18,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'Konfekt/FastFold'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } | Plug 'junegunn/fzf.vim'
 Plug 'Yggdroot/indentLine', { 'branch': 'master' }
-" Plug 'w0rp/ale'
+Plug 'w0rp/ale'
 Plug 'RRethy/vim-illuminate'
 
 " Autocomplete
@@ -33,9 +33,6 @@ Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
     \ 'do': 'bash install.sh',
     \ }
-
-" Python
-Plug 'fisadev/vim-isort', { 'for': 'python' }
 
 call plug#end()
 
@@ -69,8 +66,9 @@ nnoremap <C-p> :Files<cr>
 autocmd BufEnter *.json let g:indentLine_enabled = 0
 autocmd BufLeave *.json let g:indentLine_enabled = 1
 
-" " ale
-" let g:ale_linters = {'python': ['pylint']}
+" ale
+" let g:ale_linters = {'python': [ 'pyre' ]}
+" let g:ale_linters = {'python': [ 'pylint' ]}
 " let g:ale_python_pylint_options = "--rcfile ~/.pylintrc"
 
 " -----------------------------------------------------------------------------
@@ -97,10 +95,3 @@ nnoremap <silent> <leader>d :call LanguageClient#textDocument_definition()<CR>
 nnoremap <silent> <leader>g :call LanguageClient#textDocument_implementation()<CR>
 nnoremap <silent> <leader>f :call LanguageClient#textDocument_references()<CR>
 nnoremap <silent> <leader>r :call LanguageClient#textDocument_rename()<CR>
-
-" -----------------------------------------------------------------------------
-" Python
-" -----------------------------------------------------------------------------
-
-" isort
-let g:vim_isort_map = "<C-i>"
