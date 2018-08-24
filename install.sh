@@ -53,27 +53,30 @@ else
     fi
 
     # Install xquartz
-    brew install caskroom/cask/brew-cask
-    brew cask install xquartz
+    which -s xterm
+    if [[ $? != 0 ]] ; then
+        brew install caskroom/cask/brew-cask
+        brew cask install xquartz
+    fi
 
-    # YouCompleteMe
-    brew install cmake
-
-    # vim
-    brew install reattach-to-user-namespace
+    # tmux-vim copy
+    brew list reattach-to-user-namespace || brew install reattach-to-user-namespace
 
     # Neovim
-    brew install neovim
+    which -s nvim
+    if [[ $? != 0 ]] ; then
+        brew install neovim
+    fi
 
     # tmux dependencies: aclocal and libevent
-    brew install automake
-    brew install libevent
-
-    # ag
-    brew install the_silver_searcher
+    brew list automake || brew install automake
+    brew list libevent || brew install libevent
 
     # ripgrep
-    brew install ripgrep
+    which -s rg
+    if [[ $? != 0 ]] ; then
+        brew install ripgrep
+    fi
 fi
 
 # Neovim
