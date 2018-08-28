@@ -68,8 +68,8 @@ autocmd BufLeave *.json let g:indentLine_enabled = 1
 
 " ale
 " let g:ale_linters = {'python': [ 'pyre' ]}
-" let g:ale_linters = {'python': [ 'pylint' ]}
-" let g:ale_python_pylint_options = "--rcfile ~/.pylintrc"
+let g:ale_linters = {'python': [ 'pylint' ]}
+let g:ale_python_pylint_options = "--rcfile ~/.pylintrc"
 
 " -----------------------------------------------------------------------------
 " Autocomplete
@@ -87,6 +87,7 @@ set hidden
 let g:LanguageClient_serverCommands = {
     \ 'python': ['pyls'],
     \ }
+let g:LanguageClient_diagnosticsEnable=0
 
 nnoremap <silent> <leader>f :call LanguageClient_contextMenu()<CR>
 " Or map each action separately
