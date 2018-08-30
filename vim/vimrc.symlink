@@ -84,6 +84,11 @@ map <silent> <C-k> :call WinMove('k')<cr>
 map <silent> <C-l> :call WinMove('l')<cr>
 map <silent> <C-j> :call WinMove('j')<cr>
 
+map <silent> <S-Left> <C-w><lt>
+map <silent> <S-Up> <C-w>+
+map <silent> <S-Right> <C-w>>
+map <silent> <S-Down> <C-w>-
+
 " Zoom / Restore window.
 function! s:ZoomToggle() abort
     if exists('t:zoomed') && t:zoomed
