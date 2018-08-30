@@ -23,13 +23,13 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'kien/ctrlp.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
-Plugin 'scrooloose/syntastic'
 Plugin 'tmhedberg/SimpylFold'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'Yggdroot/indentLine'
 Plugin 'RRethy/vim-illuminate'
+Plugin 'w0rp/ale'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -45,14 +45,6 @@ set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
-let g:syntastic_always_populate_loc_list = 1
-" let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
-
-" standard pylint
-let g:syntastic_python_checkers = ['pylint']
-let g:syntastic_python_pylint_args = "--rcfile=$HOME/.pylintrc"
 syntax on
 
 " SimplyFold docstrings
@@ -69,6 +61,10 @@ let g:airline_section_x=0
 let g:airline_section_y=0
 let g:airline_section_z = airline#section#create(['%l:%c ', "\u2630 ", ' %3p%%'])
 
+" ale
+let g:ale_linters = {'python': ['pylint']}
+let g:ale_python_pylint_options = "--rcfile ~/.pylintrc"
+
 " ripgrep
 if executable('rg')
   " Use rg over grep
@@ -84,4 +80,3 @@ if executable('rg')
     command -nargs=+ -complete=file -bar Rg silent! grep! <args>|cwindow|redraw!
     nnoremap \ :Rg<SPACE>
 endif
-
