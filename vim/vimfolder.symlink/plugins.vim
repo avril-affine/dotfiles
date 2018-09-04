@@ -21,6 +21,7 @@ Plug 'Yggdroot/indentLine', { 'branch': 'master' }
 Plug 'w0rp/ale'
 Plug 'RRethy/vim-illuminate'
 Plug 'jiangmiao/auto-pairs'
+Plug 'kshenoy/vim-signature'
 
 " Autocomplete
 if has('nvim')
