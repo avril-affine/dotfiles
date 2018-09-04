@@ -10,18 +10,20 @@ endif
 call plug#begin('~/.vim/plugged')
 
 " General
-Plug 'tpope/vim-fugitive'
-Plug 'scrooloose/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'Konfekt/FastFold'
+Plug 'tpope/vim-fugitive'               " git
+Plug 'scrooloose/nerdtree'              " file explorer
+Plug 'Xuyuanp/nerdtree-git-plugin'      " show git status in nerdtree
+Plug 'vim-airline/vim-airline'          " status line formatting
+Plug 'vim-airline/vim-airline-themes'   " status line themes
+Plug 'Konfekt/FastFold'                 " faster code folding
+" fuzzy finder
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } | Plug 'junegunn/fzf.vim'
+" show line indent
 Plug 'Yggdroot/indentLine', { 'branch': 'master' }
-Plug 'w0rp/ale'
-Plug 'RRethy/vim-illuminate'
-Plug 'jiangmiao/auto-pairs'
-Plug 'kshenoy/vim-signature'
+Plug 'w0rp/ale'                         " async linter
+Plug 'RRethy/vim-illuminate'            " highlight current word
+Plug 'jiangmiao/auto-pairs'             " auto pair parens, brackets, etc.
+Plug 'kshenoy/vim-signature'            " display markers on ruler
 
 " Autocomplete
 if has('nvim')
