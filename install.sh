@@ -26,6 +26,7 @@ ln -s "$DIR/gitconfig" "$HOME/.gitconfig"
 
 # Package dependencies / OS specific stuff
 if uname -s | grep --quiet Linux; then
+    # TODO: add install checks
     # tmux dependencies
     sudo apt-get install -y automake
     sudo apt-get install -y build-essential
@@ -33,6 +34,7 @@ if uname -s | grep --quiet Linux; then
     sudo apt-get install -y libevent-dev
     sudo apt-get install -y libncurses5-dev
 
+    # TODO: add install checks
     # Neovim
     sudo apt-get install software-properties-common
     sudo add-apt-repository ppa:neovim-ppa/stable
@@ -52,6 +54,8 @@ if uname -s | grep --quiet Linux; then
         curl -LO https://github.com/BurntSushi/ripgrep/releases/download/0.8.1/ripgrep_0.8.1_amd64.deb
         sudo dpkg -i ripgrep_0.8.1_amd64.deb
     fi
+
+    # TODO: X11/xclip?
 else
     # Install Homebrew
     which -s brew
