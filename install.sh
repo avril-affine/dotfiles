@@ -11,6 +11,9 @@ if [ -e "$HOME/.tmux.conf" ]; then mv "$HOME/.tmux.conf" "$HOME/.tmux.conf.bkp";
 if [ -e "$HOME/.tmux.conf.local" ]; then mv "$HOME/.tmux.conf.local" "$HOME/.tmux.conf.local.bkp"; fi
 if [ -e "$HOME/.vimrc" ]; then mv "$HOME/.vimrc" "$HOME/.vimrc.bkp"; fi
 if [ -e "$HOME/.vim" ]; then mv "$HOME/.vim" "$HOME/.vim.bkp"; fi
+if [ -e "$HOME/.pylintrc" ]; then mv "$HOME/.pylintrc" "$HOME/.pylintrc.bkp"; fi
+if [ -e "$HOME/.gitconfig" ]; then mv "$HOME/.gitconfig" "$HOME/.gitconfig.bkp"; fi
+if [ -e "$HOME/.ripgreprc" ]; then mv "$HOME/.ripgreprc" "$HOME/.ripgreprc.bkp"; fi
 
 ln -s "$DIR/tmux/tmux.conf.symlink" ~/.tmux.conf
 ln -s "$DIR/tmux/tmux.conf.local.symlink" ~/.tmux.conf.local
@@ -19,10 +22,13 @@ ln -s "$DIR/vim/vimfolder.symlink/" ~/.vim
 ln -s "$DIR/bash/sshrc" ~/.ssh/rc
 
 # pylint
-ln -s "$DIR/pylintrc" "$HOME/.pylintrc"
+ln -s "$DIR/misc/pylintrc.symlink" "$HOME/.pylintrc"
 
-# .gitconfig
-ln -s "$DIR/gitconfig" "$HOME/.gitconfig"
+# gitconfig
+ln -s "$DIR/misc/gitconfig.symlink" "$HOME/.gitconfig"
+
+# ripgrep
+ln -s "$DIR/misc/ripgreprc.symlink" "$HOME/.ripgreprc"
 
 # Package dependencies / OS specific stuff
 if uname -s | grep --quiet Linux; then
