@@ -1,5 +1,6 @@
 # ls
 alias ll="ls -Glrth"
+alias ls="ls -G"
 
 alias tns="tmux new -s"
 alias ta="tmux attach"
