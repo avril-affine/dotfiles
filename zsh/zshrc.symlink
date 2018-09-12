@@ -1,0 +1,23 @@
+ZSH_THEME=""
+
+plugins=(
+  git
+  zsh-syntax-highlighting
+)
+
+DISABLE_UNTRACKED_FILES_DIRTY=true
+source $ZSH/oh-my-zsh.sh
+
+autoload -U promptinit; promptinit
+autoload -U compinit; compinit
+
+PURE_GIT_UNTRACKED_DIRTY=0  # ignore untracked files in git
+
+# Right prompt if ssh'd.
+# RPROMPT="%F{8}${SSH_TTY:+%n@%m}%f"
+
+prompt pure
+PROMPT='%F{white}%* '$PROMPT
+
+source $HOME/.pure.local.zsh
+source $HOME/.aliases.zsh
