@@ -12,7 +12,7 @@
 setw -g mouse on
 set-window-option -g mode-keys vi
 
-set -g default-shell /bin/zsh             # use zsh
+set -g default-shell $SHELL               # use default shell
 set -g default-terminal "screen-256color" # colors!
 setw -g xterm-keys on
 set -s escape-time 10                     # faster command sequences
