@@ -9,6 +9,10 @@ prompt_pure_preprompt_render() {
 	# Initialize the preprompt array.
 	local -a preprompt_parts
 
+    # Conda environment
+    local conda_color=90
+    [[ -n $CONDA_PREFIX ]] && preprompt_parts+=("%F{$conda_color}"'[$(echo $CONDA_PREFIX | rev | cut -d'/' -f1 | rev)]%f')
+
 	# Set the path.
 	preprompt_parts+=('%F{blue}%~%f')
 
