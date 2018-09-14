@@ -9,13 +9,17 @@ prompt_pure_preprompt_render() {
 	# Initialize the preprompt array.
 	local -a preprompt_parts
 
+    # Conda environment
+    local conda_color=90
+    [[ -n $CONDA_PREFIX ]] && preprompt_parts+=("%F{$conda_color}"'[$(echo $CONDA_PREFIX | rev | cut -d'/' -f1 | rev)]%f')
+
 	# Set the path.
 	preprompt_parts+=('%F{blue}%~%f')
 
 	# Add git branch and dirty status info.
 	typeset -gA prompt_pure_vcs_info
 	if [[ -n $prompt_pure_vcs_info[branch] ]]; then
-		preprompt_parts+=("%F{$git_color}"'${prompt_pure_vcs_info[branch]}${prompt_pure_git_dirty}%f')
+		preprompt_parts+=("%F{$git_color}"'<${prompt_pure_vcs_info[branch]}${prompt_pure_git_dirty}>%f')
 	fi
 	# Git pull/push arrows.
 	if [[ -n $prompt_pure_git_arrows ]]; then
