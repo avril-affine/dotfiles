@@ -3,8 +3,8 @@ from abc import ABC, abstractmethod
 
 class Base(ABC):
 
-    @abstractmethod
     @property
+    @abstractmethod
     def is_installed(self) -> bool:
         pass
 
