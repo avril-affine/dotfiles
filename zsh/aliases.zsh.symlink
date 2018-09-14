@@ -12,3 +12,6 @@ alias g="git"
 
 # grep
 alias grep="grep --color=auto --exclude-dir=.mypy_cache"
+
+# vim
+alias vim="$(which nvim)"

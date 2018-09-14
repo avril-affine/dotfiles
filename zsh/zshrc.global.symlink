@@ -21,3 +21,9 @@ PROMPT='%F{white}%* '$PROMPT
 
 source $HOME/.pure.local.zsh
 source $HOME/.aliases.zsh
+
+# unbind ^v
+bindkey -vr '^v'
+# bind ctrl-v to toggle between modes
+bindkey -M vicmd '^v' vi-insert
+bindkey -M viins '^v' vi-cmd-mode
