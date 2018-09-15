@@ -17,6 +17,15 @@ assert sys.version_info.major == 3 and sys.version_info.minor >= 5, \
 def main(args: argparse.Namespace):
     installers = []
 
+    # zsh
+    installers += [
+        Shell('installer/install-zsh.sh',
+              install_check=lambda: (
+                    util.shell_command('which zsh')
+                    and util.check_zsh_version()
+              )
+        ),
+    ]
     # tmux
     installers += [
         Shell('installer/install-tmux.sh',
