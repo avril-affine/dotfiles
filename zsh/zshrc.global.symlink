@@ -19,7 +19,6 @@ PURE_GIT_UNTRACKED_DIRTY=0  # ignore untracked files in git
 prompt pure
 PROMPT='%F{white}%* '$PROMPT
 
-source $HOME/.pure.local.zsh
 source $HOME/.aliases.zsh
 
 # unbind ^v

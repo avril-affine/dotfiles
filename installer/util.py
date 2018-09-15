@@ -25,3 +25,10 @@ def shell_output(command: str) -> str:
 
 def is_osx() -> bool:
     return sys.platform == 'darwin'
+
+
+def check_zsh_version(major=5, minor=6) -> bool:
+    version_str = shell_output('zsh --version').split()[1]
+    version_major = int(version_str.split('.')[0])
+    version_minor = int(version_str.split('.')[1])
+    return (version_major == major and version_minor >= minor) or (version_major > major)
