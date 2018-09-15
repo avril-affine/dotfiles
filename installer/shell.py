@@ -20,7 +20,7 @@ class Shell(Base):
         if self.is_installed:
             return
 
-        util.shell_command('. {}'.format(self.name))
+        util.shell_command('bash {}'.format(self.name))
 
     def uninstall(self) -> None:
         print('Check {} for details on installation.')
