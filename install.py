@@ -2,6 +2,7 @@
 
 import argparse
 import glob
+import os
 import sys
 
 from installer import util
@@ -13,7 +14,7 @@ assert sys.version_info.major == 3 and sys.version_info.minor >= 5, \
     'Python version must be >= 3.5'
 
 
-def main(args):
+def main(args: argparse.Namespace):
     installers = []
 
     # tmux
@@ -36,7 +37,6 @@ def main(args):
             BrewPackage('automake'),
             BrewPackage('libevent'),
             BrewPackage('ripgrep'),
-            BrewPackage('npm'),
         ]
     else:             # Ubuntu packages
         installers += [
@@ -56,7 +56,6 @@ def main(args):
             Shell('installer/install-ripgrep.sh',
                   install_check=lambda: util.shell_command('which rg')
             ),
-            AptPackage('npm'),
         ]
     # pip
     installers += [
@@ -66,21 +65,34 @@ def main(args):
         PipPackage('pyls-mypy'),
         PipPackage('pyls-isort'),
     ]
+    # oh-my-zsh
+    installers += [
+        Shell('installer/install-oh-my-zsh.sh',
+              install_check=lambda: os.path.exists(os.path.join(util.home_dir(), '.oh-my-zsh'))
+        ),
+    ]
     # symlinks
     installers += [
-        Symlink(f, args.backup)
-        for f in glob.glob('**/*.symlink', recursive=True)
+        Symlink(sym_path, args.backup)
+        for sym_path in glob.glob('**/*.symlink', recursive=True)
     ]
     # sourced symlinks
     installers += [
         SourceSymlink('zsh/zshrc.global.symlink'),
     ]
+    # link nvim configs
+    nvim_config_dir = os.path.join(util.home_dir(), '.config', 'nvim')
+    nvim_link_dir = os.path.abspath('vim/vim.symlink')
+    installers += [
+        Shell('installer/install-nvim-links.sh',
+              install_check=lambda: os.path.realpath(nvim_config_dir) == nvim_link_dir
+        ),
+    ]
 
     fn_str = 'uninstall' if args.uninstall else 'install'
 
     for installer in installers:
-        print(installer.name, installer.is_installed)
-        # getattr(installer, fn_str)()
+        getattr(installer, fn_str)()
 
 
 if __name__ == '__main__':
@@ -89,5 +101,5 @@ if __name__ == '__main__':
         help='If set, do not store backups of symlinked files.')
     parser.add_argument('--uninstall', action='store_true',
         help='Uninstall dotfiles.')
-    args = parser.parse_args()
-    main(args)
+    _args = parser.parse_args()
+    main(_args)
