@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
+import logging
 import glob
 import os
 import sys
@@ -12,6 +13,15 @@ from installer.symlink import Symlink, SourceSymlink
 
 assert sys.version_info.major == 3 and sys.version_info.minor >= 5, \
     'Python version must be >= 3.5'
+
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+ch = logging.StreamHandler()
+ch.setLevel(logging.DEBUG)
+formatter = logging.Formatter('[%(asctime)s] %(levelname)s %(message)s')
+ch.setFormatter(formatter)
+logger.addHandler(ch)
 
 
 def main(args: argparse.Namespace):
@@ -101,6 +111,7 @@ def main(args: argparse.Namespace):
     fn_str = 'uninstall' if args.uninstall else 'install'
 
     for installer in installers:
+        logger.info('Installing %s...', installer.name)
         getattr(installer, fn_str)()
 
 

@@ -1,4 +1,5 @@
 import os
+import shlex
 import subprocess
 import sys
 
@@ -12,7 +13,7 @@ def project_dir() -> str:
 
 
 def shell_command(command: str) -> bool:
-    command = command.split()
+    command = shlex.split(command)
     p = subprocess.Popen(command, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     p.wait()
     return p.returncode == 0
