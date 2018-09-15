@@ -9,6 +9,6 @@ if uname -s | grep --quiet Linux; then
 else
     ./configure CFLAGS="-I/usr/local/include" LDFLAGS="-L/usr/local/lib" && make
 fi
-cp ./tmux /usr/local/bin/tmux
+sudo cp ./tmux /usr/local/bin/tmux
 popd
 rm -rf $HOME/tmux
