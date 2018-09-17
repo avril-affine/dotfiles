@@ -25,7 +25,9 @@ class Shell(Base):
             return
         logger.info('Installing shell script %s...', self.name)
 
-        util.shell_command('bash {}'.format(self.name))
+        ret = util.shell_command('bash {}'.format(self.name))
+        if not ret:
+            logger.error('Error installing shell script %s', self.name)
 
     def uninstall(self) -> None:
         print('Check {} for details on installation.')
