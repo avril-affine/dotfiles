@@ -38,7 +38,7 @@ class Symlink(Base):
             self._backup()
             os.unlink(self.install_path)
 
-        os.link(self.name, self.install_path)
+        os.symlink(self.name, self.install_path)
 
     def uninstall(self) -> None:
         if self.is_installed:
