@@ -65,6 +65,7 @@ let g:airline_section_z = airline#section#create(['%l:%c ', "\u2630 ", ' %3p%%']
 
 " FZF
 nnoremap <C-p> :Files<cr>
+let $FZF_DEFAULT_COMMAND='rg --hidden -l ""'
 
 " indentLine
 autocmd BufEnter *.json let g:indentLine_enabled = 0
