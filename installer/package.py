@@ -1,7 +1,10 @@
+import logging
 from typing import List, Optional
 
 from installer import util
 from installer.base import Base
+
+logger = logging.getLogger(__name__)
 
 
 class BrewPackage(Base):
@@ -14,12 +17,14 @@ class BrewPackage(Base):
     def is_installed(self) -> bool:
         if self.cask:
             return util.shell_command('brew cask info {}'.format(self.name))
-        else:
-            return util.shell_command('brew info {}'.format(self.name))
+        return util.shell_command('brew info {}'.format(self.name))
 
     def install(self) -> None:
         if self.is_installed:
+            logger.info('Package %s already installed. Skipping...', self.name)
             return
+
+        logger.info('Installing package %s...', self.name)
 
         if self.cask:
             util.shell_command('brew install {}'.format(self.cask))
@@ -59,8 +64,8 @@ class AptPackage(Base):
             util.shell_command('sudo apt-get update')
         util.shell_command('sudo apt-get install -y {}'.format(self.name))
         for link, name, path, priority in self.alternatives:
-            util.shell_command('sudo update-alternatives --install {} {} {} {}',
-                link, name, path, priority)
+            util.shell_command('sudo update-alternatives --install {} {} {} {}'.format(
+                link, name, path, priority))
             util.shell_command('sudo update-alternatives --config {}'.format(name))
 
     def uninstall(self) -> None:

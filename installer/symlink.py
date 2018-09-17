@@ -1,9 +1,12 @@
+import logging
 import os
 import re
 import shutil
 
 from installer import util
 from installer.base import Base
+
+logger = logging.getLogger(__name__)
 
 
 class Symlink(Base):
@@ -26,7 +29,10 @@ class Symlink(Base):
 
     def install(self) -> None:
         if self.is_installed:
+            logger.info('Symlink %s already installed. Skipping...', self.name)
             return
+
+        logger.info('Installing symlink %s...', self.name)
 
         if os.path.exists(self.install_path) and self.do_backup:
             self._backup()
@@ -39,10 +45,18 @@ class Symlink(Base):
             os.unlink(self.install_path)
 
     def _backup(self) -> None:
-        shutil.copyfile(
+        backup_path = '{}.bak'.format(self.install_path)
+        _backup_path = backup_path
+        i = 1
+        while True:
+            if not os.path.exists(_backup_path):
+                backup_path = _backup_path
+                break
+            _backup_path = '{}-{}'.format(backup_path, i)
+            i += 1
+        shutil.copy(
             self.install_path,
-            '{}.bak'.format(self.install_path),
-            follow_symlinks=False)
+            backup_path)
 
 
 class SourceSymlink(Symlink):
