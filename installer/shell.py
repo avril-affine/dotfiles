@@ -1,8 +1,11 @@
+import logging
 import os
 from typing import Callable
 
 from installer import util
 from installer.base import Base
+
+logger = logging.getLogger(__name__)
 
 
 class Shell(Base):
@@ -18,7 +21,9 @@ class Shell(Base):
 
     def install(self) -> None:
         if self.is_installed:
+            logger.info('Shell script %s already installed. Skipping...', self.name)
             return
+        logger.info('Installing shell script %s...', self.name)
 
         util.shell_command('bash {}'.format(self.name))
 
