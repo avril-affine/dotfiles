@@ -50,7 +50,6 @@ def main(args: argparse.Namespace):
         ]
     else:             # Ubuntu packages
         installers += [
-            AptPackage('autotools-dev'),
             AptPackage('automake'),
             AptPackage('build-essential'),
             AptPackage('pkg-config'),
