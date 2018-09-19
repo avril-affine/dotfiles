@@ -57,7 +57,10 @@ class AptPackage(Base):
 
     def install(self) -> None:
         if self.is_installed:
+            logger.info('Package %s already installed. Skipping...', self.name)
             return
+
+        logger.info('Installing package %s...', self.name)
 
         if self.ppa:
             util.shell_command('sudo add-apt-repository {}'.format(self.ppa))
@@ -86,7 +89,10 @@ class PipPackage(Base):
 
     def install(self) -> None:
         if self.is_installed:
+            logger.info('Pip package %s already installed. Skipping...', self.name)
             return
+
+        logger.info('Installing pip package %s...', self.name)
 
         util.shell_command('pip install {}'.format(self.name))
 
