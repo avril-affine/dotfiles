@@ -36,15 +36,6 @@ def main(args: argparse.Namespace):
               )
         ),
     ]
-    # tmux
-    installers += [
-        Shell('installer/install-tmux.sh',
-              install_check=lambda: (
-                    util.shell_command('which tmux')
-                    and util.shell_output('tmux -V') == 'tmux 2.6'
-              )
-        ),
-    ]
     if util.is_osx():  # OSX packages
         installers += [
             Shell('installer/install-brew.sh',
@@ -59,6 +50,7 @@ def main(args: argparse.Namespace):
         ]
     else:             # Ubuntu packages
         installers += [
+            AptPackage('autotools-dev'),
             AptPackage('automake'),
             AptPackage('build-essential'),
             AptPackage('pkg-config'),
@@ -76,6 +68,15 @@ def main(args: argparse.Namespace):
                   install_check=lambda: util.shell_command('which rg')
             ),
         ]
+    # tmux
+    installers += [
+        Shell('installer/install-tmux.sh',
+              install_check=lambda: (
+                    util.shell_command('which tmux')
+                    and util.shell_output('tmux -V') == 'tmux 2.6'
+              )
+        ),
+    ]
     # pip
     installers += [
         PipPackage('neovim'),
