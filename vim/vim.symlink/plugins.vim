@@ -20,6 +20,7 @@ Plug 'Konfekt/FastFold'                 " faster code folding
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } | Plug 'junegunn/fzf.vim'
 " show line indent
 Plug 'Yggdroot/indentLine', { 'branch': 'master' }
+Plug 'elzr/vim-json'
 Plug 'w0rp/ale'                         " async linter
 Plug 'RRethy/vim-illuminate'            " highlight current word
 Plug 'jiangmiao/auto-pairs'             " auto pair parens, brackets, etc.
@@ -68,8 +69,7 @@ nnoremap <C-p> :Files<cr>
 let $FZF_DEFAULT_COMMAND='rg --hidden -l ""'
 
 " indentLine
-autocmd BufEnter *.json let g:indentLine_enabled = 0
-autocmd BufLeave *.json let g:indentLine_enabled = 1
+let g:vim_json_syntax_conceal = 0
 
 " ale
 " let g:ale_linters = {'python': [ 'pyre' ]}
