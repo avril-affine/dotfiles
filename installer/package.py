@@ -99,3 +99,25 @@ class PipPackage(Base):
     def uninstall(self) -> None:
         if self.is_installed:
             util.shell_command('pip uninstall {}'.format(self.name))
+
+
+class NpmPackage(Base):
+    def __init__(self, name: str) -> None:
+        self.name = name
+
+    @property
+    def is_installed(self) -> bool:
+        return util.shell_command('npm list -g {}'.format(self.name))
+
+    def install(self) -> None:
+        if self.is_installed:
+            logger.info('Npm package %s already installed. Skipping...', self.name)
+            return
+
+        logger.info('Installing npm package %s...', self.name)
+
+        util.shell_command('npm install -g {}'.format(self.name))
+
+    def uninstall(self) -> None:
+        if self.is_installed:
+            util.shell_command('npm uninstall -g {}'.format(self.name))

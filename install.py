@@ -7,7 +7,7 @@ import os
 import sys
 
 from installer import util
-from installer.package import AptPackage, BrewPackage, PipPackage
+from installer.package import AptPackage, BrewPackage, NpmPackage, PipPackage
 from installer.shell import Shell
 from installer.symlink import Symlink, SourceSymlink
 
@@ -83,6 +83,10 @@ def main(args: argparse.Namespace):
         PipPackage('pyls'),
         PipPackage('pyls-mypy'),
         PipPackage('pyls-isort'),
+    ]
+    # npm
+    installers += [
+        NpmPackage('javascript-typescript-langserver'),
     ]
     # oh-my-zsh
     installers += [

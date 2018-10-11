@@ -91,6 +91,7 @@ set hidden
 
 let g:LanguageClient_serverCommands = {
     \ 'python': ['pyls'],
+    \ 'javascript': ['javascript-typescript-stdio']
     \ }
 let g:LanguageClient_diagnosticsEnable=0
 
