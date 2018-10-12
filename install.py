@@ -88,6 +88,7 @@ def main(args: argparse.Namespace):
     installers += [
         NpmPackage('javascript-typescript-langserver'),
         NpmPackage('flow-language-server'),
+        NpmPackage('flow-bin'),
     ]
     # oh-my-zsh
     installers += [
