@@ -91,7 +91,7 @@ set hidden
 
 let g:LanguageClient_serverCommands = {
     \ 'python': ['pyls'],
-    \ 'javascript': ['javascript-typescript-stdio']
+    \ 'javascript': ['flow-language-server', '--stdio']
     \ }
 let g:LanguageClient_diagnosticsEnable=0
 
