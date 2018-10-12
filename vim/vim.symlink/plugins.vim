@@ -95,11 +95,11 @@ let g:LanguageClient_serverCommands = {
     \ 'javascript.jsx': ['flow', 'lsp', '--from', './node_modules/.bin'],
     \ }
 let g:LanguageClient_diagnosticsEnable=0
+autocmd FileType javascript let g:LangaugeClient_diagnosticsEnable=1
 let g:LanguageClient_rootMarkers = {
     \ 'javascript': ['.flowconfig'],
     \ 'javascript.jsx': ['.flowconfig'],
     \ }
-let g:LanguageClient_autoStart = 1
 
 nnoremap <silent> <leader>f :call LanguageClient_contextMenu()<CR>
 " Or map each action separately
