@@ -91,9 +91,15 @@ set hidden
 
 let g:LanguageClient_serverCommands = {
     \ 'python': ['pyls'],
-    \ 'javascript': ['flow-language-server', '--stdio']
+    \ 'javascript': ['flow', 'lsp', '--from', './node_modules/.bin'],
+    \ 'javascript.jsx': ['flow', 'lsp', '--from', './node_modules/.bin'],
     \ }
 let g:LanguageClient_diagnosticsEnable=0
+let g:LanguageClient_rootMarkers = {
+    \ 'javascript': ['.flowconfig'],
+    \ 'javascript.jsx': ['.flowconfig'],
+    \ }
+let g:LanguageClient_autoStart = 1
 
 nnoremap <silent> <leader>f :call LanguageClient_contextMenu()<CR>
 " Or map each action separately
