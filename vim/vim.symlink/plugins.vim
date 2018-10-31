@@ -25,7 +25,6 @@ Plug 'w0rp/ale'                         " async linter
 Plug 'RRethy/vim-illuminate'            " highlight current word
 Plug 'jiangmiao/auto-pairs'             " auto pair parens, brackets, etc.
 Plug 'kshenoy/vim-signature'            " display markers on ruler
-
 " Autocomplete
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -38,6 +37,8 @@ Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
     \ 'do': 'bash install.sh',
     \ }
+" python
+Plug 'fisadev/vim-isort'                " sort imports
 
 call plug#end()
 
