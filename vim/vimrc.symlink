@@ -104,7 +104,8 @@ endfunction
 command! ZoomToggle call s:ZoomToggle()
 nnoremap <silent> <leader>z :ZoomToggle<CR>
 
-" close location and preview windows
+" open/close location and preview windows
+nnoremap <silent> <leader>o :lopen<cr>
 nnoremap <silent> <leader>c :lclose<cr>:pclose<cr>
 
 " ripgrep with CtrlP
