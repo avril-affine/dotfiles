@@ -116,3 +116,6 @@ if executable('rg')
   command -nargs=+ -complete=file -bar Rg silent! grep! <args>|cwindow|redraw!
   nnoremap \ :Rg<SPACE>
 endif
+
+" bind <leader>f to grep word under cursor
+nnoremap <leader>f :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>

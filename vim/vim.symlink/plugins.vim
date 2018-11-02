@@ -102,10 +102,9 @@ let g:LanguageClient_rootMarkers = {
     \ 'javascript.jsx': ['.flowconfig'],
     \ }
 
-nnoremap <silent> <leader>f :call LanguageClient_contextMenu()<CR>
 " Or map each action separately
 nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
 nnoremap <silent> <leader>d :call LanguageClient#textDocument_definition()<CR>
 nnoremap <silent> <leader>g :call LanguageClient#textDocument_implementation()<CR>
-nnoremap <silent> <leader>f :call LanguageClient#textDocument_references()<CR>
+" nnoremap <silent> <leader>f :call LanguageClient#textDocument_references()<CR>
 nnoremap <silent> <leader>r :call LanguageClient#textDocument_rename()<CR>
