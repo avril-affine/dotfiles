@@ -19,7 +19,7 @@ Plug 'Konfekt/FastFold'                 " faster code folding
 " fuzzy finder
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } | Plug 'junegunn/fzf.vim'
 " show line indent
-Plug 'Yggdroot/indentLine', { 'branch': 'master' }
+Plug 'nathanaelkane/vim-indent-guides'  " indent markers
 Plug 'elzr/vim-json'
 Plug 'w0rp/ale'                         " async linter
 Plug 'RRethy/vim-illuminate'            " highlight current word
@@ -65,12 +65,14 @@ let g:airline_section_x=0   " clear section
 let g:airline_section_y=0   " clear section
 let g:airline_section_z = airline#section#create(['%l:%c ', "\u2630 ", ' %3p%%'])
 
+" indentline
+let g:indent_guides_enable_on_vim_startup=1
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=238
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=239
+
 " FZF
 nnoremap <C-p> :Files<cr>
 let $FZF_DEFAULT_COMMAND='rg --hidden -l ""'
-
-" indentLine
-let g:vim_json_syntax_conceal = 0
 
 " ale
 " let g:ale_linters = {'python': [ 'pyre' ]}
