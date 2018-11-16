@@ -27,9 +27,10 @@ Plugin 'tmhedberg/SimpylFold'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
-Plugin 'Yggdroot/indentLine'
 Plugin 'RRethy/vim-illuminate'
 Plugin 'w0rp/ale'
+Plugin 'fisadev/vim-isort'
+Plugin 'nathanaelkane/vim-indent-guides'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -55,6 +56,13 @@ autocmd BufWinEnter * let &foldlevel = max(map(range(1, line('$')), 'foldlevel(v
 " YouCompleteMe configs
 let g:ycm_autoclose_preview_window_after_completion=1
 let g:ycm_python_binary_path=substitute(system("which python3"), "\n", '', 'g')
+
+" vim-indent-guides
+let g:indent_guides_enable_on_vim_startup=1
+let g:indent_guides_auto_colors = 0
+autocmd VimEnter,Colorscheme * hi IndentGuidesOdd  ctermbg=238
+autocmd VimEnter,Colorscheme * hi IndentGuidesEven ctermbg=239
+
 
 " vim-airline
 let g:airline_section_x=0
