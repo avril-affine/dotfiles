@@ -120,3 +120,6 @@ endif
 
 " bind <leader>f to grep word under cursor
 nnoremap <leader>f :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+
+setlocal foldmethod=indent
+autocmd BufWinEnter * let &foldlevel = max(map(range(1, line('$')), 'foldlevel(v:val)'))
