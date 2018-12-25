@@ -17,19 +17,15 @@ Plug 'vim-airline/vim-airline'          " status line formatting
 Plug 'vim-airline/vim-airline-themes'   " status line themes
 Plug 'Konfekt/FastFold'                 " faster code folding
 Plug 'terryma/vim-smooth-scroll'        " smooth scrolling
-" fuzzy finder
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } | Plug 'junegunn/fzf.vim'
-" show line indent
+Plug 'junegunn/fzf',
+    \ { 'dir': '~/.fzf',
+    \   'do': './install --all' }
+    \ | Plug 'junegunn/fzf.vim'         " fuzzy finder
 Plug 'nathanaelkane/vim-indent-guides'  " indent markers
 Plug 'elzr/vim-json'
 Plug 'w0rp/ale'                         " async linter
-if has('nvim')
-    " semantic highlighting
-    Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
-else
-    " highlight current word
-    Plug 'RRethy/vim-illuminate'
-endif
+Plug 'RRethy/vim-illuminate',
+    \ { 'for': [] }                     " highlight current word
 Plug 'jiangmiao/auto-pairs'             " auto pair parens, brackets, etc.
 Plug 'kshenoy/vim-signature'            " display markers on ruler
 " Autocomplete
@@ -46,6 +42,10 @@ Plug 'autozimu/LanguageClient-neovim', {
     \ }
 " python
 Plug 'fisadev/vim-isort'                " sort imports
+if has('nvim')
+    " semantic highlighting
+    Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins', 'for': 'python' }
+endif
 
 call plug#end()
 
@@ -95,6 +95,13 @@ if has('nvim')
     nmap <silent> <Tab> :Semshi goto name next<CR>
     nmap <silent> <S-Tab> :Semshi goto name prev<CR>
 endif
+
+augroup exclude_python
+    autocmd FileType * if expand('<amatch>') != 'python' && has('nvim')
+        \ | call plug#load('vim-illuminate')
+        \ | execute 'autocmd! exclude_python'
+        \ | endif
+augroup END
 
 " -----------------------------------------------------------------------------
 " Autocomplete
