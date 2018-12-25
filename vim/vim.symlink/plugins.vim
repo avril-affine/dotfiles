@@ -16,6 +16,7 @@ Plug 'Xuyuanp/nerdtree-git-plugin'      " show git status in nerdtree
 Plug 'vim-airline/vim-airline'          " status line formatting
 Plug 'vim-airline/vim-airline-themes'   " status line themes
 Plug 'Konfekt/FastFold'                 " faster code folding
+Plug 'terryma/vim-smooth-scroll'        " smooth scrolling
 " fuzzy finder
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } | Plug 'junegunn/fzf.vim'
 " show line indent
@@ -78,6 +79,10 @@ let $FZF_DEFAULT_COMMAND='rg --hidden -l ""'
 " let g:ale_linters = {'python': [ 'pyre' ]}
 let g:ale_linters = {'python': [ 'pylint' ]}
 let g:ale_python_pylint_options = "--rcfile ~/.pylintrc"
+
+" vim-smooth-scroll
+noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
+noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
 
 " -----------------------------------------------------------------------------
 " Autocomplete
