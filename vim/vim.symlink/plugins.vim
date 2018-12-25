@@ -17,34 +17,39 @@ Plug 'vim-airline/vim-airline'          " status line formatting
 Plug 'vim-airline/vim-airline-themes'   " status line themes
 Plug 'Konfekt/FastFold'                 " faster code folding
 Plug 'terryma/vim-smooth-scroll'        " smooth scrolling
-Plug 'junegunn/fzf',
-    \ { 'dir': '~/.fzf',
-    \   'do': './install --all' }
-    \ | Plug 'junegunn/fzf.vim'         " fuzzy finder
+Plug 'junegunn/fzf', {
+  \ 'dir': '~/.fzf',
+  \ 'do': './install --all'
+  \ }
+  \ | Plug 'junegunn/fzf.vim'         " fuzzy finder
 Plug 'nathanaelkane/vim-indent-guides'  " indent markers
 Plug 'elzr/vim-json'
 Plug 'w0rp/ale'                         " async linter
-Plug 'RRethy/vim-illuminate',
-    \ { 'for': [] }                     " highlight current word
+Plug 'RRethy/vim-illuminate', {
+    \ 'for': [] }                       " highlight current word
 Plug 'jiangmiao/auto-pairs'             " auto pair parens, brackets, etc.
 Plug 'kshenoy/vim-signature'            " display markers on ruler
 " Autocomplete
 if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  Plug 'Shougo/deoplete.nvim', {
+    \ 'do': ':UpdateRemotePlugins'
+    \ }
 else
   Plug 'Shougo/deoplete.nvim'
   Plug 'roxma/nvim-yarp'
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
 Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
+  \ 'branch': 'next',
+  \ 'do': 'bash install.sh',
+  \ }
 " python
 Plug 'fisadev/vim-isort'                " sort imports
 if has('nvim')
-    " semantic highlighting
-    Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins', 'for': 'python' }
+  Plug 'numirias/semshi', {
+    \ 'do': ':UpdateRemotePlugins',
+    \ 'for': 'python'
+    \ }                                 " semantic highlighting
 endif
 
 call plug#end()
@@ -92,15 +97,15 @@ noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
 
 " semshi
 if has('nvim')
-    nmap <silent> <Tab> :Semshi goto name next<CR>
-    nmap <silent> <S-Tab> :Semshi goto name prev<CR>
+  nmap <silent> <Tab> :Semshi goto name next<CR>
+  nmap <silent> <S-Tab> :Semshi goto name prev<CR>
 endif
 
 augroup exclude_python
-    autocmd FileType * if expand('<amatch>') != 'python' && has('nvim')
-        \ | call plug#load('vim-illuminate')
-        \ | execute 'autocmd! exclude_python'
-        \ | endif
+  autocmd FileType * if expand('<amatch>') != 'python' && has('nvim')
+    \ | call plug#load('vim-illuminate')
+    \ | execute 'autocmd! exclude_python'
+    \ | endif
 augroup END
 
 " -----------------------------------------------------------------------------
@@ -117,16 +122,16 @@ autocmd CompleteDone * pclose!                              " close preview when
 set hidden
 
 let g:LanguageClient_serverCommands = {
-    \ 'python': ['pyls'],
-    \ 'javascript': ['flow', 'lsp', '--from', './node_modules/.bin'],
-    \ 'javascript.jsx': ['flow', 'lsp', '--from', './node_modules/.bin'],
-    \ }
+  \ 'python': ['pyls'],
+  \ 'javascript': ['flow', 'lsp', '--from', './node_modules/.bin'],
+  \ 'javascript.jsx': ['flow', 'lsp', '--from', './node_modules/.bin'],
+  \ }
 let g:LanguageClient_diagnosticsEnable=0
 autocmd FileType javascript let g:LangaugeClient_diagnosticsEnable=1
 let g:LanguageClient_rootMarkers = {
-    \ 'javascript': ['.flowconfig'],
-    \ 'javascript.jsx': ['.flowconfig'],
-    \ }
+  \ 'javascript': ['.flowconfig'],
+  \ 'javascript.jsx': ['.flowconfig'],
+  \ }
 
 " Or map each action separately
 nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
