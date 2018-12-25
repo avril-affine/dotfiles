@@ -23,7 +23,13 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } | Plug 'junegu
 Plug 'nathanaelkane/vim-indent-guides'  " indent markers
 Plug 'elzr/vim-json'
 Plug 'w0rp/ale'                         " async linter
-Plug 'RRethy/vim-illuminate'            " highlight current word
+if has('nvim')
+    " semantic highlighting
+    Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
+else
+    " highlight current word
+    Plug 'RRethy/vim-illuminate'
+endif
 Plug 'jiangmiao/auto-pairs'             " auto pair parens, brackets, etc.
 Plug 'kshenoy/vim-signature'            " display markers on ruler
 " Autocomplete
@@ -83,6 +89,12 @@ let g:ale_python_pylint_options = "--rcfile ~/.pylintrc"
 " vim-smooth-scroll
 noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
 noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
+
+" semshi
+if has('nvim')
+    nmap <silent> <Tab> :Semshi goto name next<CR>
+    nmap <silent> <S-Tab> :Semshi goto name prev<CR>
+endif
 
 " -----------------------------------------------------------------------------
 " Autocomplete
