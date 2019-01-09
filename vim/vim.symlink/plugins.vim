@@ -92,8 +92,8 @@ let g:ale_linters = {'python': [ 'pylint' ]}
 let g:ale_python_pylint_options = "--rcfile ~/.pylintrc"
 
 " vim-smooth-scroll
-noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
-noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
+nnoremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
+nnoremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
 
 " semshi
 if has('nvim')
