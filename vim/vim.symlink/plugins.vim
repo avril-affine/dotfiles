@@ -29,6 +29,7 @@ Plug 'RRethy/vim-illuminate', {
     \ 'for': 'javascript' }             " highlight current word
 Plug 'jiangmiao/auto-pairs'             " auto pair parens, brackets, etc.
 Plug 'kshenoy/vim-signature'            " display markers on ruler
+Plug 'junegunn/vim-slash'               " better search
 " Autocomplete
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', {
@@ -103,6 +104,9 @@ endif
 
 " reset <C-I> to default behavior
 unmap <C-I>
+
+" vim-slash
+noremap <plug>(slash-after) zz
 
 " -----------------------------------------------------------------------------
 " Autocomplete
