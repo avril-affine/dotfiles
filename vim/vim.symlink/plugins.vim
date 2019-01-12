@@ -26,7 +26,7 @@ Plug 'nathanaelkane/vim-indent-guides'  " indent markers
 Plug 'elzr/vim-json'
 Plug 'w0rp/ale'                         " async linter
 Plug 'RRethy/vim-illuminate', {
-    \ 'for': [] }                       " highlight current word
+    \ 'for': 'javascript' }             " highlight current word
 Plug 'jiangmiao/auto-pairs'             " auto pair parens, brackets, etc.
 Plug 'kshenoy/vim-signature'            " display markers on ruler
 " Autocomplete
@@ -100,13 +100,6 @@ if has('nvim')
   nmap <silent> <Tab> :Semshi goto name next<CR>
   nmap <silent> <S-Tab> :Semshi goto name prev<CR>
 endif
-
-augroup exclude_python
-  autocmd FileType * if expand('<amatch>') != 'python' && has('nvim')
-    \ | call plug#load('vim-illuminate')
-    \ | execute 'autocmd! exclude_python'
-    \ | endif
-augroup END
 
 " reset <C-I> to default behavior
 unmap <C-I>
