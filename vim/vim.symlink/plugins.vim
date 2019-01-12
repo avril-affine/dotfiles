@@ -30,6 +30,7 @@ Plug 'RRethy/vim-illuminate', {
 Plug 'jiangmiao/auto-pairs'             " auto pair parens, brackets, etc.
 Plug 'kshenoy/vim-signature'            " display markers on ruler
 Plug 'junegunn/vim-slash'               " better search
+Plug 'junegunn/vim-easy-align'          " easy align
 " Autocomplete
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', {
@@ -107,6 +108,10 @@ unmap <C-I>
 
 " vim-slash
 noremap <plug>(slash-after) zz
+
+" vim-easy-align
+nmap <leader>a <Plug>(EasyAlign)
+vmap <leader>a <Plug>(EasyAlign)
 
 " -----------------------------------------------------------------------------
 " Autocomplete
