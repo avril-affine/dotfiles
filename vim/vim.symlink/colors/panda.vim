@@ -86,7 +86,7 @@ highlight WarningMsg guifg=#c0c0c0 ctermfg=7 guibg=#005fdf ctermbg=26 gui=NONE c
 
 " Visual {{{1
 
-highlight Visual guifg=#c0c0c0 ctermfg=DarkBlue guibg=#afff00 ctermbg=154 gui=NONE cterm=NONE
+highlight Visual guifg=#c0c0c0 ctermfg=0 guibg=#afff00 ctermbg=154 gui=NONE cterm=NONE
 highlight VisualNOS guifg=#c0c0c0 ctermfg=7 guibg=#5f5f87 ctermbg=60 gui=NONE cterm=NONE
 
 " Pmenu {{{1

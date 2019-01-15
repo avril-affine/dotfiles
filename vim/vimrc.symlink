@@ -57,12 +57,8 @@ augroup BgHighlight
     autocmd WinLeave * set norelativenumber
 augroup END
 
-" Highlight search
-set hlsearch
-hi Search cterm=None ctermbg=LightYellow ctermfg=DarkRed
-
+" FIXME: highlights only works when placed here.
 " vim-illuminate
-" FIXME: only works when placed here.
 hi illuminatedWord ctermbg=DarkGray guibg=DarkGray
 
 " Window movement keys
