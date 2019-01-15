@@ -104,6 +104,12 @@ if has('nvim')
   nmap <silent> <S-Tab> :Semshi goto name prev<CR>
 endif
 
+" light blue selected background
+function MyCustomHighlights()
+    hi semshiSelected ctermfg=0 guifg=#ffffff ctermbg=45 guibg=#d7005f
+endfunction
+autocmd FileType python call MyCustomHighlights()
+
 " reset <C-I> to default behavior
 unmap <C-I>
 
