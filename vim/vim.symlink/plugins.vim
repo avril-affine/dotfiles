@@ -21,7 +21,7 @@ Plug 'junegunn/fzf', {
   \ 'dir': '~/.fzf',
   \ 'do': './install --all'
   \ }
-  \ | Plug 'junegunn/fzf.vim'         " fuzzy finder
+  \ | Plug 'junegunn/fzf.vim'           " fuzzy finder
 Plug 'nathanaelkane/vim-indent-guides'  " indent markers
 Plug 'elzr/vim-json'
 Plug 'w0rp/ale'                         " async linter
@@ -141,3 +141,11 @@ nnoremap <silent> <leader>d :call LanguageClient#textDocument_definition()<CR>
 nnoremap <silent> <leader>g :call LanguageClient#textDocument_implementation()<CR>
 " nnoremap <silent> <leader>f :call LanguageClient#textDocument_references()<CR>
 nnoremap <silent> <leader>r :call LanguageClient#textDocument_rename()<CR>
+
+" -----------------------------------------------------------------------------
+" python
+" -----------------------------------------------------------------------------
+
+" semshi
+nmap <silent> <Tab> :Semshi goto name next<CR>
+nmap <silent> <S-Tab> :Semshi goto name prev<CR>
