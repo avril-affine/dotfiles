@@ -31,6 +31,7 @@ Plug 'jiangmiao/auto-pairs'             " auto pair parens, brackets, etc.
 Plug 'kshenoy/vim-signature'            " display markers on ruler
 Plug 'pgdouyon/vim-evanesco'            " better search
 Plug 'junegunn/vim-easy-align'          " easy align
+Plug 'AndrewRadev/sideways.vim'         " swap arguments
 " Autocomplete
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', {
@@ -110,6 +111,10 @@ unmap <C-I>
 nmap <leader>a <Plug>(EasyAlign)
 vmap <leader>a <Plug>(EasyAlign)
 
+" sideways
+nnoremap <leader>l :SidewaysLeft<CR>
+nnoremap <leader>r :SidewaysRight<CR>
+
 " -----------------------------------------------------------------------------
 " Autocomplete
 " -----------------------------------------------------------------------------
@@ -140,7 +145,7 @@ nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
 nnoremap <silent> <leader>d :call LanguageClient#textDocument_definition()<CR>
 nnoremap <silent> <leader>g :call LanguageClient#textDocument_implementation()<CR>
 " nnoremap <silent> <leader>f :call LanguageClient#textDocument_references()<CR>
-nnoremap <silent> <leader>r :call LanguageClient#textDocument_rename()<CR>
+" nnoremap <silent> <leader>r :call LanguageClient#textDocument_rename()<CR>
 
 " -----------------------------------------------------------------------------
 " python
