@@ -95,23 +95,8 @@ let g:ale_linters = {'python': [ 'pylint' ]}
 let g:ale_python_pylint_options = "--rcfile ~/.pylintrc"
 
 " vim-smooth-scroll
-nnoremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
-nnoremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
-
-" semshi
-if has('nvim')
-  nmap <silent> <Tab> :Semshi goto name next<CR>
-  nmap <silent> <S-Tab> :Semshi goto name prev<CR>
-endif
-
-" light blue selected background
-function MyCustomHighlights()
-    hi semshiSelected ctermfg=0 guifg=#ffffff ctermbg=45 guibg=#d7005f
-endfunction
-autocmd FileType python call MyCustomHighlights()
-
-" reset <C-I> to default behavior
-unmap <C-I>
+nnoremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 3)<CR>
+nnoremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 3)<CR>
 
 " vim-easy-align
 nmap <leader>a <Plug>(EasyAlign)
@@ -158,5 +143,19 @@ nnoremap <silent> <leader>g :call LanguageClient#textDocument_implementation()<C
 " -----------------------------------------------------------------------------
 
 " semshi
-nmap <silent> <Tab> :Semshi goto name next<CR>
+if has('nvim')
+  nmap <silent> <Tab> :Semshi goto name next<CR>
+  nmap <silent> <S-Tab> :Semshi goto name prev<CR>
+endif
+
+" light blue selected background
+function MyCustomHighlights()
+    hi semshiSelected ctermfg=0 guifg=#ffffff ctermbg=45 guibg=#d7005f
+endfunction
+autocmd FileType python call MyCustomHighlights()
+
+" reset <C-I> to default behavior
+unmap <C-I>
+
+" nmap <silent> <Tab> :Semshi goto name next<CR>
 nmap <silent> <S-Tab> :Semshi goto name prev<CR>
