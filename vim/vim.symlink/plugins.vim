@@ -91,7 +91,7 @@ let $FZF_DEFAULT_COMMAND='rg --hidden -l ""'
 
 " ale
 " let g:ale_linters = {'python': [ 'pyre' ]}
-let g:ale_linters = {'python': [ 'pylint' ]}
+let g:ale_linters = {'python': [ 'pylint', 'mypy' ]}
 let g:ale_python_pylint_options = "--rcfile ~/.pylintrc"
 
 " vim-smooth-scroll
