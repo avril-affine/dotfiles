@@ -47,6 +47,7 @@ Plug 'autozimu/LanguageClient-neovim', {
   \ 'do': 'bash install.sh',
   \ }
 " python
+Plug 'ambv/black'                       " black autoformatter
 Plug 'fisadev/vim-isort'                " sort imports
 if has('nvim')
   Plug 'numirias/semshi', {
@@ -141,6 +142,10 @@ nnoremap <silent> <leader>g :call LanguageClient#textDocument_implementation()<C
 " -----------------------------------------------------------------------------
 " python
 " -----------------------------------------------------------------------------
+
+" black
+autocmd BufWritePre *.py execute ':Black'
+let g:black_linelength=100
 
 " semshi
 if has('nvim')
