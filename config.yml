@@ -1,0 +1,12 @@
+symlinks:
+    vim_vim: vim/vim.symlink
+    vim_vimrc: vim/vimrc.symlink
+    misc_gitconfig: misc/gitconfig.symlink
+    misc_pylintrc: misc/pylintrc.symlink
+    misc_ripgreprc: misc/ripgreprc.symlink
+    tmux_tmux.conf: tmux/tmux.conf.symlink
+    tmux_tmux.conf.local: tmux/tmux.conf.local.symlink
+    zsh_aliases.zsh: zsh/aliases.zsh.symlink
+    zsh_zshrc.global: zsh/zshrc.global.symlink
+    zsh_zfunctions: zsh/zfunctions.symlink
+    zsh_zshenv: zsh/zshenv.symlink
