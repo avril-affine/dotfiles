@@ -1,0 +1,97 @@
+symlinks:
+    vim_vim: vim/vim.symlink
+    vim_vimrc: vim/vimrc.symlink
+    misc_gitconfig: misc/gitconfig.symlink
+    misc_pylintrc: misc/pylintrc.symlink
+    misc_ripgreprc: misc/ripgreprc.symlink
+    tmux_tmux.conf: tmux/tmux.conf.symlink
+    tmux_tmux.conf.local: tmux/tmux.conf.local.symlink
+    zsh_aliases.zsh: zsh/aliases.zsh.symlink
+    zsh_zshrc.global: zsh/zshrc.global.symlink
+    zsh_zfunctions: zsh/zfunctions.symlink
+    zsh_zshenv: zsh/zshenv.symlink
+
+brew:
+    xquartz:
+        name: caskroom/cask/brew-cask
+        cask: xquartz
+    reattach-to-user-namespace:
+        name: reattach-to-user-namespace
+        cask: ""
+    neovim:
+        name: neovim
+        cask: ""
+    automake:
+        name: automake
+        cask: ""
+    libevent:
+        name: libevent
+        cask: ""
+    ripgrep:
+        name: ripgrep
+        cask: ""
+
+install_scripts:
+    - install-nvim-links.sh
+    - install-zsh.sh
+    - install-tmux.sh
+
+mac_install_scripts:
+    - install-brew.sh
+
+ubuntu_install_scripts:
+    - install-ripgrep.sh
+
+npm:
+    - javascript-typescript-langserver
+    - flow-language-server
+    - flow-bin
+
+pip:
+    - neovim
+    - pylint
+    - python-language-server
+    - pyls-mypy
+    - pyls-isort
+
+apt:
+    automake:
+        name: automake
+        ppa: ""
+        alternatives: []
+    build-essential:
+        name: build-essential
+        ppa: ""
+        alternatives: []
+    pkg-config:
+        name: pkg-config
+        ppa: ""
+        alternatives: []
+    libevent-dev:
+        name: libevent-dev
+        ppa: ""
+        alternatives: []
+    libncurses5-dev:
+        name: libncurses5-dev
+        ppa: ""
+        alternatives: []
+    software-properties-common:
+        name: software-properties-common
+        ppa: ""
+        alternatives: []
+    neovim:
+        name: neovim
+        ppa: ppa:neovim-ppa/stable
+        alternatives:
+            - link: /usr/bin/vi
+              name: vi
+              path: /usr/bin/nvim
+              priority: 60
+            - link: /usr/bin/vim
+              name: vim
+              path: /usr/bin/nvim
+              priority: 60
+            - link: /usr/bin/editor
+              name: editor
+              path: /usr/bin/nvim
+              priority: 60

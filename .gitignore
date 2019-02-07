@@ -3,3 +3,7 @@ vim/vim.symlink/init.vim
 vim/vim.symlink/.netrwhist
 vim/vim.symlink/autoload/*
 vim/vim.symlink/plugged/*
+build/
+.mypy_cache/
+.snakemake/
+__pycache__/
