@@ -55,6 +55,8 @@ if has('nvim')
     \ 'for': 'python'
     \ }                                 " semantic highlighting
 endif
+" Miscellaneous
+Plug 'ivan-krukov/vim-snakemake'        " snakemake syntax highlighting
 
 call plug#end()
 
