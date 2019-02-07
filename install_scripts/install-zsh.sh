@@ -14,3 +14,15 @@ else
     brew install zsh
     sudo sh -c 'echo /usr/local/bin/zsh >> /etc/shells'
 fi
+
+# install oh-my-zsh
+sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+
+# remove default oh-my-zsh .zshrc
+if [ $? -eq 0 ]; then
+    echo "[ -f $HOME/.zshrc.global ] && source $HOME/.zshrc.global" > $HOME/.zshrc
+    echo ". $HOME/anaconda3/etc/profile.d/conda.sh" >> $HOME/.zshrc
+else
+    exit 1
+fi
+
