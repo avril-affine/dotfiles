@@ -2,10 +2,9 @@
 
 Config files for vim, tmux, and zsh.
 
-## Install
+## Installation
 
-The installer requires python >= 3.5 and was written for MacOS or Ubuntu.
+1. Install [Snakemake](https://snakemake.readthedocs.io/en/stable/getting_started/installation.html)
+2. Run `snakemake` or `snakemake -n` for a dry-run.
 
-Install with `./install.py`
-
-**WARNING:** some symlinks in the installer are buggy. Use at your own risk.
+**WARNING:** installer is not perfect. Use at your own risk.
