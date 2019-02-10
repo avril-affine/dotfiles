@@ -139,3 +139,12 @@ rule install_zsh:
         os.path.join(SCRIPT_DIR, "install-zsh.sh")
     shell:
         "bash {input[0]} && touch {output}"
+
+rule _install_zsh:
+    input:
+        os.path.join(SCRIPT_DIR, "install-zsh.sh")
+    output:
+        directory(os.path.expanduser("~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting"))
+    shell:
+        "git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "
+        "~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
