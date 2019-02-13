@@ -30,6 +30,9 @@ brew:
     ripgrep:
         name: ripgrep
         cask: ""
+    tig:
+        name: tig
+        cask: ""
 
 install_scripts:
     - install-nvim-links.sh
