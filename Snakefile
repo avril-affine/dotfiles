@@ -21,6 +21,7 @@ def is_ubuntu():
 BUILD_DIR = "build"
 SYMLINK_DIR = os.path.join(BUILD_DIR, "symlinks")
 BREW_DIR = os.path.join(BUILD_DIR, "brew")
+APT_DIR = os.path.join(BUILD_DIR, "apt")
 SCRIPT_DIR = os.path.join(BUILD_DIR, "install_scripts")
 NPM_DIR = os.path.join(BUILD_DIR, "npm")
 
@@ -34,6 +35,7 @@ makedirs(NPM_DIR)
 
 symlink_targets = [os.path.join(SYMLINK_DIR, target) for target in config["symlinks"]]
 brew_targets = [os.path.join(BREW_DIR, target) for target in config["brew"]]
+apt_targets = [os.path.join(APT_DIR, target) for target in config["apt"]]
 script_targets = [os.path.join(SCRIPT_DIR, target) for target in config["install_scripts"]]
 if is_mac():
     script_targets += [os.path.join(SCRIPT_DIR, target) for target in config["mac_install_scripts"]]
@@ -47,8 +49,9 @@ npm_targets = [os.path.join(NPM_DIR, target) for target in config["npm"]]
 rule all:
     input:
         symlink_targets,
-        script_targets,
         brew_targets if is_mac() else [],
+        apt_targets if is_ubuntu() else [],
+        script_targets,
         npm_targets
 
 rule symlinks:
@@ -148,3 +151,32 @@ rule _install_zsh:
     shell:
         "git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "
         "~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
+
+rule apt_packages:
+    input:
+        target=apt_targets
+
+rule _apt_packages:
+    params:
+        target="{apt_target}"
+    output:
+        os.path.join(APT_DIR, "{apt_target}")
+    run:
+        assert is_mac()
+        name = config["apt"][params.target]["name"]
+        ppa = config["apt"][params.target]["ppa"]
+        alternatives = config["apt"][params.target]["alternatives"]
+
+        # check if installed
+        cmd = "dpkg-query -W {}".format(name)
+        if not util.shell_command(cmd):
+            if ppa:
+                shell("sudo add-apt-repository {}".format(ppa))
+                shell("sudo apt-get update")
+            shell("sudo apt-get install -y {}".format(name))
+            for alt in alternatives:
+                shell("sudo update-alternatives --install {} {} {} {}".format(
+                    alt["link"], alt["name"], alt["path"], alt["priority"]
+                ))
+                shell("sudo update-alternatives --config {}".format(alt["name"]))
+        shell("touch {output}")
