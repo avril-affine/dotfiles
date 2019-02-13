@@ -105,7 +105,7 @@ rule _brew_packages:
         cask = config["brew"][params.target]["cask"]
 
         # check if installed
-        cmd = "brew cask info {}".format(cask) if cask else "brew info {}".format(name)
+        cmd = "brew cask info {}".format(cask) if cask else "brew list {}".format(name)
         if not util.shell_command(cmd):
             # TODO: check version upgrade
             shell("brew install {}".format(name))
