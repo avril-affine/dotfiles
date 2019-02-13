@@ -30,6 +30,12 @@ brew:
     ripgrep:
         name: ripgrep
         cask: ""
+    vifm:
+        name: vifm
+        cask: ""
+    peco:
+        name: peco
+        cask: ""
 
 install_scripts:
     - install-nvim-links.sh
@@ -55,6 +61,14 @@ pip:
     - pyls-isort
 
 apt:
+    vifm:
+        name: vifm
+        ppa: ""
+        alternatives: []
+    peco:
+        name: peco
+        ppa: ""
+        alternatives: []
     automake:
         name: automake
         ppa: ""
