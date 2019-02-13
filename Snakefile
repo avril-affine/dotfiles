@@ -162,7 +162,7 @@ rule _apt_packages:
     output:
         os.path.join(APT_DIR, "{apt_target}")
     run:
-        assert is_mac()
+        assert is_ubuntu()
         name = config["apt"][params.target]["name"]
         ppa = config["apt"][params.target]["ppa"]
         alternatives = config["apt"][params.target]["alternatives"]
