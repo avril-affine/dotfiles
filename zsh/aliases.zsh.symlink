@@ -17,4 +17,4 @@ alias grep="grep --color=auto --exclude-dir=.mypy_cache"
 alias vim="$(which nvim)"
 
 # peco
-alias peco="peco --exec \"xclip -selection c\""
+alias pcp="peco --exec \"xclip -selection c\""
