@@ -35,6 +35,8 @@ brew:
         cask: ""
     peco:
         name: peco
+    tig:
+        name: tig
         cask: ""
 
 install_scripts:
