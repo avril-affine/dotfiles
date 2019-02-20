@@ -102,7 +102,7 @@ nnoremap <silent> <leader>z :ZoomToggle<CR>
 
 " open/close location and preview windows
 nnoremap <silent> <leader>o :lopen<cr>
-nnoremap <silent> <leader>c :lclose<cr>:pclose<cr>:cclose<cr>
+" nnoremap <silent> <leader>c :lclose<cr>:pclose<cr>:cclose<cr>
 
 " ripgrep with CtrlP
 if executable('rg')
@@ -116,3 +116,8 @@ endif
 
 " bind <leader>f to grep word under cursor
 nnoremap <leader>f :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+
+" vim tabs
+nnoremap <silent> <leader>c :tabnew<cr>
+nnoremap <silent> <leader>n :tabnext<cr>
+nnoremap <silent> <leader>p :tabprevious<cr>
