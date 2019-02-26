@@ -35,6 +35,7 @@ brew:
         cask: ""
     peco:
         name: peco
+        cask: ""
     tig:
         name: tig
         cask: ""
