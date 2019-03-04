@@ -11,6 +11,7 @@ call plug#begin('~/.vim/plugged')
 
 " General
 Plug 'tpope/vim-fugitive'               " git
+Plug 'rbong/vim-flog'                   " git branch viewer
 Plug 'scrooloose/nerdtree'              " file explorer
 Plug 'Xuyuanp/nerdtree-git-plugin'      " show git status in nerdtree
 Plug 'vim-airline/vim-airline'          " status line formatting
