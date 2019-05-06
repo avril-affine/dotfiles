@@ -3,6 +3,7 @@ ZSH_THEME=""
 plugins=(
   git
   zsh-syntax-highlighting
+  autojump
 )
 
 DISABLE_UNTRACKED_FILES_DIRTY=true
