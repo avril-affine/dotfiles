@@ -118,3 +118,15 @@ apt:
         name: autojump
         ppa: ""
         alternatives: []
+    git:
+        name: git
+        ppa: ""
+        alternatives: []
+    curl:
+        name: curl
+        ppa: ""
+        alternatives: []
+    npm:
+        name: npm
+        ppa: ""
+        alternatives: []
