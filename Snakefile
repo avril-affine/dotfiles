@@ -127,7 +127,7 @@ rule pip:
     params:
         target=config["pip"]
     shell:
-        "for target in {params.target}; do pip install target; done"
+        "for target in {params.target}; do pip install $target; done"
 
 def zsh_dependencies(wildcards):
     if is_mac():
