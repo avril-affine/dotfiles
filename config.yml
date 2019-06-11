@@ -130,3 +130,7 @@ apt:
         name: npm
         ppa: ""
         alternatives: []
+    zsh-syntax-highlighting:
+        name: zsh-syntax-highlighting
+        ppa: ""
+        alternatives: []
