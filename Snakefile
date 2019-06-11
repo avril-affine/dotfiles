@@ -13,7 +13,7 @@ def is_mac():
     return platform.system() == "Darwin"
 
 def is_ubuntu():
-    return platform.linux_distribution()[0] == "Ubuntu"
+    return platform.linux_distribution()[0] in ["Ubuntu", "debian"]
 
 # ------------
 # BUILD PATHS
@@ -120,7 +120,7 @@ rule npm:
         os.path.join(NPM_DIR, "{npm_target}")
     shell:
         "npm list -g {params.target} || "
-        "npm install -g {params.target}; "
+        "sudo npm install -g {params.target}; "
         "touch {output}"
 
 rule pip:
