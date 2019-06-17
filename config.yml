@@ -39,6 +39,9 @@ brew:
     tig:
         name: tig
         cask: ""
+    autojump:
+        name: autojump
+        cask: ""
 
 install_scripts:
     - install-nvim-links.sh
@@ -111,4 +114,23 @@ apt:
             - link: /usr/bin/editor
               name: editor
               path: /usr/bin/nvim
-              priority: 60
+    autojump:
+        name: autojump
+        ppa: ""
+        alternatives: []
+    git:
+        name: git
+        ppa: ""
+        alternatives: []
+    curl:
+        name: curl
+        ppa: ""
+        alternatives: []
+    npm:
+        name: npm
+        ppa: ""
+        alternatives: []
+    zsh-syntax-highlighting:
+        name: zsh-syntax-highlighting
+        ppa: ""
+        alternatives: []
