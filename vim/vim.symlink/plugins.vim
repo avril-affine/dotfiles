@@ -123,6 +123,8 @@ inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"     " tab-complete
 autocmd CompleteDone * pclose!                              " close preview when done
 
 " LanguageClient
+autocmd BufReadPost *.rs setlocal filetype=rust
+
 " Required for operations modifying multiple buffers like rename.
 set hidden
 
@@ -130,6 +132,7 @@ let g:LanguageClient_serverCommands = {
   \ 'python': ['pyls'],
   \ 'javascript': ['flow', 'lsp', '--from', './node_modules/.bin'],
   \ 'javascript.jsx': ['flow', 'lsp', '--from', './node_modules/.bin'],
+  \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
   \ }
 let g:LanguageClient_diagnosticsEnable=0
 autocmd FileType javascript let g:LangaugeClient_diagnosticsEnable=1
