@@ -21,6 +21,7 @@ sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/i
 # remove default oh-my-zsh .zshrc
 if [ $? -eq 0 ]; then
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+    git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
     echo "[ -f $HOME/.fzf.zsh ] && source $HOME/.fzf.zsh" > $HOME/.zshrc
     echo "[ -f $HOME/.zshrc.global ] && source $HOME/.zshrc.global" >> $HOME/.zshrc
     echo ". $HOME/anaconda3/etc/profile.d/conda.sh" >> $HOME/.zshrc
