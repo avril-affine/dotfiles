@@ -136,7 +136,7 @@ let g:LanguageClient_serverCommands = {
   \ 'python': ['pyls'],
   \ 'javascript': ['flow', 'lsp', '--from', './node_modules/.bin'],
   \ 'javascript.jsx': ['flow', 'lsp', '--from', './node_modules/.bin'],
-  \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
+  \ 'rust': ['rls'],
   \ }
 let g:LanguageClient_diagnosticsEnable=0
 autocmd FileType javascript let g:LangaugeClient_diagnosticsEnable=1
