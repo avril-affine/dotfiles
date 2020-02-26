@@ -4,6 +4,7 @@ plugins=(
   git
   zsh-syntax-highlighting
   autojump
+  zsh-autosuggestions
 )
 
 DISABLE_UNTRACKED_FILES_DIRTY=true
