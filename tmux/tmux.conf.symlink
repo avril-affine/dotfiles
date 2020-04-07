@@ -36,12 +36,6 @@ bind r source-file ~/.tmux.conf \; display '~/.tmux.conf sourced'
 # synchronize typing
 bind y set-window-option synchronize-panes
 
-# fix ssh agent when tmux is detached
-# See .ssh/rc for socket linking
-set -g update-environment -r
-setenv -g SSH_AUTH_SOCK $HOME/.ssh/ssh_auth_sock.$HOSTNAME
-
-
 # -- display -------------------------------------------------------------------
 
 set-option -g status-position top   # status bar on top
