@@ -114,6 +114,7 @@ apt:
             - link: /usr/bin/editor
               name: editor
               path: /usr/bin/nvim
+              priority: 60
     autojump:
         name: autojump
         ppa: ""
