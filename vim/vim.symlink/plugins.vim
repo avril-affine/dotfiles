@@ -34,6 +34,7 @@ Plug 'pgdouyon/vim-evanesco'            " better search
 Plug 'junegunn/vim-easy-align'          " easy align
 Plug 'AndrewRadev/sideways.vim'         " swap arguments
 Plug 'ruanyl/vim-gh-line'               " open browser to github line
+Plug 'majutsushi/tagbar'                " displays tags in separate window
 " Autocomplete
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', {
@@ -49,10 +50,13 @@ Plug 'autozimu/LanguageClient-neovim', {
   \ 'do': 'bash install.sh',
   \ }
 " python
-Plug 'ambv/black'                       " black autoformatter
+Plug 'ambv/black', {
+  \ 'tag': '19.10b0'
+  \ }                                     " black autoformatter
 Plug 'fisadev/vim-isort'                " sort imports
 if has('nvim')
   Plug 'numirias/semshi', {
+    \ 'commit': '816b8d22adf59260f4355aab31c1cdc99db8f438',
     \ 'do': ':UpdateRemotePlugins',
     \ 'for': 'python'
     \ }                                 " semantic highlighting
@@ -116,6 +120,9 @@ nnoremap <leader>r :SidewaysRight<CR>
 
 " vim-gh-line
 let g:gh_line_map = '<leader>g'
+
+" tagbar
+nmap <leader>t :TagbarToggle<CR>
 
 " -----------------------------------------------------------------------------
 " Autocomplete
