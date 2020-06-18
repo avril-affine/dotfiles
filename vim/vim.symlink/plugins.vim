@@ -27,7 +27,8 @@ Plug 'nathanaelkane/vim-indent-guides'  " indent markers
 Plug 'elzr/vim-json'
 Plug 'w0rp/ale'                         " async linter
 Plug 'RRethy/vim-illuminate', {
-    \ 'for': 'javascript' }             " highlight current word
+    \ 'for': 'javascript'
+    \ }                                 " highlight current word
 Plug 'jiangmiao/auto-pairs'             " auto pair parens, brackets, etc.
 Plug 'kshenoy/vim-signature'            " display markers on ruler
 Plug 'pgdouyon/vim-evanesco'            " better search
@@ -35,24 +36,14 @@ Plug 'junegunn/vim-easy-align'          " easy align
 Plug 'AndrewRadev/sideways.vim'         " swap arguments
 Plug 'ruanyl/vim-gh-line'               " open browser to github line
 Plug 'majutsushi/tagbar'                " displays tags in separate window
-" Autocomplete
-if has('nvim')
-  Plug 'Shougo/deoplete.nvim', {
-    \ 'do': ':UpdateRemotePlugins'
+" " Autocomplete
+Plug 'neoclide/coc.nvim', {
+    \ 'branch': 'release'
     \ }
-else
-  Plug 'Shougo/deoplete.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
-endif
-Plug 'autozimu/LanguageClient-neovim', {
-  \ 'branch': 'next',
-  \ 'do': 'bash install.sh',
-  \ }
 " python
 Plug 'ambv/black', {
   \ 'tag': '19.10b0'
-  \ }                                     " black autoformatter
+  \ }                                   " black autoformatter
 Plug 'fisadev/vim-isort'                " sort imports
 if has('nvim')
   Plug 'numirias/semshi', {
@@ -128,36 +119,19 @@ nmap <leader>t :TagbarToggle<CR>
 " Autocomplete
 " -----------------------------------------------------------------------------
 
-" deoplete
-let g:deoplete#enable_at_startup = 1
-inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"     " tab-complete
-autocmd CompleteDone * pclose!                              " close preview when done
+let b:coc_enabled = 0
+nmap <silent> <leader>d <Plug>(coc-definition)
 
-" LanguageClient
-autocmd BufReadPost *.rs setlocal filetype=rust
+"" use <tab> for trigger completion and navigate to the next complete item
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
 
-" Required for operations modifying multiple buffers like rename.
-set hidden
-
-let g:LanguageClient_serverCommands = {
-  \ 'python': ['pyls'],
-  \ 'javascript': ['flow', 'lsp', '--from', './node_modules/.bin'],
-  \ 'javascript.jsx': ['flow', 'lsp', '--from', './node_modules/.bin'],
-  \ 'rust': ['rls'],
-  \ }
-let g:LanguageClient_diagnosticsEnable=0
-autocmd FileType javascript let g:LangaugeClient_diagnosticsEnable=1
-let g:LanguageClient_rootMarkers = {
-  \ 'javascript': ['.flowconfig'],
-  \ 'javascript.jsx': ['.flowconfig'],
-  \ }
-
-" Or map each action separately
-nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
-nnoremap <silent> <leader>d :call LanguageClient#textDocument_definition()<CR>
-" nnoremap <silent> <leader>g :call LanguageClient#textDocument_implementation()<CR>
-" nnoremap <silent> <leader>f :call LanguageClient#textDocument_references()<CR>
-" nnoremap <silent> <leader>r :call LanguageClient#textDocument_rename()<CR>
+inoremap <silent><expr> <Tab>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<Tab>" :
+      \ coc#refresh()
 
 " -----------------------------------------------------------------------------
 " python
