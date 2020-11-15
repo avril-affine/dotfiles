@@ -121,3 +121,6 @@ nnoremap <leader>f :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 nnoremap <silent> <leader>c :tabnew<cr>
 nnoremap <silent> <leader>n :tabnext<cr>
 nnoremap <silent> <leader>p :tabprevious<cr>
+
+" python debug
+nmap <leader>/ oimport ipdb; ipdb.set_trace()<ESC>
