@@ -2,6 +2,7 @@
 alias ll="ls -Glrth"
 alias ls="ls -G"
 
+# tmux
 alias tns="tmux new -s"
 alias ta="tmux attach"
 alias tat="tmux attach -t"
@@ -18,3 +19,7 @@ alias vim="$(which nvim)"
 
 # peco
 alias pcp="peco --exec \"xclip -selection c\""
+
+# env
+alias ca="conda activate"
+alias cad="conda activate dev"

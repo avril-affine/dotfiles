@@ -4,7 +4,7 @@ plugins=(
   git
   zsh-syntax-highlighting
   autojump
-  zsh-autosuggestions
+  fzf-tab
 )
 
 DISABLE_UNTRACKED_FILES_DIRTY=true
@@ -43,3 +43,5 @@ if [[ "${terminfo[kcud1]}" != "" ]]; then
   zle -N down-line-or-beginning-search
   bindkey "${terminfo[kcud1]}" down-line-or-beginning-search
 fi
+
+setopt nonomatch

@@ -1,8 +1,3 @@
-[filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
 [user]
 	name = kenny
 	email = kkihara1@gmail.com
@@ -23,5 +18,12 @@
     ps = push
     pl = pull
     last = log -1 HEAD
+    rbo = rebase origin/master
+    rbc = rebase --continue
 [mergetool]
 	path = vim
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge --skip -- %f
+	process = git-lfs filter-process --skip

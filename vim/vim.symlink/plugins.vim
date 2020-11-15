@@ -25,7 +25,6 @@ Plug 'junegunn/fzf', {
   \ | Plug 'junegunn/fzf.vim'           " fuzzy finder
 Plug 'nathanaelkane/vim-indent-guides'  " indent markers
 Plug 'elzr/vim-json'
-Plug 'w0rp/ale'                         " async linter
 Plug 'RRethy/vim-illuminate', {
     \ 'for': 'javascript'
     \ }                                 " highlight current word
@@ -44,7 +43,7 @@ Plug 'neoclide/coc.nvim', {
 Plug 'ambv/black', {
   \ 'tag': '19.10b0'
   \ }                                   " black autoformatter
-Plug 'fisadev/vim-isort'                " sort imports
+Plug 'kkihara/vim-isort'                " sort imports
 if has('nvim')
   Plug 'numirias/semshi', {
     \ 'commit': '816b8d22adf59260f4355aab31c1cdc99db8f438',
@@ -89,14 +88,6 @@ autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=239
 nnoremap <C-p> :Files<cr>
 let $FZF_DEFAULT_COMMAND='rg --hidden -l ""'
 
-" ale
-" let g:ale_linters = {'python': [ 'pyre' ]}
-let g:ale_linters = {
-  \ 'python': [ 'pylint', 'mypy' ],
-  \ 'javascript': []
-  \ }
-let g:ale_python_pylint_options = "--rcfile ~/.pylintrc"
-
 " vim-smooth-scroll
 nnoremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 3)<CR>
 nnoremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 3)<CR>
@@ -120,7 +111,9 @@ nmap <leader>t :TagbarToggle<CR>
 " -----------------------------------------------------------------------------
 
 let b:coc_enabled = 0
+" nmap <silent> <leader> f <Plug>(coc-references)
 nmap <silent> <leader>d <Plug>(coc-definition)
+nmap <F2> <Plug>(coc-rename)
 
 "" use <tab> for trigger completion and navigate to the next complete item
 function! s:check_back_space() abort
@@ -137,8 +130,8 @@ inoremap <silent><expr> <Tab>
 " python
 " -----------------------------------------------------------------------------
 
-" black
-autocmd BufWritePre *.py execute ':Black'
+" black/isort
+autocmd BufWritePre *.py execute ':Black' | execute ':Isort'
 let g:black_linelength=100
 
 " semshi
