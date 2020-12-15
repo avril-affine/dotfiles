@@ -131,7 +131,7 @@ inoremap <silent><expr> <Tab>
 " -----------------------------------------------------------------------------
 
 " black/isort
-autocmd BufWritePre *.py execute ':Black' | execute ':Isort'
+autocmd BufWritePre *.py execute ':Black' | execute ':Isort' | execute ':Semshi highlight'
 let g:black_linelength=100
 
 " semshi
