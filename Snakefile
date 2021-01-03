@@ -13,7 +13,7 @@ def is_mac():
     return platform.system() == "Darwin"
 
 def is_ubuntu():
-    return platform.linux_distribution()[0] in ["Ubuntu", "debian"]
+    return platform.system() in ["Linux", "Ubuntu", "debian"]
 
 # ------------
 # BUILD PATHS
