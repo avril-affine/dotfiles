@@ -90,7 +90,7 @@ autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=239
 
 " FZF
 nnoremap <C-p> :Files<cr>
-let $FZF_DEFAULT_COMMAND='rg --hidden -l ""'
+let $FZF_DEFAULT_COMMAND='rg --hidden -l --glob=\!.git --glob \!__pycache__ ""'
 
 " vim-smooth-scroll
 nnoremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 3)<CR>
