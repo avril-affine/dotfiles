@@ -35,6 +35,9 @@ Plug 'junegunn/vim-easy-align'          " easy align
 Plug 'AndrewRadev/sideways.vim'         " swap arguments
 Plug 'ruanyl/vim-gh-line'               " open browser to github line
 Plug 'majutsushi/tagbar'                " displays tags in separate window
+Plug 'kdheepak/lazygit.nvim', {
+    \ 'branch': 'nvim-v0.4.3'
+    \ }                                       " lazygit in vim
 " " Autocomplete
 Plug 'neoclide/coc.nvim', {
     \ 'branch': 'release'
@@ -45,11 +48,12 @@ Plug 'ambv/black', {
   \ }                                   " black autoformatter
 Plug 'kkihara/vim-isort'                " sort imports
 if has('nvim')
-  Plug 'numirias/semshi', {
-    \ 'commit': '816b8d22adf59260f4355aab31c1cdc99db8f438',
-    \ 'do': ':UpdateRemotePlugins',
-    \ 'for': 'python'
-    \ }                                 " semantic highlighting
+  " Plug 'numirias/semshi', {
+  "   \ 'commit': '816b8d22adf59260f4355aab31c1cdc99db8f438',
+  "   \ 'do': ':UpdateRemotePlugins',
+  "   \ 'for': 'python'
+  "   \ }                                 " semantic highlighting
+  Plug 'numirias/semshi'
 endif
 " Miscellaneous
 Plug 'ivan-krukov/vim-snakemake'        " snakemake syntax highlighting
