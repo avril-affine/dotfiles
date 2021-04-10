@@ -111,8 +111,7 @@ let g:gh_line_map = '<leader>g'
 nmap <leader>t :TagbarToggle<CR>
 
 " LazyGit
-command Lg LazyGit
-command LG LazyGit
+command L LazyGit
 
 " -----------------------------------------------------------------------------
 " Autocomplete
