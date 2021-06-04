@@ -124,3 +124,8 @@ nnoremap <silent> <leader>p :tabprevious<cr>
 
 " python debug
 nmap <leader>/ oimport ipdb; ipdb.set_trace()<ESC>
+
+noremap ∆ <Esc>:m .+1<CR>
+noremap ˚ <Esc>:m .-2<CR>
+vnoremap ∆ :m '>+1<CR>gv=gv
+vnoremap ˚ :m '<-2<CR>gv=gv

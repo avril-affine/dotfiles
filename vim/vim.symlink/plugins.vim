@@ -37,7 +37,7 @@ Plug 'ruanyl/vim-gh-line'               " open browser to github line
 Plug 'majutsushi/tagbar'                " displays tags in separate window
 Plug 'kdheepak/lazygit.nvim', {
     \ 'branch': 'nvim-v0.4.3'
-    \ }                                       " lazygit in vim
+    \ }                                 " lazygit in vim
 " " Autocomplete
 Plug 'neoclide/coc.nvim', {
     \ 'branch': 'release'
