@@ -32,12 +32,12 @@ Plug 'jiangmiao/auto-pairs'             " auto pair parens, brackets, etc.
 Plug 'kshenoy/vim-signature'            " display markers on ruler
 Plug 'pgdouyon/vim-evanesco'            " better search
 Plug 'junegunn/vim-easy-align'          " easy align
-Plug 'AndrewRadev/sideways.vim'         " swap arguments
 Plug 'ruanyl/vim-gh-line'               " open browser to github line
 Plug 'majutsushi/tagbar'                " displays tags in separate window
 Plug 'kdheepak/lazygit.nvim', {
     \ 'branch': 'nvim-v0.4.3'
     \ }                                 " lazygit in vim
+Plug 'machakann/vim-swap'               " swap arguments
 " " Autocomplete
 Plug 'neoclide/coc.nvim', {
     \ 'branch': 'release'
@@ -99,10 +99,6 @@ nnoremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 3)<CR>
 " vim-easy-align
 nmap <leader>a <Plug>(EasyAlign)
 vmap <leader>a <Plug>(EasyAlign)
-
-" sideways
-nnoremap <leader>l :SidewaysLeft<CR>
-nnoremap <leader>r :SidewaysRight<CR>
 
 " vim-gh-line
 let g:gh_line_map = '<leader>g'
