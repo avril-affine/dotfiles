@@ -14,7 +14,7 @@ highlight Normal guifg=#dadada ctermfg=253 guibg=#262626 gui=NONE cterm=NONE
 
 " Misc {{{1
 
-highlight Comment guifg=#585858 ctermfg=240 ctermbg=NONE gui=NONE cterm=NONE
+highlight Comment guifg=#e3e3e3 ctermfg=227 ctermbg=NONE gui=NONE cterm=NONE
 highlight Constant guifg=#87dfdf ctermfg=116 ctermbg=NONE gui=NONE cterm=NONE
 highlight Directory guifg=#ffaf87 ctermfg=216 ctermbg=NONE gui=NONE cterm=NONE
 highlight Identifier guifg=#ffaf87 ctermfg=216 ctermbg=NONE gui=NONE cterm=NONE
