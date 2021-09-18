@@ -6,6 +6,9 @@ set nu
 set rnu
 set ruler
 
+" filetype tabs
+autocmd FileType yaml setlocal shiftwidth=2 tabstop=2
+
 " Show filename with one window open
 set laststatus=2
 set statusline+=%F%=%l,%c
