@@ -14,7 +14,8 @@ highlight Normal guifg=#dadada ctermfg=253 guibg=#262626 gui=NONE cterm=NONE
 
 " Misc {{{1
 
-highlight Comment guifg=#e3e3e3 ctermfg=227 ctermbg=NONE gui=NONE cterm=NONE
+" highlight Comment ctermfg=110 guifg=#87afdguifg ctermbg=NONE gui=NONE cterm=NONE
+highlight Comment guifg=#ffdfafg ctermfg=223 ctermbg=NONE gui=NONE cterm=NONE
 highlight Constant guifg=#87dfdf ctermfg=116 ctermbg=NONE gui=NONE cterm=NONE
 highlight Directory guifg=#ffaf87 ctermfg=216 ctermbg=NONE gui=NONE cterm=NONE
 highlight Identifier guifg=#ffaf87 ctermfg=216 ctermbg=NONE gui=NONE cterm=NONE
@@ -27,7 +28,7 @@ highlight SpecialKey guifg=#3a3a3a ctermfg=237 ctermbg=NONE gui=NONE cterm=NONE
 highlight Statement guifg=#afdf87 ctermfg=150 ctermbg=NONE gui=NONE cterm=NONE
 highlight String guifg=#87afdf ctermfg=110 ctermbg=NONE gui=NONE cterm=NONE
 highlight Title guifg=#afff87 ctermfg=156 ctermbg=NONE gui=NONE cterm=NONE
-highlight Todo guifg=#ffdfaf ctermfg=223 ctermbg=NONE gui=NONE cterm=NONE
+highlight Todo ctermfg=7 ctermbg=161 guifg=#c0c0c0 guibg=#df005f
 highlight Type guifg=#87dfaf ctermfg=115 ctermbg=NONE gui=NONE cterm=NONE
 highlight VertSplit guifg=#3a3a3a ctermfg=237 guibg=#3a3a3a ctermbg=237 gui=NONE cterm=NONE
 highlight WildMenu guifg=#df005f ctermfg=161 guibg=#3a3a3a ctermbg=237 gui=bold cterm=bold
