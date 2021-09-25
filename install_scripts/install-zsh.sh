@@ -1,18 +1,21 @@
 #!/usr/bin/env bash
 
-if uname -s | grep --quiet Linux; then
-    curl -O https://sourceforge.net/projects/zsh/files/zsh/5.8/zsh-5.8.tar.xz/download
-    tar -xJ -f zsh-5.8.tar.xz
-    pushd zsh-5.8
-    ./configure
-    make
-    sudo make install
-    popd
-    rm -rf zsh-5.8 zsh-5.8.tar.xz
-    sudo sh -c 'echo /usr/local/bin/zsh >> /etc/shells'
-else
-    brew install zsh
-    sudo sh -c 'echo /usr/local/bin/zsh >> /etc/shells'
+
+if ! command -v zsh &> /dev/null; then
+    if uname -s | grep --quiet Linux; then
+        curl -O https://sourceforge.net/projects/zsh/files/zsh/5.8/zsh-5.8.tar.xz/download
+        tar -xJ -f zsh-5.8.tar.xz
+        pushd zsh-5.8
+        ./configure
+        make
+        sudo make install
+        popd
+        rm -rf zsh-5.8 zsh-5.8.tar.xz
+        sudo sh -c 'echo /usr/local/bin/zsh >> /etc/shells'
+    else
+        brew install zsh
+        sudo sh -c 'echo /usr/local/bin/zsh >> /etc/shells'
+    fi
 fi
 
 # install oh-my-zsh
