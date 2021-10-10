@@ -1,6 +1,8 @@
 local utils = require('utils')
-require('ftplugins')
 local plugins = require('plugins')
+
+vim.cmd [[set runtimepath+=~/.config/nvim]]
+vim.cmd [[set runtimepath+=~/.config/nvim/after]]
 
 -- options
 vim.opt.tabstop = 4
@@ -9,8 +11,6 @@ vim.opt.expandtab = true
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.ruler = true                    -- row/col number
-vim.opt.laststatus = 2
--- vim.opt.statusline = '%F=%l,%c'
 vim.opt.timeout = false
 vim.opt.ttimeout = true
 vim.opt.timeoutlen = 10
@@ -21,29 +21,13 @@ vim.opt.grepprg = 'rg --vimgrep --no-heading'  -- use ripgrep
 
 vim.g.python3_host_prog=vim.fn.substitute(vim.fn.system('which python3'), '\n', '', 'g')  -- find correct python
 
--- local this_dir = debug.getinfo(1).source:match("@?(.*/)")
--- vim.cmd('colorscheme ' .. this_dir .. 'colors/panda')
+-- colors are under $VIMRUNTIME/colors
+vim.cmd('colorscheme panda')
 
 -- keybindings
 vim.g.mapleader = ','
 
 local nowait = { nowait = true }
-
--- TODO: lua version. move to wincmd.lua?
-vim.cmd([[
-  function! WinMove(key)
-    let t:curwin = winnr()
-    exec "wincmd ".a:key
-    if (t:curwin == winnr()) "we havent moved
-      if (match(a:key,'[jk]')) "were we going up/down
-        wincmd v
-      else
-        wincmd s
-      endif
-      exec "wincmd ".a:key
-    endif
-  endfunction
-]])
 
 vim.api.nvim_set_keymap('n', '<C-K>', ":call WinMove('k')<CR>", nowait)   -- ctrl+k move window up
 vim.api.nvim_set_keymap('n', '<C-J>', ":call WinMove('j')<CR>", nowait)   -- ctrl+j move window down
@@ -67,6 +51,8 @@ vim.api.nvim_set_keymap('n', '<leader>c', ':tabnew<CR>', nowait)        -- creat
 vim.api.nvim_set_keymap('n', '<leader>n', ':tabnext<CR>', nowait)       -- move to next tab
 vim.api.nvim_set_keymap('n', '<leader>p', ':tabprevious<CR>', nowait)   -- move to previous tab
 
+plugins.startup()
+
 -- Underline current line
 vim.cmd([[
 set cursorline
@@ -86,4 +72,19 @@ augroup BgHighlight
 augroup END
 ]])
 
-plugins.startup()
+
+-- TODO: lua version. move to wincmd.lua?
+vim.cmd([[
+  function! WinMove(key)
+    let t:curwin = winnr()
+    exec "wincmd ".a:key
+    if (t:curwin == winnr()) "we havent moved
+      if (match(a:key,'[jk]')) "were we going up/down
+        wincmd v
+      else
+        wincmd s
+      endif
+      exec "wincmd ".a:key
+    endif
+  endfunction
+]])
