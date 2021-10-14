@@ -8,7 +8,7 @@ local function load_plugins()
   local packer = require('packer')
   local use = packer.use
   require('packer').startup({function()
-    use 'wbthomason/packer.nvim'
+    use { 'wbthomason/packer.nvim', lock = true }
 
     -- python
     use {
@@ -29,6 +29,7 @@ local function load_plugins()
 
           inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
           inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+          imap <tab> <Plug>(completion_smart_tab)
 
           set completeopt=menuone,noinsert,noselect
 
@@ -39,7 +40,7 @@ local function load_plugins()
     }
     use {
       'folke/trouble.nvim',
-      requires = { 'kyazdani42/nvim-web-devicons' },
+      requires = { 'kyazdani42/nvim-web-devicons', lock = true },
       lock = true,
       config = function()
         require('trouble').setup {
@@ -48,22 +49,22 @@ local function load_plugins()
       end,
     }
     use {
-      'folke/todo-comments.nvim',
-      requires = { 'nvim-lua/plenary.nvim' },
-      lock = true,
-			config = function()
-				require('todo-comments').setup {
-						-- your configuration comes here
-						-- or leave it empty to use the default settings
-						-- refer to the configuration section below
-				}
+      'nvim-treesitter/nvim-treesitter',
+      config = function()
+        require'nvim-treesitter.configs'.setup {
+          ensure_installed = { 'lua' },  -- can specify "all"
+          highlight = {
+            enable = true,
+            disable = { 'python' },
+          },
+        }
       end,
     }
 
     -- navigation
     use {
       'nvim-telescope/telescope.nvim',
-      requires = { 'nvim-lua/plenary.nvim' },
+      requires = { 'nvim-lua/plenary.nvim', lock = true },
       lock = true,
       config = function()
         require('telescope').setup {
@@ -84,7 +85,7 @@ local function load_plugins()
     }
     use {
       'kyazdani42/nvim-tree.lua',
-      requires = { 'kyazdani42/nvim-web-devicons' },
+      requires = { 'kyazdani42/nvim-web-devicons', lock = true },
       lock = true,
       config = function()
         require'nvim-tree'.setup {
@@ -101,11 +102,23 @@ local function load_plugins()
     }
     use { 'tpope/vim-fugitive', lock = true }
     use { 'ruanyl/vim-gh-line', lock = true, config = function() vim.g.gh_line_blame_map = '<leader>g' end }
+    use {
+      'folke/todo-comments.nvim',
+      requires = { 'nvim-lua/plenary.nvim', lock = true },
+      lock = true,
+			config = function()
+				require('todo-comments').setup {
+						-- your configuration comes here
+						-- or leave it empty to use the default settings
+						-- refer to the configuration section below
+				}
+      end,
+    }
 
     -- utils
     use {
       'junegunn/fzf.vim',
-      requires = { 'junegunn/fzf', run = 'fzf#install()' },
+      requires = { 'junegunn/fzf', run = 'fzf#install()', lock = true },
       lock = true,
     }
     use {
@@ -120,22 +133,26 @@ local function load_plugins()
     use { 'machakann/vim-swap', lock = true }
     use {
       'hoob3rt/lualine.nvim',
-      requires = { 'kyazdani42/nvim-web-devicons', opt = true },
+      requires = { 'kyazdani42/nvim-web-devicons', opt = true, lock = true },
       lock = true,
       config = function()
         require('plenary.reload').reload_module('lualine', true)
         require'lualine'.setup {
           options = {
             icons_enabled = true,
-            theme = 'gruvbox',
-            component_separators = {'', ''},
+            theme = 'oceanicnext',  -- other themes: 'material' 'onedark'
+            component_separators = {'', '|'},
             section_separators = {'', ''},
             disabled_filetypes = {}
           },
           sections = {
             lualine_a = {'mode'},
             lualine_b = {'branch'},
-            lualine_c = {'filename'},
+            lualine_c = {{
+              'filename',
+              file_status = true,
+              path = 2,  -- absolute path
+            }},
             lualine_x = {'encoding', 'fileformat', 'filetype'},
             lualine_y = {'progress'},
             lualine_z = {'location'}
@@ -152,15 +169,13 @@ local function load_plugins()
           extensions = {},
         }
       end
-
     }
     use {
       'yamatsum/nvim-nonicons',
-      requires = { 'kyazdani42/nvim-web-devicons' },
+      requires = { 'kyazdani42/nvim-web-devicons', lock = true },
       lock = true,
       config = function() require('nvim-nonicons').get('file') end,
     }
-
     end,
     config = {
       package_root = package_root,
