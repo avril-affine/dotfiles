@@ -27,29 +27,29 @@ vim.cmd('colorscheme panda')
 -- keybindings
 vim.g.mapleader = ','
 
-local nowait = { nowait = true }
+local win_keyopts = { nowait = true, silent = true }
 
-vim.api.nvim_set_keymap('n', '<C-K>', ":call WinMove('k')<CR>", nowait)   -- ctrl+k move window up
-vim.api.nvim_set_keymap('n', '<C-J>', ":call WinMove('j')<CR>", nowait)   -- ctrl+j move window down
-vim.api.nvim_set_keymap('n', '<C-H>', ":call WinMove('h')<CR>", nowait)   -- ctrl+h move window left
-vim.api.nvim_set_keymap('n', '<C-L>', ":call WinMove('l')<CR>", nowait)   -- ctrl+l move window right
+vim.api.nvim_set_keymap('n', '<C-K>', ":call WinMove('k')<CR>", win_keyopts)   -- ctrl+k move window up
+vim.api.nvim_set_keymap('n', '<C-J>', ":call WinMove('j')<CR>", win_keyopts)   -- ctrl+j move window down
+vim.api.nvim_set_keymap('n', '<C-H>', ":call WinMove('h')<CR>", win_keyopts)   -- ctrl+h move window left
+vim.api.nvim_set_keymap('n', '<C-L>', ":call WinMove('l')<CR>", win_keyopts)   -- ctrl+l move window right
 
-vim.api.nvim_set_keymap('i', '˚', ":resize -1<CR>", nowait)            -- alt+k resize window up
-vim.api.nvim_set_keymap('n', '˚', ":resize -1<CR>", nowait)
-vim.api.nvim_set_keymap('v', '˚', ":resize -1<CR>", nowait)
-vim.api.nvim_set_keymap('i', '∆', ":resize +1<CR>", nowait)            -- alt+j resize window down
-vim.api.nvim_set_keymap('n', '∆', ":resize +1<CR>", nowait)
-vim.api.nvim_set_keymap('v', '∆', ":resize +1<CR>", nowait)
-vim.api.nvim_set_keymap('i', '˙', ":vertical resize -1<CR>", nowait)   -- alt+h resize window left
-vim.api.nvim_set_keymap('n', '˙', ":vertical resize -1<CR>", nowait)
-vim.api.nvim_set_keymap('v', '˙', ":vertical resize -1<CR>", nowait)
-vim.api.nvim_set_keymap('i', '¬', ":vertical resize +1<CR>", nowait)   -- alt+l resize window right
-vim.api.nvim_set_keymap('n', '¬', ":vertical resize +1<CR>", nowait)
-vim.api.nvim_set_keymap('v', '¬', ":vertical resize +1<CR>", nowait)
+vim.api.nvim_set_keymap('i', '˚', ":resize -1<CR>", win_keyopts)            -- alt+k resize window up
+vim.api.nvim_set_keymap('n', '˚', ":resize -1<CR>", win_keyopts)
+vim.api.nvim_set_keymap('v', '˚', ":resize -1<CR>", win_keyopts)
+vim.api.nvim_set_keymap('i', '∆', ":resize +1<CR>", win_keyopts)            -- alt+j resize window down
+vim.api.nvim_set_keymap('n', '∆', ":resize +1<CR>", win_keyopts)
+vim.api.nvim_set_keymap('v', '∆', ":resize +1<CR>", win_keyopts)
+vim.api.nvim_set_keymap('i', '˙', ":vertical resize -1<CR>", win_keyopts)   -- alt+h resize window left
+vim.api.nvim_set_keymap('n', '˙', ":vertical resize -1<CR>", win_keyopts)
+vim.api.nvim_set_keymap('v', '˙', ":vertical resize -1<CR>", win_keyopts)
+vim.api.nvim_set_keymap('i', '¬', ":vertical resize +1<CR>", win_keyopts)   -- alt+l resize window right
+vim.api.nvim_set_keymap('n', '¬', ":vertical resize +1<CR>", win_keyopts)
+vim.api.nvim_set_keymap('v', '¬', ":vertical resize +1<CR>", win_keyopts)
 
-vim.api.nvim_set_keymap('n', '<leader>c', ':tabnew<CR>', nowait)        -- create new tab
-vim.api.nvim_set_keymap('n', '<leader>n', ':tabnext<CR>', nowait)       -- move to next tab
-vim.api.nvim_set_keymap('n', '<leader>p', ':tabprevious<CR>', nowait)   -- move to previous tab
+vim.api.nvim_set_keymap('n', '<leader>c', ':tabnew<CR>', win_keyopts)        -- create new tab
+vim.api.nvim_set_keymap('n', '<leader>n', ':tabnext<CR>', win_keyopts)       -- move to next tab
+vim.api.nvim_set_keymap('n', '<leader>p', ':tabprevious<CR>', win_keyopts)   -- move to previous tab
 
 plugins.startup()
 
