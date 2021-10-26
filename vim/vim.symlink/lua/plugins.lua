@@ -15,7 +15,7 @@ local function load_plugins()
       'numirias/semshi',
       ft = 'python',
       lock = true,
-      config = function() vim.cmd('UpdateRemotePlugins') end,
+      config = function() vim.cmd [[UpdateRemotePlugins]] end,
     }
     use { 'psf/black', ft = 'python', lock = true }
     use {
@@ -23,7 +23,7 @@ local function load_plugins()
       ft = 'python',
       lock = true,
       config = function()
-        vim.cmd('UpdateRemotePlugins')
+        vim.cmd [[UpdateRemotePlugins]]
         vim.g.isort_command = 'Isort'
       end,
     }
@@ -146,7 +146,7 @@ local function load_plugins()
       'nvim-treesitter/nvim-treesitter',
       config = function()
         require'nvim-treesitter.configs'.setup {
-          ensure_installed = { 'lua' },  -- can specify "all"
+          ensure_installed = { 'lua', 'javascript' },  -- can specify "all"
           highlight = {
             enable = true,
             disable = { 'python' },
@@ -159,15 +159,10 @@ local function load_plugins()
     use {
       'nvim-telescope/telescope.nvim',
       requires = { 'nvim-lua/plenary.nvim', lock = true },
-      lock = true,
       config = function()
-        require('telescope').setup {
-          fuzzy = true,
-          override_generic_sorter = true,
-          override_file_sorter = true,
-          case_mode = 'respect_case',
-        }
-        vim.api.nvim_set_keymap('n', '<leader>f', '<cmd>lua require("telescope.builtin").live_grep()<CR>', { nowait = true, silent = true })
+        -- require('telescope').load_extension('fzf')
+
+        vim.api.nvim_set_keymap('n', '<leader>f', '"zyiw<cmd>lua require("telescope.builtin").live_grep()<CR> <ESC>"zpa', { nowait = true, silent = true })
         vim.api.nvim_set_keymap('n', '<C-P>', '<cmd>lua require("telescope.builtin").find_files()<CR>', { nowait = true, silent = true })
       end,
 		}
@@ -175,7 +170,18 @@ local function load_plugins()
       'nvim-telescope/telescope-fzf-native.nvim',
       run = 'make',
       lock = true,
-      config = function() require('telescope').load_extension('fzf') end,
+      config = function()
+        require('telescope').setup {
+          extensions = {
+            fzf = {
+              fuzzy = true,
+              override_generic_sorter = true,
+              override_file_sorter = true,
+              case_mode = 'respect_case',
+            }
+          }
+        }
+        require('telescope').load_extension('fzf') end,
     }
     use {
       'kyazdani42/nvim-tree.lua',
