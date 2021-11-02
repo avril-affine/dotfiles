@@ -1,7 +1,6 @@
-vim.cmd [[set runtimepath=$VIMRUNTIME]]
-vim.cmd [[set packpath=/tmp/nvim/site]]
+vim.opt.packpath = '~/.config/nvim/site'
 
-local package_root = '/tmp/nvim/site/pack'
+local package_root = vim.fn.expand('~/.config/nvim/site/pack')
 local install_path = package_root .. '/packer/start/packer.nvim'
 
 local function load_plugins()
@@ -15,7 +14,8 @@ local function load_plugins()
       'numirias/semshi',
       ft = 'python',
       lock = true,
-      config = function() vim.cmd [[UpdateRemotePlugins]] end,
+      -- config = function() vim.cmd [[UpdateRemotePlugins]] end,
+      config = vim.fn['#remote#host#UpdateRemotePlugins'],
     }
     use { 'psf/black', ft = 'python', lock = true }
     use {
