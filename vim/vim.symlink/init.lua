@@ -88,3 +88,16 @@ vim.cmd([[
     endif
   endfunction
 ]])
+
+vim.cmd([[
+  if executable('rg')
+    " Use rg over grep
+    set grepprg=rg\ --vimgrep\ --no-heading\ --smart-case
+
+    " bind \ (backward slash) to grep shortcut
+    command -nargs=+ -complete=file -bar Rg silent! grep! <args>|cwindow|redraw!
+    nnoremap \ :Rg<SPACE>
+  endif
+
+  nnoremap <leader>q :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+]])
