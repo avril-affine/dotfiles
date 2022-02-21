@@ -134,6 +134,9 @@ highlight StartifySelect guifg=#5fdfff ctermfg=81 ctermbg=NONE gui=NONE cterm=NO
 highlight StartifySlash guifg=#585858 ctermfg=240 ctermbg=NONE gui=NONE cterm=NONE
 highlight StartifySpecial guifg=#585858 ctermfg=240 ctermbg=NONE gui=NONE cterm=NONE
 
+" Plugin: nvim-compe {{{1
+highlight CompeDocumentation guifg=#afff87 ctermfg=156 guibg=#3a3a3a ctermbg=237 gui=NONE cterm=NONE
+
 " Neovim {{{1
 
 if has('nvim')

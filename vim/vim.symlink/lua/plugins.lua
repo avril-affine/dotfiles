@@ -138,6 +138,7 @@ return require('packer').startup {
               ultisnips = true;
               luasnip = true;
             };
+
           }
 
           -- tab completion
@@ -177,6 +178,8 @@ return require('packer').startup {
           vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
           vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
           vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+          vim.api.nvim_set_keymap("i", "<C-d>", "compe#scroll({ 'delta': +4 })", {expr = true})
+          vim.api.nvim_set_keymap("i", "<C-u>", "compe#scroll({ 'delta': -4 })", {expr = true})
 
           -- function signature
           require('lsp_signature').setup()
