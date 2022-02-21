@@ -13,7 +13,7 @@ return require('packer').startup {
     local use = packer.use
       use { 'wbthomason/packer.nvim' }
 
-      -- python
+      -- PYTHON ----------------------------------------------------------------
       use {
         'numirias/semshi',
         ft = 'python',
@@ -30,7 +30,7 @@ return require('packer').startup {
         config = 'vim.cmd [[UpdateRemotePlugins]]',
       }
 
-      -- LSP / completion
+      -- LSP / completion ------------------------------------------------------
       use {
         'neovim/nvim-lspconfig',
         config = function()
@@ -204,7 +204,7 @@ return require('packer').startup {
         end,
       }
 
-      -- navigation
+      -- NAVIGATION ------------------------------------------------------------
       use {
         'nvim-telescope/telescope.nvim',
         requires = { 'nvim-lua/plenary.nvim' },
@@ -262,8 +262,9 @@ return require('packer').startup {
           }
         end,
       }
+      use { 'TaDaa/vimade' }
 
-      -- utils
+      -- UTILS -----------------------------------------------------------------
       use {
         'junegunn/fzf.vim',
         requires = { 'junegunn/fzf', run = 'fzf#install()' }
@@ -319,6 +320,12 @@ return require('packer').startup {
         'yamatsum/nvim-nonicons',
         requires = { 'kyazdani42/nvim-web-devicons' },
         config = function() require('nvim-nonicons').get('file') end,
+      }
+
+      use {
+        "rcarriga/vim-ultest",
+        requires = {"vim-test/vim-test"},
+        config = 'vim.cmd [[UpdateRemotePlugins]]',
       }
   end,
   config = {
