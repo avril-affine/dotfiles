@@ -1,5 +1,6 @@
 vim/vim.symlink/bundle/*
-vim/vim.symlink/init.vim
+vim/vim.symlink/site/*
+vim/vim.symlink/black/*
 vim/vim.symlink/.netrwhist
 vim/vim.symlink/autoload/*
 vim/vim.symlink/plugged/*
