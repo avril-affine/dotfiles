@@ -1,5 +1,5 @@
 local utils = require('utils')
-local plugins = require('plugins')
+require('plugins')
 
 vim.cmd [[set runtimepath+=~/.config/nvim]]
 vim.cmd [[set runtimepath+=~/.config/nvim/after]]
@@ -51,8 +51,6 @@ vim.api.nvim_set_keymap('n', '<leader>c', ':tabnew<CR>', win_keyopts)        -- 
 vim.api.nvim_set_keymap('n', '<leader>n', ':tabnext<CR>', win_keyopts)       -- move to next tab
 vim.api.nvim_set_keymap('n', '<leader>p', ':tabprevious<CR>', win_keyopts)   -- move to previous tab
 
-plugins.startup()
-
 -- Underline current line
 vim.cmd([[
 set cursorline
@@ -71,7 +69,6 @@ augroup BgHighlight
   autocmd WinLeave * set norelativenumber
 augroup END
 ]])
-
 
 -- TODO: lua version. move to wincmd.lua?
 vim.cmd([[
@@ -100,4 +97,12 @@ vim.cmd([[
   endif
 
   nnoremap <leader>q :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+]])
+
+-- autocompile packer
+vim.cmd([[
+  augroup packer_user_config
+    autocmd!
+    autocmd BufWritePost plugins.lua source <afile> | PackerCompile
+  augroup end
 ]])
