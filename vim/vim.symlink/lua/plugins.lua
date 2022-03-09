@@ -67,8 +67,8 @@ return require('packer').startup {
           require('lspconfig').pyright.setup { on_attach=on_attach }
 
           -- LSP: sumneko_lua
-          local sumneko_binary_path = vim.fn.exepath('lua-language-server')
-          local sumneko_root_path = vim.fn.fnamemodify(sumneko_binary_path, ':h:h:h')
+          local sumneko_binary_path = vim.fn.resolve(vim.fn.exepath('lua-language-server'))
+          local sumneko_root_path = vim.fn.fnamemodify(sumneko_binary_path, ':h:h')
           local runtime_path = vim.split(package.path, ';')
           table.insert(runtime_path, 'lua/?.lua')
           table.insert(runtime_path, 'lua/?/init.lua')
@@ -197,11 +197,35 @@ return require('packer').startup {
       use {
         'nvim-treesitter/nvim-treesitter',
         config = function()
-          require'nvim-treesitter.configs'.setup {
+          require('nvim-treesitter.configs').setup {
             ensure_installed = { 'lua', 'javascript' },  -- can specify "all"
             highlight = {
               enable = true,
               disable = { 'python' },
+            },
+          }
+        end,
+      }
+      use {
+        'nvim-treesitter/nvim-treesitter-textobjects',
+        requires = { 'nvim-treesitter/nvim-treesitter' },
+        config = function()
+          require('nvim-treesitter.configs').setup {
+            textobjects = {
+              select = {
+                enable = true,
+
+                -- Automatically jump forward to textobj, similar to targets.vim
+                lookahead = true,
+
+                keymaps = {
+                  -- You can use the capture groups defined in textobjects.scm
+                  ["af"] = "@function.outer",
+                  ["if"] = "@function.inner",
+                  ["ac"] = "@class.outer",
+                  ["ic"] = "@class.inner",
+                },
+              },
             },
           }
         end,
