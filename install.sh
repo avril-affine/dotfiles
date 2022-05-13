@@ -27,10 +27,10 @@ APT_PKGS=" \
 set -ex
 
 symlinks() {
-    for SRC in $(find ~+ -name *.symlink)
+    for SRC in $(find ~+ -name \*.symlink)
     do 
         local TARGET=$(echo $SRC | sed 's/.*\/\(.*\)\.symlink$/\1/')
-        ln -sf $SRC "/home/panda/.$TARGET"
+        ln -sf $SRC "$HOME/.$TARGET"
     done
 }
 
@@ -39,7 +39,7 @@ vim() {
     ln -sf $HOME/.vim $HOME/.config/nvim
 
     # nonicons
-    https://github.com/yamatsum/nonicons
+    git clone https://github.com/yamatsum/nonicons
     mkdir -p ~/.local/share/fonts
     cp nonicons/dist/*.tff ~/.local/share/fonts
     fc-cache -f -v
