@@ -68,13 +68,13 @@ return require('packer').startup {
 
           -- LSP: sumneko_lua
           local sumneko_binary_path = vim.fn.resolve(vim.fn.exepath('lua-language-server'))
-          local sumneko_root_path = vim.fn.fnamemodify(sumneko_binary_path, ':h:h')
+          local sumneko_root_path = vim.fn.fnamemodify(sumneko_binary_path, ':h:h:h')
           local runtime_path = vim.split(package.path, ';')
           table.insert(runtime_path, 'lua/?.lua')
           table.insert(runtime_path, 'lua/?/init.lua')
           require('lspconfig').sumneko_lua.setup {
             on_attach = on_attach,
-            cmd = {sumneko_binary_path, '-E', sumneko_root_path .. '/main.lua'};
+            cmd = {sumneko_binary_path, '-E', sumneko_root_path .. '/main.lua'},
             settings = {
                 Lua = {
                   runtime = {
@@ -97,8 +97,21 @@ return require('packer').startup {
             },
           }
 
+          -- LSP: dart
+          local dart_binary_path = vim.fn.resolve(vim.fn.exepath('dart'))
+          local dart_root_path = vim.fn.fnamemodify(dart_binary_path, ':h')
+          if string.find(dart_binary_path, 'flutter') then
+            dart_root_path = dart_root_path .. '/cache/dart-sdk/bin'
+          end
+          require('lspconfig').dartls.setup {
+            on_attach = on_attach,
+            cmd = { dart_binary_path, dart_root_path .. '/snapshots/analysis_server.dart.snapshot', '--lsp' },
+          }
         end
       }
+      use {
+        'dart-lang/dart-vim-plugin',
+        requires = { 'neovim/nvim-lspconfig' },
       use {
         'hrsh7th/nvim-compe',
         requires = {
@@ -201,6 +214,7 @@ return require('packer').startup {
         config = function()
           require('nvim-treesitter.configs').setup {
             ensure_installed = { 'lua', 'javascript', 'python' },  -- can specify "all"
+            ensure_installed = { 'lua', 'javascript', 'python', 'dart', 'rust' },  -- can specify "all"
             highlight = {
               enable = true,
               disable = { 'python' },
