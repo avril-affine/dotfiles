@@ -107,11 +107,52 @@ return require('packer').startup {
             on_attach = on_attach,
             cmd = { dart_binary_path, dart_root_path .. '/snapshots/analysis_server.dart.snapshot', '--lsp' },
           }
+
+          local rust_analyzer_binary_path = vim.fn.resolve(vim.fn.exepath('rust-analyzer'))
+          require('lspconfig').rust_analyzer.setup {
+            on_attach = on_attach,
+          }
         end
       }
       use {
         'dart-lang/dart-vim-plugin',
         requires = { 'neovim/nvim-lspconfig' },
+      }
+      use {
+        'simrat39/rust-tools.nvim',
+        config = function()
+          vim.cmd([[ autocmd BufWritePre *.rs lua vim.lsp.buf.formatting_sync(nil, 200) ]])
+          require('rust-tools').setup {
+            tools = { -- rust-tools options
+              autoSetHints = true,
+              hover_with_actions = true,
+              inlay_hints = {
+                  show_parameter_hints = false,
+                  parameter_hints_prefix = "",
+                  other_hints_prefix = "",
+              },
+            },
+
+            -- all the opts to send to nvim-lspconfig
+            -- these override the defaults set by rust-tools.nvim
+            -- see https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#rust_analyzer
+            server = {
+              -- on_attach is a callback called when the language server attachs to the buffer
+              -- on_attach = on_attach,
+              settings = {
+                -- to enable rust-analyzer settings visit:
+                -- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
+                ["rust-analyzer"] = {
+                  -- enable clippy on save
+                  checkOnSave = {
+                      command = "clippy"
+                  },
+                }
+              }
+            },
+        }
+        end,
+      }
       use {
         'hrsh7th/nvim-compe',
         requires = {
@@ -213,7 +254,6 @@ return require('packer').startup {
         run = ':TSUpdate',
         config = function()
           require('nvim-treesitter.configs').setup {
-            ensure_installed = { 'lua', 'javascript', 'python' },  -- can specify "all"
             ensure_installed = { 'lua', 'javascript', 'python', 'dart', 'rust' },  -- can specify "all"
             highlight = {
               enable = true,
@@ -308,7 +348,6 @@ return require('packer').startup {
       use {
         'folke/todo-comments.nvim',
         requires = { 'nvim-lua/plenary.nvim' },
-        -- 
         config = function()
           require('todo-comments').setup {
               -- your configuration comes here
