@@ -17,6 +17,18 @@ vim.opt.timeoutlen = 10
 vim.opt.clipboard = 'unnamedplus'       -- global clipboard
 vim.opt.backspace = 'indent,eol,start'  -- fix backspace
 
+
+-- Set completeopt to have a better completion experience
+-- :help completeopt
+-- menuone: popup even when there's only one match
+-- noinsert: Do not insert text until a selection is made
+-- noselect: Do not select, force user to select one from the menu
+vim.opt.completeopt = 'menuone,noinsert,noselect'
+
+--  Avoid showing extra messages when using completion
+vim.opt.shortmess:append('c')
+
+
 vim.opt.grepprg = 'rg --vimgrep --no-heading'  -- use ripgrep
 
 vim.g.python3_host_prog=vim.fn.substitute(vim.fn.system('which python3'), '\n', '', 'g')  -- find correct python
