@@ -23,7 +23,7 @@ return require('packer').startup {
         'psf/black',
         ft = 'python',
         config = 'vim.cmd [[UpdateRemotePlugins]]',
-      } 
+      }
       use {
         'stsewd/isort.nvim',
         ft = 'python',
@@ -304,8 +304,7 @@ return require('packer').startup {
         'nvim-telescope/telescope.nvim',
         requires = { 'nvim-lua/plenary.nvim' },
         config = function()
-
-          vim.api.nvim_set_keymap('n', '<leader>f', '"zyiw<cmd>lua require("telescope.builtin").live_grep()<CR> <ESC>"zpa', { nowait = true, silent = true })
+          vim.api.nvim_set_keymap('n', '<leader>f', '<cmd>lua require("telescope.builtin").live_grep()<CR>', { nowait = true, silent = true })
           vim.api.nvim_set_keymap('n', '<C-P>', '<cmd>lua require("telescope.builtin").find_files()<CR>', { nowait = true, silent = true })
         end,
       }
