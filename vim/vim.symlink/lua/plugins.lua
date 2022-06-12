@@ -174,7 +174,7 @@ return require('packer').startup {
             max_kind_width = 100;
             max_menu_width = 100;
             documentation = {
-              border = { '', '' ,'', ' ', '', '', '', ' ' }, -- the border option is the same as `|help nvim_open_win|`
+              border = "rounded", -- the border option is the same as `|help nvim_open_win|`
               winhighlight = "NormalFloat:CompeDocumentation,FloatBorder:CompeDocumentationBorder",
               max_width = 120,
               min_width = 60,
@@ -236,7 +236,12 @@ return require('packer').startup {
           vim.api.nvim_set_keymap("i", "<C-u>", "compe#scroll({ 'delta': -4 })", {expr = true})
 
           -- function signature
-          require('lsp_signature').setup()
+          require "lsp_signature".setup({
+            bind = true, -- This is mandatory, otherwise border config won't get registered.
+            handler_opts = {
+              border = "rounded",
+            }
+          })
         end
       }
       use {
