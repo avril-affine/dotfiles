@@ -136,9 +136,11 @@ highlight StartifySpecial guifg=#585858 ctermfg=240 ctermbg=NONE gui=NONE cterm=
 
 " Plugin: nvim-compe {{{1
 highlight CompeDocumentation guifg=#afff87 ctermfg=156 guibg=#3a3a3a ctermbg=237 gui=NONE cterm=NONE
+highlight CompeDocumentationBorder guifg=#afff87 ctermfg=255 guibg=#3a3a3a ctermbg=237 gui=NONE cterm=NONE
 
 " Plugin: lsp_signature {{{1
 highlight NormalFloat guifg=#afff87 ctermfg=156 guibg=#3a3a3a ctermbg=237 gui=NONE cterm=NONE
+highlight FloatBorder guifg=#afff87 ctermfg=255 guibg=#3a3a3a ctermbg=237 gui=NONE cterm=NONE
 
 " Neovim {{{1
 
