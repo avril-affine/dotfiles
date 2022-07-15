@@ -16,6 +16,7 @@ APT_PKGS=" \
 APT_PKGS=" \
     autojump \
     curl \
+    fontconfig \
     git \
     neovim \
     npm \
@@ -34,14 +35,14 @@ symlinks() {
     done
 }
 
-vim() {
+install_vim() {
     mkdir -p "$HOME/.config"
     ln -sf $HOME/.vim $HOME/.config/nvim
 
     # nonicons
     git clone https://github.com/yamatsum/nonicons
     mkdir -p ~/.local/share/fonts
-    cp nonicons/dist/*.tff ~/.local/share/fonts
+    cp nonicons/dist/*.ttf ~/.local/share/fonts
     fc-cache -f -v
 
     # pyright
@@ -49,7 +50,7 @@ vim() {
 
     # lua-language-server
     mkdir /etc/lua-language-server
-    curl https://api.github.com/repos/sumneko/lua-language-server/releases | grep linux-x64 | grep browser_download_url | grep -Eo 'https://[^\"]*' | sed -n '1p' | tar -xz -C /etc/lua-language-server
+    curl https://api.github.com/repos/sumneko/lua-language-server/releases | grep linux-x64 | grep browser_download_url | grep -Eo 'https://[^\"]*' | sed -n '1p' | xargs -I{} wget {} -O - | tar -xz -C /etc/lua-language-server
     ln -s /etc/lua-language-server/bin/lua-language-server /usr/local/bin
 }
 
@@ -60,7 +61,7 @@ packages() {
     apt install -y --no-install-recommends $APT_PKGS
 }
 
-zsh() {
+install_zsh() {
     chsh -s $(which zsh)
 
     # install oh-my-zsh
@@ -84,11 +85,11 @@ zsh() {
 }
 
 main() {
-    # su $(logname) -c symlinks
-    # packages
+    su $(logname) -c symlinks
+    packages
     su $(logname) -c zsh
-    # su $(logname) -c vim
+    su $(logname) -c install_vim
 }
 
-export -f symlinks packages zsh vim
+export -f symlinks packages install_zsh install_vim
 main
