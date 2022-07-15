@@ -419,12 +419,6 @@ return require('packer').startup {
         requires = { 'kyazdani42/nvim-web-devicons' },
         config = function() require('nvim-nonicons').get('file') end,
       }
-
-      use {
-        "rcarriga/vim-ultest",
-        requires = {"vim-test/vim-test"},
-        run = ':UpdateRemotePlugins',
-      }
   end,
   config = {
     package_root = package_root,

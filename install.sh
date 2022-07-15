@@ -50,8 +50,20 @@ install_vim() {
 
     # lua-language-server
     mkdir /etc/lua-language-server
-    curl https://api.github.com/repos/sumneko/lua-language-server/releases | grep linux-x64 | grep browser_download_url | grep -Eo 'https://[^\"]*' | sed -n '1p' | xargs -I{} wget {} -O - | tar -xz -C /etc/lua-language-server
+    curl https://api.github.com/repos/sumneko/lua-language-server/releases \
+        | grep linux-x64 \
+        | grep browser_download_url \
+        | grep -Eo 'https://[^\"]*' \
+        | sed -n '1p' \
+        | xargs -I{} wget {} -O - \
+        | tar -xz -C /etc/lua-language-server
     ln -s /etc/lua-language-server/bin/lua-language-server /usr/local/bin
+
+    git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+
+    vim +PackerCompile +PackerInstall +qall
+
+    pip install neovim
 }
 
 packages() {
