@@ -245,15 +245,6 @@ return require('packer').startup {
         end
       }
       use {
-        'folke/trouble.nvim',
-        requires = { 'kyazdani42/nvim-web-devicons' },
-        config = function()
-          require('trouble').setup {
-            vim.api.nvim_set_keymap('n', '<leader>t', ':TroubleToggle<CR>', { nowait = true })
-          }
-        end,
-      }
-      use {
         'nvim-treesitter/nvim-treesitter',
         requires = { 'nvim-treesitter/nvim-treesitter-textobjects' },
         run = ':TSUpdate',
