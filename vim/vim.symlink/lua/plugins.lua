@@ -122,6 +122,7 @@ return require('packer').startup {
           vim.diagnostic.config({
             virtual_text = false,
           })
+          vim.api.nvim_set_keymap('n', '<leader>l', '<cmd>lua require("lsp_lines").toggle()<CR>', { nowait = true, silent = true })
         end,
       }
       use {
@@ -336,19 +337,19 @@ return require('packer').startup {
         config = function()
           require'nvim-tree'.setup {
           }
-          vim.api.nvim_set_keymap('n', '<leader>k', ':NvimTreeToggle<CR>', { nowait = true })
+          vim.api.nvim_set_keymap('n', '<leader>k', ':NvimTreeToggle<CR>', { nowait = true, silent = true })
         end,
       }
       use {
         'kdheepak/lazygit.nvim',
         config = function()
-          vim.api.nvim_set_keymap('n', '<leader>l', ':LazyGit<CR>', { nowait = true })
+          vim.api.nvim_set_keymap('n', '<leader>g', ':LazyGit<CR>', { nowait = true, silent = true })
         end,
       }
       use { 'tpope/vim-fugitive' }
       use {
         'ruanyl/vim-gh-line',
-        config = function() vim.g.gh_line_blame_map = '<leader>g' end,
+        config = function() vim.g.gh_line_blame_map = '<leader>b' end,
       }
       use {
         'folke/todo-comments.nvim',
