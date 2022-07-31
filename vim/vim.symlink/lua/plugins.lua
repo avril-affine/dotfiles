@@ -14,11 +14,11 @@ return require('packer').startup {
       use { 'wbthomason/packer.nvim' }
 
       -- PYTHON ----------------------------------------------------------------
-      use {
-        'numirias/semshi',
-        ft = 'python',
-        config = 'vim.cmd [[UpdateRemotePlugins]]',
-      }
+      -- use {
+      --   'numirias/semshi',
+      --   ft = 'python',
+      --   config = 'vim.cmd [[UpdateRemotePlugins]]',
+      -- }
       use {
         'psf/black',
         ft = 'python',
