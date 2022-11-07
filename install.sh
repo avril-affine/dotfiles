@@ -3,6 +3,15 @@ if [[ $EUID -ne 0 ]]; then
   exit
 fi
 
+BREW_PKGS=" \
+    tmux \
+    neovim \
+    npm \
+    fontconfig \
+    ripgrep \
+    autojump \
+"
+
 # build
 APT_PKGS=" \
     automake \
@@ -27,15 +36,19 @@ APT_PKGS=" \
 
 set -ex
 
-symlinks() {
+function symlinks() {
     for SRC in $(find ~+ -name \*.symlink)
     do 
-        local TARGET=$(echo $SRC | sed 's/.*\/\(.*\)\.symlink$/\1/')
-        ln -sf $SRC "$HOME/.$TARGET"
+	    local TARGET="$HOME/.$(echo $SRC | sed 's/.*\/\(.*\)\.symlink$/\1/')"
+	if [[ -L $TARGET && -d $TARGET ]]
+	then
+            rm $TARGET
+	fi
+        ln -sf "$SRC" "$TARGET"
     done
 }
 
-install_vim() {
+function install_vim() {
     mkdir -p "$HOME/.config"
     ln -sf $HOME/.vim $HOME/.config/nvim
 
@@ -57,23 +70,26 @@ install_vim() {
         | sed -n '1p' \
         | xargs -I{} wget {} -O - \
         | tar -xz -C /etc/lua-language-server
-    ln -s /etc/lua-language-server/bin/lua-language-server /usr/local/bin
+    ln -sf /etc/lua-language-server/bin/lua-language-server /usr/local/bin
 
     git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 
-    vim +PackerCompile +PackerInstall +qall
+    vim +PackerInstall +PackerCompile +qall
 
     pip install neovim
 }
 
-packages() {
-    add-apt-repository -y ppa:neovim-ppa/unstable
-
-    apt update
-    apt install -y --no-install-recommends $APT_PKGS
+function install_packages() {
+    if [[ $OSTYPE == 'darwin'* ]]; then
+	brew install $BREW_PKGS
+    else
+        add-apt-repository -y ppa:neovim-ppa/unstable
+        apt update
+        apt install -y --no-install-recommends $APT_PKGS
+    fi
 }
 
-install_zsh() {
+function install_zsh() {
     chsh -s $(which zsh)
 
     # install oh-my-zsh
@@ -96,12 +112,14 @@ install_zsh() {
     fi
 }
 
-main() {
+function main() {
+    # TODO: do i have to put declare -x in front?
     su $(logname) -c symlinks
-    packages
-    su $(logname) -c zsh
+    install_packages
+    su $(logname) -c install_zsh
     su $(logname) -c install_vim
 }
 
+# TODO: separate functions and source them separately
 export -f symlinks packages install_zsh install_vim
 main
