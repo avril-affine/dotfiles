@@ -13,21 +13,38 @@ return require('packer').startup {
     local use = packer.use
       use { 'wbthomason/packer.nvim' }
 
+      -- COLORSCHEME -----------------------------------------------------------
+      use {
+        'folke/tokyonight.nvim',
+        config = function()
+          require('tokyonight').setup {
+            style = 'night',
+            on_highlights = function(highlights, colors)
+              highlights.Normal = { fg = colors.white, bg = colors.bg }
+              highlights.Comment = { fg = '#ffdfaf' }
+              -- highlights.String = { fg = '#00ffff' }
+              -- highlights.Statement = { fg = '#afdf87' }
+              -- 
+              highlights.LineNr = { fg = colors.white }
+              highlights.CursorLineNr = { fg = colors.cyan }
+            end
+          }
+          vim.cmd('colorscheme tokyonight')
+        end
+      }
+
       -- PYTHON ----------------------------------------------------------------
-      -- use {
-      --   'numirias/semshi',
-      --   ft = 'python',
-      --   config = 'vim.cmd [[UpdateRemotePlugins]]',
-      -- }
+      use {
+        'wookayin/semshi',
+        ft = 'python',
+      }
       use {
         'psf/black',
         ft = 'python',
-        config = 'vim.cmd [[UpdateRemotePlugins]]',
       }
       use {
         'stsewd/isort.nvim',
         ft = 'python',
-        config = 'vim.cmd [[UpdateRemotePlugins]]',
       }
 
       -- LSP / completion ------------------------------------------------------
@@ -110,6 +127,10 @@ return require('packer').startup {
 
           local rust_analyzer_binary_path = vim.fn.resolve(vim.fn.exepath('rust-analyzer'))
           require('lspconfig').rust_analyzer.setup {
+            on_attach = on_attach,
+          }
+
+          require('lspconfig').tsserver.setup {
             on_attach = on_attach,
           }
         end
@@ -257,15 +278,17 @@ return require('packer').startup {
       }
       use {
         'nvim-treesitter/nvim-treesitter',
-        requires = { 'nvim-treesitter/nvim-treesitter-textobjects' },
+        requires = { 'nvim-treesitter/nvim-treesitter-textobjects', 'nvim-treesitter/playground' },
         run = ':TSUpdate',
         config = function()
           require('nvim-treesitter.configs').setup {
-            ensure_installed = { 'lua', 'javascript', 'python', 'dart', 'rust' },  -- can specify "all"
+            ensure_installed = { 'lua', 'javascript', 'typescript', 'python', 'dart', 'rust' },  -- can specify "all"
+            -- highlights
             highlight = {
               enable = true,
               disable = { 'python' },
             },
+            -- text objects
             textobjects = {
               select = {
                 enable = true,
@@ -300,6 +323,30 @@ return require('packer').startup {
                   ["[M"] = "@function.outer",
                   ["[]"] = "@class.outer",
                 },
+              },
+            },
+            query_linter = {
+              enable = true,
+              use_virtual_text = true,
+              lint_events = {"BufWrite", "CursorHold"},
+            },
+            -- playground
+            playground = {
+              enable = true,
+              disable = {},
+              updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
+              persist_queries = false, -- Whether the query persists across vim sessions
+              keybindings = {
+                toggle_query_editor = 'o',
+                toggle_hl_groups = 'i',
+                toggle_injected_languages = 't',
+                toggle_anonymous_nodes = 'a',
+                toggle_language_display = 'I',
+                focus_language = 'f',
+                unfocus_language = 'F',
+                update = 'R',
+                goto_node = '<cr>',
+                show_help = '?',
               },
             },
           }

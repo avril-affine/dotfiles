@@ -33,9 +33,6 @@ vim.opt.grepprg = 'rg --vimgrep --no-heading'  -- use ripgrep
 
 vim.g.python3_host_prog=vim.fn.substitute(vim.fn.system('which python3'), '\n', '', 'g')  -- find correct python
 
--- colors are under $VIMRUNTIME/colors
-vim.cmd('colorscheme panda')
-
 -- keybindings
 vim.g.mapleader = ','
 
