@@ -3,6 +3,8 @@ if [[ $EUID -ne 0 ]]; then
   exit
 fi
 
+HOMEDIR=$( getent passwd "$(logname)" | cut -d: -f6 )
+
 BREW_PKGS=" \
     tmux \
     neovim \
@@ -21,7 +23,6 @@ APT_PKGS=" \
     libncurses5-dev \
 "
 
-# programs
 APT_PKGS=" \
     autojump \
     curl \
@@ -36,41 +37,44 @@ APT_PKGS=" \
 
 set -ex
 
-function symlinks() {
-    for SRC in $(find ~+ -name \*.symlink)
-    do 
-	    local TARGET="$HOME/.$(echo $SRC | sed 's/.*\/\(.*\)\.symlink$/\1/')"
-	if [[ -L $TARGET && -d $TARGET ]]
-	then
+function install_symlinks() {
+    for SRC in $(find ~+ -name \*.symlink); do 
+	local TARGET="$HOME/.$(echo $SRC | sed 's/.*\/\(.*\)\.symlink$/\1/')"
+	if [[ -L $TARGET && -d $TARGET ]]; then
             rm $TARGET
 	fi
         ln -sf "$SRC" "$TARGET"
     done
 }
 
-function install_vim() {
-    mkdir -p "$HOME/.config"
-    ln -sf $HOME/.vim $HOME/.config/nvim
+function install_neovim_config() {
+    mkdir -p ~/.config
+    if [[ -L ~/.config/nvim && -d ~/.config/nvim ]]; then
+        rm ~/.config/nvim
+    fi
+    ln -sf ~/.vim ~/.config/nvim
 
     # nonicons
-    git clone https://github.com/yamatsum/nonicons
+    git clone https://github.com/yamatsum/nonicons ~/nonicons
     mkdir -p ~/.local/share/fonts
     cp nonicons/dist/*.ttf ~/.local/share/fonts
     fc-cache -f -v
+    rm -rf ~/nonicons
 
     # pyright
     npm install -g pyright
 
+    # TODO: install lua-language-server correctly for arm/x86
     # lua-language-server
-    mkdir /etc/lua-language-server
-    curl https://api.github.com/repos/sumneko/lua-language-server/releases \
-        | grep linux-x64 \
-        | grep browser_download_url \
-        | grep -Eo 'https://[^\"]*' \
-        | sed -n '1p' \
-        | xargs -I{} wget {} -O - \
-        | tar -xz -C /etc/lua-language-server
-    ln -sf /etc/lua-language-server/bin/lua-language-server /usr/local/bin
+    # mkdir /etc/lua-language-server
+    # curl https://api.github.com/repos/sumneko/lua-language-server/releases \
+    #     | grep linux-x64 \
+    #     | grep browser_download_url \
+    #     | grep -Eo 'https://[^\"]*' \
+    #     | sed -n '1p' \
+    #     | xargs -I{} wget {} -O - \
+    #     | tar -xz -C /etc/lua-language-server
+    # ln -sf /etc/lua-language-server/bin/lua-language-server /usr/local/bin
 
     git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 
@@ -81,7 +85,10 @@ function install_vim() {
 
 function install_packages() {
     if [[ $OSTYPE == 'darwin'* ]]; then
-	brew install $BREW_PKGS
+	if ! command -v brew &> /dev/null; then
+	    su $(logname) -c "/bin/bash -c $(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+	fi
+	su $(logname) -c "brew install $BREW_PKGS"
     else
         add-apt-repository -y ppa:neovim-ppa/unstable
         apt update
@@ -95,15 +102,12 @@ function install_zsh() {
     # install oh-my-zsh
     sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
-    # remove default oh-my-zsh .zshrc
+    # zsh plugins
     if [ $? -eq 0 ]; then
         git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
         git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
         git clone https://github.com/wting/autojump ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/autojump
         git clone https://github.com/Aloxaf/fzf-tab ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/fzf-tab
-        echo "[ -f $HOME/.fzf.zsh ] && source $HOME/.fzf.zsh" > $HOME/.zshrc
-        echo "[ -f $HOME/.zshrc.global ] && source $HOME/.zshrc.global" >> $HOME/.zshrc
-        echo ". $HOME/anaconda3/etc/profile.d/conda.sh" >> $HOME/.zshrc
 
         git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
         ~/.fzf/install --all
@@ -112,14 +116,33 @@ function install_zsh() {
     fi
 }
 
-function main() {
-    # TODO: do i have to put declare -x in front?
-    su $(logname) -c symlinks
-    install_packages
-    su $(logname) -c install_zsh
-    su $(logname) -c install_vim
+function install_miniconda() {
+    mkdir -p ~/miniconda3
+    wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh
+    bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
+    rm -rf ~/miniconda3/miniconda.sh
+    ~/miniconda3/bin/conda init zsh
 }
 
-# TODO: separate functions and source them separately
-export -f symlinks packages install_zsh install_vim
-main
+# install
+su $(logname) -c "$(declare -f install_symlinks); install_symlinks"
+
+install_packages
+
+if ! [ -d "$HOMEDIR/.oh-my-zsh" ]; then
+    su $(logname) -c "$(declare -f install_zsh); install_zsh"
+else
+    echo "oh-my-zsh is installed. skipping..."
+fi
+
+if ! command -v conda; then
+    su $(logname) -c "$(declare -f install_miniconda); install_miniconda"
+else
+    echo "miniconda is installed. skipping..."
+fi
+
+if ! [ -d "$HOMEDIR/.config/nvim" ]; then
+    su $(logname) -c "$(declare -f install_neovim_config); install_neovim_config"
+else
+    echo "neovim config is installed. skipping..."
+fi
