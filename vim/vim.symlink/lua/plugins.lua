@@ -22,11 +22,9 @@ return require('packer').startup {
             on_highlights = function(highlights, colors)
               highlights.Normal = { fg = colors.white, bg = colors.bg }
               highlights.Comment = { fg = '#ffdfaf' }
-              -- highlights.String = { fg = '#00ffff' }
-              -- highlights.Statement = { fg = '#afdf87' }
-              -- 
-              highlights.LineNr = { fg = colors.white }
+              highlights.LineNr = { fg = colors.white, bg = '#4c4e52' }
               highlights.CursorLineNr = { fg = colors.cyan }
+              highlights.SignColumn = { bg = '#4c4e52' }
             end
           }
           vim.cmd('colorscheme tokyonight')
@@ -472,18 +470,12 @@ return require('packer').startup {
       use {
         "karb94/neoscroll.nvim",
         config = function()
-          require('neoscroll').setup({
-            -- All these keys will be mapped to their corresponding default scrolling animation
-            mappings = {'<C-u>', '<C-d>', '<C-b>', '<C-f>', '<C-y>', '<C-e>'},
-            hide_cursor = true,          -- Hide cursor while scrolling
-            stop_eof = true,             -- Stop at <EOF> when scrolling downwards
-            respect_scrolloff = false,   -- Stop scrolling when the cursor reaches the scrolloff margin of the file
-            cursor_scrolls_alone = true, -- The cursor will keep on scrolling even if the window cannot scroll further
-            easing_function = nil,       -- Default easing function
-            pre_hook = nil,              -- Function to run before the scrolling animation starts
-            post_hook = nil,             -- Function to run after the scrolling animation ends
-            performance_mode = false,    -- Disable "Performance Mode" on all buffers.
-        })
+          local t = {}
+          t['<C-u>'] = {'scroll', {'-vim.wo.scroll', 'true', '50'}}
+          t['<C-d>'] = {'scroll', { 'vim.wo.scroll', 'true', '50'}}
+
+          require('neoscroll').setup()
+          require('neoscroll.config').set_mappings(t)
         end
       }
   end,
