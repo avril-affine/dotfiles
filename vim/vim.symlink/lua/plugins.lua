@@ -474,7 +474,9 @@ return require('packer').startup {
           t['<C-u>'] = {'scroll', {'-vim.wo.scroll', 'true', '50'}}
           t['<C-d>'] = {'scroll', { 'vim.wo.scroll', 'true', '50'}}
 
-          require('neoscroll').setup()
+          require('neoscroll').setup({
+            mappings = { '<C-u>', '<C-d>' },
+          })
           require('neoscroll.config').set_mappings(t)
         end
       }
