@@ -370,6 +370,16 @@ return require('packer').startup {
                 override_generic_sorter = true,
                 override_file_sorter = true,
                 case_mode = 'respect_case',
+              },
+              yank_history = {
+                picker = {
+                  select = {
+                  action = nil, -- nil to use default put action
+                  },
+                  telescope = {
+                    mappings = nil, -- nil to use default mappings
+                  },
+                },
               }
             }
           }
@@ -478,6 +488,44 @@ return require('packer').startup {
             mappings = { '<C-u>', '<C-d>' },
           })
           require('neoscroll.config').set_mappings(t)
+        end
+      }
+      use {
+        "gbprod/yanky.nvim",
+        requires = { "nvim-telescope/telescope.nvim" },
+        config = function()
+          local utils = require("yanky.utils")
+          local mapping = require("yanky.telescope.mapping")
+          require("yanky").setup {
+            ring = {
+              history_length = 100,
+              storage = "shada",
+              sync_with_numbered_registers = true,
+              cancel_event = "update",
+            },
+            picker = {
+              telescope = {
+                mappings = {
+                  default = mapping.put("p"),
+                  i = {
+                    ["<c-p>"] = mapping.put("p"),
+                    ["<c-k>"] = mapping.put("P"),
+                    ["<c-x>"] = mapping.delete(),
+                    ["<c-r>"] = mapping.set_register(utils.get_default_register()),
+                  },
+                  n = {
+                    p = mapping.put("p"),
+                    P = mapping.put("P"),
+                    d = mapping.delete(),
+                    r = mapping.set_register(utils.get_default_register())
+                  },
+                }
+              }
+            },
+            system_clipboard = {
+              sync_with_ring = true,
+            },
+          }
         end
       }
   end,
