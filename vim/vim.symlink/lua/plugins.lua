@@ -471,8 +471,8 @@ return require('packer').startup {
         "karb94/neoscroll.nvim",
         config = function()
           local t = {}
-          t['<C-u>'] = {'scroll', {'-vim.wo.scroll', 'true', '50'}}
-          t['<C-d>'] = {'scroll', { 'vim.wo.scroll', 'true', '50'}}
+          t['<C-u>'] = {'scroll', {'-vim.wo.scroll', 'true', '75'}}
+          t['<C-d>'] = {'scroll', { 'vim.wo.scroll', 'true', '75'}}
 
           require('neoscroll').setup({
             mappings = { '<C-u>', '<C-d>' },
