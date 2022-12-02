@@ -19,13 +19,14 @@ return require('packer').startup {
         config = function()
           require('tokyonight').setup {
             style = 'night',
+            dim_inactive = true,
             on_highlights = function(highlights, colors)
               highlights.Normal = { fg = colors.white, bg = colors.bg }
               highlights.Comment = { fg = '#ffdfaf' }
               highlights.LineNr = { fg = colors.white, bg = '#4c4e52' }
               highlights.CursorLineNr = { fg = colors.cyan }
               highlights.SignColumn = { bg = '#4c4e52' }
-            end
+            end,
           }
           vim.cmd('colorscheme tokyonight')
         end
@@ -416,7 +417,6 @@ return require('packer').startup {
           }
         end,
       }
-      use { 'TaDaa/vimade' }
 
       -- UTILS -----------------------------------------------------------------
       use {
