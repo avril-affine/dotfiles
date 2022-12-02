@@ -65,9 +65,9 @@ return require('packer').startup {
             buf_set_keymap('n', '<leader>i', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
             buf_set_keymap('n', '<leader>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
             buf_set_keymap('n', '<leader>r', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-            buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-            buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
-            buf_set_keymap('n', '<leader>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+            buf_set_keymap('n', '[e', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
+            buf_set_keymap('n', ']e', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
+            buf_set_keymap('n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
 
             -- buf_set_keymap('n', '<leader>D', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
             -- buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
@@ -473,7 +473,6 @@ return require('packer').startup {
           require("indent_blankline").setup {
             space_char_blankline = " ",
             show_current_context = true,
-            show_current_context_start = true,
           }
         end
       }
@@ -506,7 +505,7 @@ return require('packer').startup {
             picker = {
               telescope = {
                 mappings = {
-                  default = mapping.put("p"),
+                  default = mapping.set_register(utils.get_default_register()),
                   i = {
                     ["<c-p>"] = mapping.put("p"),
                     ["<c-k>"] = mapping.put("P"),
