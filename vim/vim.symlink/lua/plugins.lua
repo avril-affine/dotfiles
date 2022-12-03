@@ -384,7 +384,8 @@ return require('packer').startup {
               }
             }
           }
-          require('telescope').load_extension('fzf') end,
+          require('telescope').load_extension('fzf')
+        end,
       }
       use {
         'kyazdani42/nvim-tree.lua',
@@ -510,13 +511,13 @@ return require('packer').startup {
                     ["<c-p>"] = mapping.put("p"),
                     ["<c-k>"] = mapping.put("P"),
                     ["<c-x>"] = mapping.delete(),
-                    ["<c-r>"] = mapping.set_register(utils.get_default_register()),
+                    ["<c-y>"] = mapping.set_register(utils.get_default_register()),
                   },
                   n = {
                     p = mapping.put("p"),
                     P = mapping.put("P"),
                     d = mapping.delete(),
-                    r = mapping.set_register(utils.get_default_register())
+                    y = mapping.set_register(utils.get_default_register()),
                   },
                 }
               }
@@ -525,6 +526,9 @@ return require('packer').startup {
               sync_with_ring = true,
             },
           }
+
+          require("telescope").load_extension("yank_history")
+          vim.api.nvim_set_keymap("n", "<leader>y", "<cmd>Telescope yank_history<CR>", {})
         end
       }
   end,
