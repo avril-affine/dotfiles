@@ -20,6 +20,7 @@ PURE_GIT_UNTRACKED_DIRTY=0  # ignore untracked files in git
 # RPROMPT="%F{8}${SSH_TTY:+%n@%m}%f"
 
 fpath=( "$HOME/.zfunctions" $fpath )
+autoload -U conda-activate
 
 prompt pure
 PROMPT='%F{white}%* '$PROMPT
