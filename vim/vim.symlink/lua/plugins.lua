@@ -79,10 +79,22 @@ return require('packer').startup {
             -- buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
           end
 
-          -- LSP: pyright
-          require('lspconfig').pyright.setup { on_attach=on_attach }
+          -- LSP: python
+          require('lspconfig').pylsp.setup {
+            on_attach=on_attach,
+            plugins = {
+              pycodestyle = { enabled = false },
+              pyflakes = { enabled = false },
+              mccabe = { enabled = false },
+              yapf = { enabled = false },
+              rope_completion = {
+                enabled = true,
+                eager = true,
+              },
+            },
+          }
 
-          -- LSP: sumneko_lua
+          -- LSP: lua
           local sumneko_binary_path = vim.fn.resolve(vim.fn.exepath('lua-language-server'))
           local sumneko_root_path = vim.fn.fnamemodify(sumneko_binary_path, ':h:h')
           local runtime_path = vim.split(package.path, ';')
@@ -124,11 +136,13 @@ return require('packer').startup {
             cmd = { dart_binary_path, dart_root_path .. '/snapshots/analysis_server.dart.snapshot', '--lsp' },
           }
 
+          -- LSP: rust
           local rust_analyzer_binary_path = vim.fn.resolve(vim.fn.exepath('rust-analyzer'))
           require('lspconfig').rust_analyzer.setup {
             on_attach = on_attach,
           }
 
+          -- LSP: typescript
           require('lspconfig').tsserver.setup {
             on_attach = on_attach,
           }
@@ -396,28 +410,6 @@ return require('packer').startup {
           vim.api.nvim_set_keymap('n', '<leader>k', ':NvimTreeToggle<CR>', { nowait = true, silent = true })
         end,
       }
-      use {
-        'kdheepak/lazygit.nvim',
-        config = function()
-          vim.api.nvim_set_keymap('n', '<leader>g', ':LazyGit<CR>', { nowait = true, silent = true })
-        end,
-      }
-      use { 'tpope/vim-fugitive' }
-      use {
-        'ruanyl/vim-gh-line',
-        config = function() vim.g.gh_line_blame_map = '<leader>b' end,
-      }
-      use {
-        'folke/todo-comments.nvim',
-        requires = { 'nvim-lua/plenary.nvim' },
-        config = function()
-          require('todo-comments').setup {
-              -- your configuration comes here
-              -- or leave it empty to use the default settings
-              -- refer to the configuration section below
-          }
-        end,
-      }
 
       -- UTILS -----------------------------------------------------------------
       use {
@@ -530,6 +522,28 @@ return require('packer').startup {
           require("telescope").load_extension("yank_history")
           vim.api.nvim_set_keymap("n", "<leader>y", "<cmd>Telescope yank_history<CR>", {})
         end
+      }
+      use {
+        'kdheepak/lazygit.nvim',
+        config = function()
+          vim.api.nvim_set_keymap('n', '<leader>g', ':LazyGit<CR>', { nowait = true, silent = true })
+        end,
+      }
+      use { 'tpope/vim-fugitive' }
+      use {
+        'ruanyl/vim-gh-line',
+        config = function() vim.g.gh_line_blame_map = '<leader>b' end,
+      }
+      use {
+        'folke/todo-comments.nvim',
+        requires = { 'nvim-lua/plenary.nvim' },
+        config = function()
+          require('todo-comments').setup {
+              -- your configuration comes here
+              -- or leave it empty to use the default settings
+              -- refer to the configuration section below
+          }
+        end,
       }
   end,
   config = {
