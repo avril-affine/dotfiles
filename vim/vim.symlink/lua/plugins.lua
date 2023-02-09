@@ -82,14 +82,23 @@ return require('packer').startup {
           -- LSP: python
           require('lspconfig').pylsp.setup {
             on_attach=on_attach,
-            plugins = {
-              pycodestyle = { enabled = false },
-              pyflakes = { enabled = false },
-              mccabe = { enabled = false },
-              yapf = { enabled = false },
-              rope_completion = {
-                enabled = true,
-                eager = true,
+            settings = {
+              pylsp = {
+                configurationSources = { "flake8" },
+                plugins = {
+                  pycodestyle = { enabled = false },
+                  pyflakes = { enabled = false },
+                  mccabe = { enabled = false },
+                  yapf = { enabled = false },
+                  rope_completion = {
+                    enabled = true,
+                    eager = true,
+                  },
+                  flake8 = {
+                    enabled = true,
+                    maxLineLength = 100,
+                  },
+                },
               },
             },
           }
