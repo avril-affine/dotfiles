@@ -20,6 +20,13 @@
     last = log -1 HEAD
     rbo = rebase origin/master
     rbc = rebase --continue
+    lol = log --graph --decorate --pretty=oneline --abbrev-commit
+    lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
+[color]
+    branch = auto
+    diff = auto
+    interactive = auto
+    status = auto
 [mergetool]
 	path = vim
 [filter "lfs"]
