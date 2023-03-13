@@ -56,9 +56,8 @@ vim.api.nvim_set_keymap('i', '¬', ":vertical resize +1<CR>", win_keyopts)   -- 
 vim.api.nvim_set_keymap('n', '¬', ":vertical resize +1<CR>", win_keyopts)
 vim.api.nvim_set_keymap('v', '¬', ":vertical resize +1<CR>", win_keyopts)
 
-vim.api.nvim_set_keymap('n', '<leader>c', ':tabnew<CR>', win_keyopts)        -- create new tab
-vim.api.nvim_set_keymap('n', '<leader>n', ':tabnext<CR>', win_keyopts)       -- move to next tab
-vim.api.nvim_set_keymap('n', '<leader>p', ':tabprevious<CR>', win_keyopts)   -- move to previous tab
+vim.api.nvim_set_keymap('n', '<leader>n', ':cnext<CR>', win_keyopts)       -- move to next item in quickfix list
+vim.api.nvim_set_keymap('n', '<leader>p', ':cprevious<CR>', win_keyopts)   -- move to previous item in quickfix list
 
 -- Underline current line
 vim.cmd([[
