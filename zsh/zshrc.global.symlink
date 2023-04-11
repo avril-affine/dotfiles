@@ -51,6 +51,6 @@ setopt nonomatch
 # zsh-autosuggestions
 bindkey '^ ' autosuggest-accept
 
-if [ ! -f ~/.cargo/env ]; then
+if [ -f ~/.cargo/env ]; then
   source ~/.cargo/env
 fi
