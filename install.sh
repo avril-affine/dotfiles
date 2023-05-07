@@ -78,28 +78,31 @@ function install_neovim_config() {
 
     git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 
-    vim +PackerInstall +PackerCompile +qall
+    nvim +PackerInstall +PackerCompile +qall
 
     pip install neovim
 }
 
 function install_packages() {
     if [[ $OSTYPE == 'darwin'* ]]; then
-	if ! command -v brew &> /dev/null; then
-	    su $(logname) -c "/bin/bash -c $(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-	fi
-	su $(logname) -c "brew install $BREW_PKGS"
+        if ! command -v brew &> /dev/null; then
+            su $(logname) -c "/bin/bash -c $(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+        fi
+        su $(logname) -c "brew install $BREW_PKGS"
     else
         add-apt-repository -y ppa:neovim-ppa/unstable
         apt update
         apt install -y --no-install-recommends $APT_PKGS
+        update-alternatives --install $(which vim) vim $(which nvim) 1
 
         LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep '"tag_name":' |  sed -E 's/.*"v*([^"]+)".*/\1/')
         curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
         tar xf lazygit.tar.gz -C /usr/local/bin lazygit
+        rm lazygit.tar.gz
     fi
 
     npm install -g pyright
+    npm install -g pure-prompt
 }
 
 function install_zsh() {
@@ -107,6 +110,7 @@ function install_zsh() {
 
     # install oh-my-zsh
     sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+    echo "[ -f ~/.zshrc.global ] && source ~/.zshrc.global" >> ~/.zshrc
 
     # zsh plugins
     if [ $? -eq 0 ]; then
@@ -128,6 +132,7 @@ function install_miniconda() {
     bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
     rm -rf ~/miniconda3/miniconda.sh
     ~/miniconda3/bin/conda init zsh
+    . "$HOME/miniconda3/etc/profile.d/conda.sh"
 }
 
 # install
