@@ -424,12 +424,17 @@ return require('packer').startup {
         end,
       }
       use {
-        'kyazdani42/nvim-tree.lua',
-        requires = { 'kyazdani42/nvim-web-devicons' },
-        config = function()
-          require'nvim-tree'.setup {
-          }
-          vim.api.nvim_set_keymap('n', '<leader>k', ':NvimTreeToggle<CR>', { nowait = true, silent = true })
+        'stevearc/oil.nvim',
+        config = function ()
+          require('oil').setup({
+            columns = {
+              "icon",
+              "permissions",
+              "size",
+              "mtime",
+            },
+          })
+          vim.keymap.set('n', '<leader>k', require('oil').open_float, { desc = 'Open parent directory' })
         end,
       }
 
