@@ -31,18 +31,3 @@ set_keymap({ "i", "n", "v" }, "¬", ":vertical resize +1<cr>", { nowait = true, 
 
 set_keymap("n", "<leader>n", ":cnext<cr>", { nowait = true, silent = true }) -- move to next item in quickfix list
 set_keymap("n", "<leader>p", ":cprevious<cr>", { nowait = true, silent = true }) -- move to previous item in quickfix list
-
--- LSP
-set_keymap("n", "K", function() vim.lsp.buf.hover() end)
-set_keymap("n", "<leader>d", function() vim.lsp.buf.definition() end)
-set_keymap("n", "<leader>i", function() vim.lsp.buf.implementation() end)
-set_keymap("n", "<leader>D", function() vim.lsp.buf.type_definition() end)
-set_keymap("n", "<leader>r", function() vim.lsp.buf.references() end)
-set_keymap("n", "<leader>e", function() vim.diagnostic.open_float() end)
-set_keymap("n", "<leader>l", function() require("lsp_lines").toggle() end, { nowait = true, silent = true })
-
--- Navigation
-set_keymap("n", "<leader>k", function() require("oil").open_float() end)
-
--- UI
-set_keymap("n", "<leader>g", function() vim.cmd("LazyGit") end, { nowait = true, silent = true })

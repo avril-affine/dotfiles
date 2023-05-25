@@ -14,6 +14,10 @@ return {
     },
     {
         "kdheepak/lazygit.nvim",
+        lazy = false,
+        keys = {
+            { "<leader>g", function() vim.cmd("LazyGit") end, desc = "Open lazy git", nowait = true, silent = true },
+        },
     },
     {
         "folke/todo-comments.nvim",

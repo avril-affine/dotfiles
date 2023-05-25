@@ -50,6 +50,14 @@ return {
                 end,
             },
         },
+        keys = {
+            { "K", function() vim.lsp.buf.hover() end, desc = "LSP hover" },
+            { "<leader>d", function() vim.lsp.buf.definition() end, desc =  "goto definition" },
+            { "<leader>i", function() vim.lsp.buf.implementation() end, desc = "goto implementation" },
+            { "<leader>D", function() vim.lsp.buf.type_definition() end, desc = "goto type definition" },
+            { "<leader>r", function() vim.lsp.buf.references() end, desc = "find references" },
+            { "<leader>e", function() vim.diagnostic.open_float() end, desc = "open diagnostics" },
+        },
         opts = {
             diagnostics = {
                 underline = true,
@@ -231,6 +239,9 @@ return {
     {
         "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
         dependencies = { "neovim/nvim-lspconfig" },
+        keys = {
+            { "n", "<leader>l", function() require("lsp_lines").toggle() end, desc = "toggle lsp lines", nowait = true, silent = true },
+        },
         init = function()
             require("lsp_lines").setup()
             require("lsp_lines").toggle()

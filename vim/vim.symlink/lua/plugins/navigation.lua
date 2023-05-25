@@ -25,6 +25,10 @@ return {
 	},
 	{
 		"stevearc/oil.nvim",
+        lazy = false,
+        keys = {
+            { "<leader>k", function() require("oil").open_float() end },
+        },
 		init = function()
 			require("oil").setup({
 				columns = {
