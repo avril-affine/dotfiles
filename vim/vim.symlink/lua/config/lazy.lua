@@ -11,16 +11,18 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 
-require("lazy").setup({
-	spec = {
-		{ import = "plugins" },
-	},
+require("lazy").setup("plugins", {
+	-- spec = {
+	-- 	{ import = "plugins" },
+	-- },
 	defaults = {
 		lazy = false,
 		version = false, -- always use the latest git commit
 	},
-    colorscheme = function() require("tokyonight").load() end,
 	performance = {
+        cache = {
+            enable = true,
+        },
 		rtp = {
 			disabled_plugins = {
 				"gzip",
