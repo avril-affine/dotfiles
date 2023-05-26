@@ -175,4 +175,20 @@ return {
             { "<leader>bD", function() require("mini.bufremove").delete(0, true) end, desc = "Delete Buffer (Force)" },
         },
     },
+    {
+        "stevearc/aerial.nvim",
+        dependencies = {
+            "nvim-treesitter/nvim-treesitter",
+            "nvim-tree/nvim-web-devicons",
+        },
+        keys = {
+            { "<leader>a", "<cmd>AerialToggle!<CR>", desc = "AerialToggle" },
+            { "{", "<cmd>AerialPrev<CR>", desc = "AerialPrev" },
+            { "}", "<cmd>AerialNext<CR>", desc = "AerialNext" },
+        },
+        opts = {
+            backends = { "treesitter" },
+            default_direction = { "prefer_right" },
+        },
+    },
 }
