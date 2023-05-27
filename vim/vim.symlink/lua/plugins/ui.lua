@@ -1,16 +1,10 @@
 return {
     {
         "karb94/neoscroll.nvim",
-        init = function()
-            local t = {}
-            t["<C-u>"] = { "scroll", { "-vim.wo.scroll", "true", "75" } }
-            t["<C-d>"] = { "scroll", { "vim.wo.scroll", "true", "75" } }
-
-            require("neoscroll").setup({
-                mappings = { "<C-u>", "<C-d>" },
-            })
-            require("neoscroll.config").set_mappings(t)
-        end,
+        keys = {
+            { "<C-u", function() require("neoscroll").scroll(-vim.wo.scroll, true, 75) end, silent = true, noremap = true },
+            { "<C-d", function() require("neoscroll").scroll(vim.wo.scroll, true, 75) end, silent = true, noremap = true },
+        },
     },
     {
         "kdheepak/lazygit.nvim",
