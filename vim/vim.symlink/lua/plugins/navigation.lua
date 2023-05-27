@@ -3,6 +3,7 @@ return {
 		"nvim-telescope/telescope.nvim",
 		dependencies = { "nvim-lua/plenary.nvim" },
 		init = function()
+            local actions = require("telescope.actions")
 			require("telescope").setup({
 				extensions = {
 					fzf = {
@@ -12,6 +13,14 @@ return {
 						case_mode = "respect_case",
 					},
 				},
+                defaults = {
+                    mappings = {
+                        n  = {
+                            ["<leader>qf"] = actions.send_selected_to_qflist + actions.open_qflist,
+                            ["<leader>qF"] = actions.smart_send_to_qflist + actions.open_qflist,
+                        },
+                    },
+                },
 			})
 		end,
 	},
