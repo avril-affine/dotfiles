@@ -1,9 +1,10 @@
 return {
     {
         "karb94/neoscroll.nvim",
+        opts = {},
         keys = {
-            { "<C-u", function() require("neoscroll").scroll(-vim.wo.scroll, true, 75) end, silent = true, noremap = true },
-            { "<C-d", function() require("neoscroll").scroll(vim.wo.scroll, true, 75) end, silent = true, noremap = true },
+            { "<C-u>", function() require("neoscroll").scroll(-vim.wo.scroll, true, 50) end, silent = true, noremap = true },
+            { "<C-d>", function() require("neoscroll").scroll(vim.wo.scroll, true, 50) end, silent = true, noremap = true },
         },
     },
     {
