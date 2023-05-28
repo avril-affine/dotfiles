@@ -12,13 +12,35 @@ end
 vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 
 require("lazy").setup("plugins", {
-	-- spec = {
-	-- 	{ import = "plugins" },
-	-- },
 	defaults = {
 		lazy = false,
 		version = false, -- always use the latest git commit
 	},
+    ui = {
+        icons = {
+            cmd = " ",
+            config = "",
+            event = "",
+            ft = " ",
+            init = " ",
+            import = " ",
+            keys = " ",
+            lazy = "󰒲 ",
+            loaded = "●",
+            not_loaded = "○",
+            plugin = " ",
+            runtime = " ",
+            source = " ",
+            start = "",
+            task = "✔ ",
+            list = {
+                "●",
+                "➜",
+                "★",
+                "‒",
+            },
+        },
+    },
 	performance = {
         cache = {
             enable = true,

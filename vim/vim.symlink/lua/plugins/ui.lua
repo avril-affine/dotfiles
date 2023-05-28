@@ -76,7 +76,10 @@ return {
     -- bufferline
     {
         "akinsho/bufferline.nvim",
-        dependencies = { "LazyVim/LazyVim" },
+        dependencies = {
+            "LazyVim/LazyVim",
+            "nvim-tree/nvim-web-devicons",
+        },
         event = "VeryLazy",
         keys = {
             { "<leader>bp", "<Cmd>BufferLineTogglePin<CR>", desc = "Toggle pin" },
