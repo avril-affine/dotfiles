@@ -135,10 +135,23 @@ function install_miniconda() {
     . "$HOME/miniconda3/etc/profile.d/conda.sh"
 }
 
+function install_fonts() {
+    su -c $(logname) -c "git clone https://github.com/Karmenzind/monaco-nerd-fonts ~/monaco-nerd-fonts"
+    if [[ $OSTYPE = 'darwin'* ]]; then
+        su -c $(logname) -c ' \
+            mkdir -p ~/Library/Fonts; \
+            cp ~/monaco-nerd-fonts/fonts/* ~/Library/Fonts/;
+        '
+    else
+        fc-cache -fv ~/monaco-nerd-fonts/fonts
+    fi
+}
+
 # install
 su $(logname) -c "$(declare -f install_symlinks); install_symlinks"
 
 install_packages
+install_fonts
 
 if ! [ -d "$HOMEDIR/.oh-my-zsh" ]; then
     su $(logname) -c "$(declare -f install_zsh); install_zsh"
