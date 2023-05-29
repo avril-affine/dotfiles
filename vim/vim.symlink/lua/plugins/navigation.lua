@@ -204,4 +204,7 @@ return {
             default_direction = { "prefer_right" },
         },
     },
+    {
+        "sindrets/diffview.nvim",
+    },
 }
