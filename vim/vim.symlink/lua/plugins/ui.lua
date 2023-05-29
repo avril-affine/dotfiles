@@ -82,17 +82,33 @@ return {
         },
         event = "VeryLazy",
         keys = {
-            { "<leader>bp", "<Cmd>BufferLineTogglePin<CR>", desc = "Toggle pin" },
-            { "<leader>bP", "<Cmd>BufferLineGroupClose ungrouped<CR>", desc = "Delete non-pinned buffers" },
+            { "<leader>bb", "<cmd>BufferLineTogglePin<CR>", desc = "Toggle pin" },
+            { "<leader>bD", "<cmd>BufferLineGroupClose ungrouped<CR>", desc = "Delete non-pinned buffers" },
+            { "<leader>bn", "<cmd>BufferLineCycleNext<CR>", desc = "move to next buffer" },
+            { "<leader>bp", "<cmd>bBufferLineCyclePrevious<CR>", desc = "move to previous buffer" },
+            { "<leader>1", "<cmd>BufferLineGoToBuffer 1<CR>", desc = "Go to buffer #" },
+            { "<leader>2", "<cmd>BufferLineGoToBuffer 2<CR>", desc = "Go to buffer #" },
+            { "<leader>3", "<cmd>BufferLineGoToBuffer 3<CR>", desc = "Go to buffer #" },
+            { "<leader>4", "<cmd>BufferLineGoToBuffer 4<CR>", desc = "Go to buffer #" },
+            { "<leader>5", "<cmd>BufferLineGoToBuffer 5<CR>", desc = "Go to buffer #" },
+            { "<leader>6", "<cmd>BufferLineGoToBuffer 6<CR>", desc = "Go to buffer #" },
+            { "<leader>7", "<cmd>BufferLineGoToBuffer 7<CR>", desc = "Go to buffer #" },
+            { "<leader>8", "<cmd>BufferLineGoToBuffer 8<CR>", desc = "Go to buffer #" },
+            { "<leader>9", "<cmd>BufferLineGoToBuffer 9<CR>", desc = "Go to buffer #" },
+            { "<leader>$", "<cmd>BufferLineGoToBuffer -1<CR>", desc = "Go to buffer #" },
         },
-        opts = {
-            options = {
-                -- stylua: ignore
+        opts = function(_, opts)
+            opts.options = {
+                modified_icon = "●",
+                numbers = function(o)
+                    if vim.api.nvim_get_current_buf() == o.id then return "" end
+                    return o.ordinal
+                end,
                 close_command = function(n) require("mini.bufremove").delete(n, false) end,
-                -- stylua: ignore
                 right_mouse_command = function(n) require("mini.bufremove").delete(n, false) end,
                 diagnostics = "nvim_lsp",
                 always_show_bufferline = false,
+                show_buffer_icons = false,
                 diagnostics_indicator = function(_, _, diag)
                     local icons = require("lazyvim.config").icons.diagnostics
                     local ret = (diag.error and icons.Error .. diag.error .. " " or "")
@@ -107,8 +123,19 @@ return {
                         text_align = "left",
                     },
                 },
-            },
-        },
+            }
+            opts.highlights = {
+                buffer_selected = {
+                    bg = { highlight = "Search", attribute = "bg" },
+                },
+                close_button_selected = {
+                    bg = { highlight = "Search", attribute = "bg" },
+                },
+                separator = {
+                    fg = { highlight = "Comment", attribute = "fg" },
+                },
+            }
+        end,
     },
 
     -- statusline
