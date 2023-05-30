@@ -122,20 +122,34 @@ return {
                         text_align = "left",
                     },
                 },
+                separator_style = "thick",
             }
             opts.highlights = {
                 buffer_selected = {
-                    bg = { highlight = "Search", attribute = "bg" },
-                },
-                numbers_selected = {
-                    bg = { highlight = "Search", attribute = "bg" },
-                },
-                close_button_selected = {
-                    bg = { highlight = "Search", attribute = "bg" },
+                    fg = "white",
+                    bold = true,
+                    underline = true,
+                    italic = false,
                 },
                 separator = {
                     fg = { highlight = "Comment", attribute = "fg" },
+                    bold = true,
                 },
+                separator_selected = {
+                    fg = { highlight = "Comment", attribute = "fg" },
+                    bold = true,
+                },
+                hint_selected = { fg = "NONE", underline = true, italic = false },
+                info_selected = { fg = "NONE", underline = true, italic = false },
+                warning_selected = { fg = "NONE", underline = true,  italic = false },
+                error_selected = { fg = "NONE", underline = true, italic = false },
+                warning_diagnostic_selected = { italic = false },
+                hint_diagnostic_selected = { italic = false },
+                info_diagnostic_selected = { italic = false },
+                diagnostic_selected = { italic = false },
+                error_diagnostic_selected = { italic = false },
+                numbers_selected  = { underline = false },
+                diagnostic_selected = { underline = false },
             }
         end,
     },
