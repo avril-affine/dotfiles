@@ -9,7 +9,6 @@
   "cmp-emoji": { "branch": "main", "commit": "19075c36d5820253d32e2478b6aaf3734aeaafa0" },
   "cmp-nvim-lsp": { "branch": "main", "commit": "0e6b2ed705ddcff9738ec4ea838141654f12eeef" },
   "cmp-path": { "branch": "main", "commit": "91ff86cd9c29299a64f968ebb45846c485725f23" },
-  "diffview.nvim": { "branch": "main", "commit": "bff58a6ea3e081ca50049700f9848b2f84ea57be" },
   "dressing.nvim": { "branch": "master", "commit": "f19cbd56f7f8cad212c58a7285d09c5d9c273896" },
   "indent-blankline.nvim": { "branch": "master", "commit": "ceaf730b13e332cd76600d9795722413c236c684" },
   "isort.nvim": { "branch": "master", "commit": "0617e6bf3823b36a5cb17c047dcee02c5b77b33c" },
@@ -43,6 +42,7 @@
   "telescope.nvim": { "branch": "master", "commit": "6d3fbffe426794296a77bb0b37b6ae0f4f14f807" },
   "todo-comments.nvim": { "branch": "main", "commit": "09b0b17d824d2d56f02ff15967e8a2499a89c731" },
   "tokyonight.nvim": { "branch": "main", "commit": "90b711c052bb3cd9692922e16bcf3861344ecf75" },
+  "vim-fugitive": { "branch": "master", "commit": "5f0d280b517cacb16f59316659966c7ca5e2bea2" },
   "vim-startuptime": { "branch": "master", "commit": "8eed46917c5c4882b295729ce053265c2a74ac4d" },
   "vim-swap": { "branch": "master", "commit": "9358bfdc5e377aa13e7c2c2dd8699ba32b0dcf83" }
 }
