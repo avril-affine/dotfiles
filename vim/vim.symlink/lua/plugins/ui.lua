@@ -341,7 +341,6 @@ return {
                     fg = { highlight = "Comment", attribute = "fg" },
                     bold = true,
                 },
-                --
                 -- bufferline selected highlights
                 hint_selected = { fg = "NONE", underline = true, italic = false },
                 info_selected = { fg = "NONE", underline = true, italic = false },

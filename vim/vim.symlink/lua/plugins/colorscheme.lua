@@ -13,8 +13,8 @@ return {
                      hl.LineNr = { fg = "#ffffff", bg = "#4c4e52" }
                      hl.CursorLineNr = { fg = c.cyan, bg = "#4c4e52", bold = true }
                      hl.SignColumn = { bg = "#4c4e52" }
-
                      hl.DiagnosticUnnecessary = { fg = c.none, underline = true }
+                     hl.WinSeparator = hl.LineNr
                  end,
             })
             vim.cmd.colorscheme("tokyonight")
