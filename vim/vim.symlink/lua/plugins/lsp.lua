@@ -328,9 +328,7 @@ return {
         opts = {
             messages = { enabled = false },
             notify = { enabled = false },
-            presets = {
-                bottom_search = true,
-            },
+            presets = { lsp_doc_border = true },
             lsp = {
                 progress = {
                     enabled = true,
