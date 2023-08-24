@@ -12,13 +12,6 @@ return {
         end,
     },
     {
-        "kdheepak/lazygit.nvim",
-        lazy = false,
-        keys = {
-            { "<leader>g", function() vim.cmd("LazyGit") end, desc = "Open lazy git", nowait = true, silent = true },
-        },
-    },
-    {
         "folke/todo-comments.nvim",
         dependencies = { "nvim-lua/plenary.nvim" },
     },
@@ -51,23 +44,6 @@ return {
                 Util.on_very_lazy(function()
                     vim.notify = require("notify")
                 end)
-            end
-        end,
-    },
-
-    -- better vim.ui
-    {
-        "stevearc/dressing.nvim",
-        init = function()
-            ---@diagnostic disable-next-line: duplicate-set-field
-            vim.ui.select = function(...)
-                require("lazy").load({ plugins = { "dressing.nvim" } })
-                return vim.ui.select(...)
-            end
-            ---@diagnostic disable-next-line: duplicate-set-field
-            vim.ui.input = function(...)
-                require("lazy").load({ plugins = { "dressing.nvim" } })
-                return vim.ui.input(...)
             end
         end,
     },
@@ -246,33 +222,8 @@ return {
         end,
     },
 
-    -- lsp symbol navigation for lualine
-    {
-        "SmiteshP/nvim-navic",
-        lazy = true,
-        init = function()
-            vim.g.navic_silence = true
-            require("lazyvim.util").on_attach(function(client, buffer)
-                if client.server_capabilities.documentSymbolProvider then
-                    require("nvim-navic").attach(client, buffer)
-                end
-            end)
-        end,
-        opts = function()
-            return {
-                separator = " ",
-                highlight = true,
-                depth_limit = 5,
-                icons = require("lazyvim.config").icons.kinds,
-            }
-        end,
-    },
-
     -- icons
     { "nvim-tree/nvim-web-devicons", lazy = true },
-
-    -- ui components
-    { "MunifTanjim/nui.nvim", lazy = true },
 
     -- bufferline
     {
