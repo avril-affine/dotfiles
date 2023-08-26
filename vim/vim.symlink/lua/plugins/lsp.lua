@@ -318,7 +318,6 @@ return {
             }
         end,
     },
-    -- lazy.nvim
     {
         "folke/noice.nvim",
         dependencies = {

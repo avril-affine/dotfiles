@@ -162,10 +162,10 @@ return {
             local opts = require("lazy.core.plugin").values(plugin, "opts", false)
             local mappings = {
                 { opts.mappings.add, desc = "Add surrounding", mode = { "n", "v" } },
-                { opts.mappings.delete, desc = "Delete surrounding" },
-                { opts.mappings.find, desc = "Find right surrounding" },
-                { opts.mappings.find_left, desc = "Find left surrounding" },
-                { opts.mappings.replace, desc = "Replace surrounding" },
+                -- { opts.mappings.delete, desc = "Delete surrounding" },
+                -- { opts.mappings.find, desc = "Find right surrounding" },
+                -- { opts.mappings.find_left, desc = "Find left surrounding" },
+                -- { opts.mappings.replace, desc = "Replace surrounding" },
             }
             mappings = vim.tbl_filter(function(m)
                 return m[1] and #m[1] > 0
@@ -175,10 +175,10 @@ return {
         opts = {
             mappings = {
                 add = "Sa", -- Add surrounding in Normal and Visual modes
-                delete = "Sd", -- Delete surrounding
-                find = "Sf", -- Find surrounding (to the right)
-                find_left = "SF", -- Find surrounding (to the left)
-                replace = "Sr", -- Replace surrounding
+                -- delete = "Sd", -- Delete surrounding
+                -- find = "Sf", -- Find surrounding (to the right)
+                -- find_left = "SF", -- Find surrounding (to the left)
+                -- replace = "Sr", -- Replace surrounding
             },
         },
     },
