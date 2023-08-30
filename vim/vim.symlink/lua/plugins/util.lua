@@ -33,17 +33,16 @@ return {
         },
         keys = {
             -- Launch panel if nothing is typed after <leader>z
-            { "<leader>z", function() require("telekasten").panel() end, desc = "" },
+            { "<leader>z", function() require("telekasten").panel() end, desc = "Telekasten panel" },
 
             -- Most used functions
-            { "<leader>zf", function() require("telekasten").find_notes() end, desc = "" },
-            { "<leader>zs", function() require("telekasten").search_notes() end, desc = "" },
-            { "<leader>zt", function() require("telekasten").goto_today() end, desc = "" },
-            { "<leader>zd", function() require("telekasten").follow_link() end, desc = "" },
-            { "<leader>zN", function() require("telekasten").new_note() end, desc = "" },
-            { "<leader>zn", function() require("telekasten").template_note() end, desc = "" },
-            { "<leader>zc", function() require("telekasten").show_calendar() end, desc = "" },
-            { "<leader>zb", function() require("telekasten").show_backlinks() end, desc = "" },
+            { "<leader>zf", function() require("telekasten").find_notes() end, desc = "Telekasten find notes" },
+            { "<leader>zs", function() require("telekasten").search_notes() end, desc = "Telekasten search notes" },
+            { "<leader>zt", function() require("telekasten").goto_today() end, desc = "Telekasten goto today" },
+            { "<leader>zd", function() require("telekasten").follow_link() end, desc = "Telekasten follow link" },
+            { "<leader>zn", function() require("telekasten").new_note() end, desc = "Telekasten new note" },
+            { "<leader>zc", function() require("telekasten").show_calendar() end, desc = "Telekasten show calendar" },
+            { "<leader>zb", function() require("telekasten").show_backlinks() end, desc = "Telekasten show backlinks" },
         },
         opts = function(_, opts)
             -- mkdir if not exists
