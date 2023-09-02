@@ -143,6 +143,7 @@ return {
                     },
                 },
                 vimls = {},
+                zls = {},
             },
             setup = {},
         },
