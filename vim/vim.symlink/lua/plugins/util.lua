@@ -27,7 +27,6 @@ return {
     -- note taking
     {
         "renerocksai/telekasten.nvim",
-        lazy = false,
         dependencies = {
             "nvim-telescope/telescope.nvim",
         },
@@ -70,5 +69,15 @@ return {
             opts.dailies_create_nonexisting = true
             opts.weeklies_create_nonexisting = true
         end,
+    },
+
+    {
+        "pwntester/octo.nvim",
+        lazy = false,
+        requires = {
+            "nvim-lua/plenary.nvim",
+            "nvim-telescope/telescope.nvim",
+            "nvim-tree/nvim-web-devicons",
+        },
     },
 }
