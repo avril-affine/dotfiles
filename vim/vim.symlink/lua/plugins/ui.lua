@@ -37,21 +37,15 @@ return {
                 return math.floor(vim.o.columns * 0.75)
             end,
         },
-        init = function()
-            -- when noice is not enabled, install notify on VeryLazy
-            local Util = require("lazyvim.util")
-            if not Util.has("noice.nvim") then
-                Util.on_very_lazy(function()
-                    vim.notify = require("notify")
-                end)
-            end
-        end,
     },
 
     -- statusline
     {
         "nvim-lualine/lualine.nvim",
-        dependencies = { "LazyVim/LazyVim" },
+        dependencies = {
+            "LazyVim/LazyVim",
+            "folke/noice.nvim",
+        },
         event = "VeryLazy",
         opts = function()
             local icons = require("lazyvim.config").icons
@@ -230,11 +224,13 @@ return {
         "akinsho/bufferline.nvim",
         dependencies = {
             "LazyVim/LazyVim",
+            "echasnovski/mini.bufremove",
             "nvim-tree/nvim-web-devicons",
         },
         event = "VeryLazy",
         keys = {
             { "<leader>bb", "<cmd>BufferLineTogglePin<CR>", desc = "Toggle pin" },
+            { "<leader>bb", "<cmd>bd<CR>", desc = "Delete current buffer" },
             { "<leader>bD", "<cmd>BufferLineCloseRight<CR>", desc = "Delete all buffers to the right" },
             { "<leader>bn", "<cmd>BufferLineCycleNext<CR>", desc = "move to next buffer" },
             { "<leader>bp", "<cmd>bBufferLineCyclePrevious<CR>", desc = "move to previous buffer" },
@@ -257,7 +253,6 @@ return {
                     return o.ordinal
                 end,
                 close_command = function(n) require("mini.bufremove").delete(n, false) end,
-                right_mouse_command = function(n) require("mini.bufremove").delete(n, false) end,
                 diagnostics = "nvim_lsp",
                 always_show_bufferline = false,
                 show_buffer_icons = false,
