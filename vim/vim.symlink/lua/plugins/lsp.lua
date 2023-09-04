@@ -266,9 +266,9 @@ return {
             local luasnip = require("luasnip")
             local cmp = require("cmp")
             local has_words_before = function()
-              unpack = unpack or table.unpack
-              local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-              return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+                unpack = unpack or table.unpack
+                local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+                return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
             end
             return {
                 completion = {
@@ -326,20 +326,24 @@ return {
         },
         event = "VeryLazy",
         opts = {
+            presets = {
+                lsp_doc_border = true,
+                command_palette = true,
+            },
             messages = { enabled = false },
             notify = { enabled = false },
-            presets = { lsp_doc_border = true },
             lsp = {
                 progress = {
-                    enabled = true,
-                    -- Lsp Progress is formatted using the builtins for lsp_progress. See config.format.builtin
-                    -- See the section on formatting for more details on how to customize.
-                    --- @type NoiceFormat|string
-                    format = "lsp_progress",
-                    --- @type NoiceFormat|string
-                    format_done = "lsp_progress_done",
-                    throttle = 1000 / 30, -- frequency to update lsp progress message
-                    view = "mini",
+                    enabled = false,
+                    -- enabled = true,
+                    -- -- Lsp Progress is formatted using the builtins for lsp_progress. See config.format.builtin
+                    -- -- See the section on formatting for more details on how to customize.
+                    -- --- @type NoiceFormat|string
+                    -- format = "lsp_progress",
+                    -- --- @type NoiceFormat|string
+                    -- format_done = "lsp_progress_done",
+                    -- throttle = 1000 / 30, -- frequency to update lsp progress message
+                    -- view = "notify",
                 },
                 override = {
                     -- override cmp documentation with Noice (needs the other options to work)
