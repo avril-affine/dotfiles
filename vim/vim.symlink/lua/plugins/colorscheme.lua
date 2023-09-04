@@ -17,7 +17,6 @@ return {
                      hl.WinSeparator = hl.LineNr
                  end,
             })
-            vim.cmd.colorscheme("tokyonight")
 
             -- highlight cursorline
             vim.cmd.set("cursorline")
@@ -28,5 +27,31 @@ return {
                 command = "setlocal nocursorline",
             })
         end
-    }
+    },
+    {
+        "catppuccin/nvim",
+        name = "catppuccin",
+        priority = 1000,
+        opts = {
+            no_italic = true,
+            -- color_overrides = {
+			-- 	mocha = {
+			-- 		base = "#000000",
+			-- 		mantle = "#000000",
+			-- 		crust = "#000000",
+			-- 	},
+			-- },
+            custom_highlights = function (c)
+                return {
+                    LineNr = { fg = "#fffff0" },
+                    Comment = { fg = "#ffdfaf" },
+                    CursorLineNr = { fg = "#39ff00", bold = true },
+                }
+            end
+        },
+        config = function(_, opts)
+            require("catppuccin").setup(opts)
+            vim.cmd.colorscheme("catppuccin")
+        end,
+    },
 }
