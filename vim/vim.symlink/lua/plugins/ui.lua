@@ -1,7 +1,7 @@
 return {
     {
         "karb94/neoscroll.nvim",
-        init = function()
+        config = function()
             require("neoscroll").setup({
                 mappings = { "<C-u>", "<C-d>" },
             })
@@ -18,16 +18,6 @@ return {
     -- Better `vim.notify()`
     {
         "rcarriga/nvim-notify",
-        dependencies = { "LazyVim/LazyVim" },
-        keys = {
-            {
-                "<leader>un",
-                function()
-                    require("notify").dismiss({ silent = true, pending = true })
-                end,
-                desc = "Dismiss all Notifications",
-            },
-        },
         opts = {
             timeout = 3000,
             max_height = function()

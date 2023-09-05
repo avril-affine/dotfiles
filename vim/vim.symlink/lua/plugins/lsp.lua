@@ -239,11 +239,11 @@ return {
     {
         "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
         dependencies = { "neovim/nvim-lspconfig" },
+        opts = {},
         keys = {
             { "<leader>l", function() require("lsp_lines").toggle() end, desc = "toggle lsp lines", nowait = true, silent = true },
         },
         init = function()
-            require("lsp_lines").setup()
             require("lsp_lines").toggle()
         end,
     },
