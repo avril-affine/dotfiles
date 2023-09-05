@@ -2,17 +2,17 @@ return {
 	{
 		"nvim-telescope/telescope.nvim",
 		dependencies = { "nvim-lua/plenary.nvim" },
-		init = function()
+        opts = function(_, opts)
             local actions = require("telescope.actions")
-			require("telescope").setup({
-				extensions = {
-					fzf = {
-						fuzzy = true,
-						override_generic_sorter = true,
-						override_file_sorter = true,
-						case_mode = "respect_case",
-					},
-				},
+            return {
+                extensions = {
+                    fzf = {
+                        fuzzy = true,
+                        override_generic_sorter = true,
+                        override_file_sorter = true,
+                        case_mode = "respect_case",
+                    },
+                },
                 defaults = {
                     mappings = {
                         n  = {
@@ -21,8 +21,8 @@ return {
                         },
                     },
                 },
-			})
-		end,
+            }
+        end,
 	},
 	{
 		"nvim-telescope/telescope-fzf-native.nvim",
@@ -35,19 +35,17 @@ return {
 	{
 		"stevearc/oil.nvim",
         lazy = false,
+        opts = {
+            columns = {
+                "icon",
+                "permissions",
+                "size",
+                "mtime",
+            },
+        },
         keys = {
             { "<leader>k", function() require("oil").open_float() end },
         },
-		init = function()
-			require("oil").setup({
-				columns = {
-					"icon",
-					"permissions",
-					"size",
-					"mtime",
-				},
-			})
-		end,
 	},
 	{
 		"nvim-treesitter/nvim-treesitter",
@@ -167,8 +165,24 @@ return {
                 add = "<leader>sa",
                 delete = "<leader>sd",
                 replace = "<leader>ss",
+                find = "",
+                find_left = "",
+                highlight = "",
+                update_n_lines = "",
+                suffix_last = "",
+                suffix_next = "",
             },
         },
+        config = function(_, opts)
+            require("mini.surround").setup(opts)
+            for fn_name, mapping in ipairs(opts.mappings) do
+                if fn_name == "add" then
+                    vim.keymap.set("v", mapping, function() require("mini.surround")[fn_name]("v") end, { silent = true })
+                else
+                    vim.keymap.set("v", mapping, function() require("mini.surround")[fn_name]() end, { silent = true })
+                end
+            end
+        end,
     },
     {
         "stevearc/aerial.nvim",
@@ -184,6 +198,9 @@ return {
             backends = { "treesitter" },
             default_direction = { "prefer_right" },
         },
+    },
+    {
+        "mbbill/undotree",
     },
     {
         "tpope/vim-fugitive",
