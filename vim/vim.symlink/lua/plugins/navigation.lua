@@ -34,7 +34,6 @@ return {
 	},
 	{
 		"stevearc/oil.nvim",
-        lazy = false,
         opts = {
             columns = {
                 "icon",
@@ -154,7 +153,6 @@ return {
 	},
     {
         "echasnovski/mini.surround",
-        lazy = false,
         keys = {
             { "<leader>sa", desc = "Add surrounding", mode = { "n", "v" } },
             { "<leader>sd", desc = "Delete surrounding", mode = { "n", "v" } },
@@ -204,6 +202,7 @@ return {
     },
     {
         "tpope/vim-fugitive",
+        lazy = false,
         keys = {
             { "<leader>g", "<cmd>Git<CR>", desc = "Git status", mode = "n" },
         },

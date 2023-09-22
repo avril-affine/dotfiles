@@ -32,12 +32,13 @@ return {
         },
         keys = {
             -- Launch panel if nothing is typed after <leader>z
-            { "<leader>z", function() require("telekasten").panel() end, desc = "Telekasten panel" },
+            { "<leader>zz", function() require("telekasten").panel() end, desc = "Telekasten panel" },
 
             -- Most used functions
             { "<leader>zf", function() require("telekasten").find_notes() end, desc = "Telekasten find notes" },
             { "<leader>zs", function() require("telekasten").search_notes() end, desc = "Telekasten search notes" },
             { "<leader>zt", function() require("telekasten").goto_today() end, desc = "Telekasten goto today" },
+            { "<leader>zw", function() require("telekasten").goto_thisweek() end, desc = "Telekasten goto this week" },
             { "<leader>zd", function() require("telekasten").follow_link() end, desc = "Telekasten follow link" },
             { "<leader>zn", function() require("telekasten").new_note() end, desc = "Telekasten new note" },
             { "<leader>zc", function() require("telekasten").show_calendar() end, desc = "Telekasten show calendar" },
