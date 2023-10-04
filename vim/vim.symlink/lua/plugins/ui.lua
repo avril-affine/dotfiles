@@ -291,4 +291,8 @@ return {
             }
         end,
     },
+    {
+        "norcalli/nvim-colorizer.lua",
+        lazy = true,
+    },
 }

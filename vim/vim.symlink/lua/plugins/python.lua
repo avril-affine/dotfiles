@@ -1,8 +1,9 @@
 return {
-	{
-		"numirias/semshi",
-		ft = "python",
-	},
+	-- {
+	-- 	"numirias/semshi",
+    --     lazy = false,
+	-- 	ft = "python",
+	-- },
 	{
 		"psf/black",
 		ft = "python",

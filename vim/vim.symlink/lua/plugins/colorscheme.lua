@@ -33,6 +33,7 @@ return {
         name = "catppuccin",
         priority = 1000,
         opts = {
+            flavour = "mocha",
             no_italic = true,
             -- color_overrides = {
 			-- 	mocha = {
@@ -41,11 +42,29 @@ return {
 			-- 		crust = "#000000",
 			-- 	},
 			-- },
-            custom_highlights = function (c)
+            custom_highlights = function(c)
                 return {
-                    LineNr = { fg = "#fffff0" },
+                    -- line numbers
+                    LineNr = { fg = c.subtext1, bg = c.surface0 },
+                    SignColumn = { bg = c.surface0 },
+                    DiagnosticSignError = { bg = c.surface0 },
+                    DiagnosticSignHint = { bg = c.surface0 },
+                    DiagnosticSignInfo = { bg = c.surface0 },
+                    DiagnosticSignOk = { bg = c.surface0 },
+                    DiagnosticSignWarn = { bg = c.surface0 },
+                    CursorLine = { bg = c.surface1 },
+                    CursorLineNr = { fg = c.blue, bg = c.surface1, bold = true },
+
+                    -- types
+                    Operator = { fg = c.text },
+                    Constant = { fg = c.rosewater },
                     Comment = { fg = "#ffdfaf" },
-                    CursorLineNr = { fg = "#39ff00", bold = true },
+                    Function = { fg = c.sapphire },
+                    ["@field"] = { fg = c.teal },
+                    ["@parameter"] = { fg = c.blue },
+                    ["@constructor"] = { fg = c.peach, bold = true },
+                    ["@type"] = { link = "@constructor" },
+                    ["@function.builtin"] = { fg = c.pink },
                 }
             end
         },
