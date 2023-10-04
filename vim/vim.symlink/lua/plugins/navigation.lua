@@ -79,7 +79,6 @@ return {
             -- highlights
             highlight = {
                 enable = true,
-                disable = { "python" },
             },
             query_linter = {
                 enable = true,
@@ -146,7 +145,8 @@ return {
                     show_help = "?",
                 },
             },
-        }
+        },
+        config = function(_, opts) require("nvim-treesitter.configs").setup(opts) end,
 	},
 	{
 		"machakann/vim-swap",
