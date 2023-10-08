@@ -44,6 +44,12 @@ return {
 			-- },
             custom_highlights = function(c)
                 return {
+                    -- border
+                    WinSeparator = { fg = c.surface0, bg = c.surface0 },
+
+                    -- TSContext
+                    TreesitterContext = { bg = c.surface2 },
+
                     -- line numbers
                     LineNr = { fg = c.subtext1, bg = c.surface0 },
                     SignColumn = { bg = c.surface0 },
