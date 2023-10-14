@@ -1,25 +1,12 @@
-local autocmd = vim.api.nvim_create_autocmd
-local augroup = vim.api.nvim_create_augroup
-
--- turn off lsp_lines by default
--- autocmd("VimEnter", { callback = function() require("lsp_lines").toggle() end })
-
-
--- vim.api.nvim_set_hl(0, "CursorLine", { cterm = { underline = true } })
--- augroup("CursorLine", { clear = true })
--- autocmd({ "VimEnter", "WinEnter", "BufWinEnter" }, {
---     group = "CursorLine",
---     command = "setlocal cursorline",
--- })
--- autocmd("WinLeave", {
---     group = "CursorLine",
---     command = "setlocal nocursorline",
--- })
-
 -- relative line number *only* in current window
-autocmd({ "VimEnter", "WinEnter", "BufWinEnter" }, {
+vim.api.nvim_create_autocmd({ "VimEnter", "WinEnter", "BufWinEnter" }, {
     command = "setlocal relativenumber",
 })
-autocmd("WinLeave", {
+vim.api.nvim_create_autocmd("WinLeave", {
     command = "setlocal norelativenumber",
 })
+-- FIXME: REMOVE DEBUG
+-- vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, { callback = vim.lsp.buf.document_highlight })
+-- autocmd({ "CursorMoved" }, { callback = vim.lsp.buf.clear_references })
+--
+vim.lsp.set_log_level("debug")

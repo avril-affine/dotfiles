@@ -14,3 +14,5 @@ vim.opt.ttimeout = true
 vim.opt.timeoutlen = 10
 vim.opt.clipboard = "unnamedplus" -- global clipboard
 vim.opt.backspace = "indent,eol,start" -- fix backspace
+vim.opt.updatetime = 500
+vim.opt.termguicolors = true

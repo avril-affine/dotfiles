@@ -76,6 +76,7 @@ return {
                                     enabled = true,
                                     maxLineLength = 100,
                                 },
+                                pylsp_mypy = { enabled = true },
                             },
                         },
                     },
@@ -95,7 +96,6 @@ return {
                 tsserver = {},
                 html = {},
                 lua_ls = {
-                    -- enabled = false,
                     single_file_support = true,
                     settings = {
                         Lua = {
@@ -361,7 +361,7 @@ return {
                         replace = true,
                         render = "plain",
                         format = { "{message}" },
-                        win_options = { concealcursor = "n", conceallevel = 3 },
+                        win_options = { concealcursor = "n", conceallevel = 3, rnu = false },
                     },
                 },
             },

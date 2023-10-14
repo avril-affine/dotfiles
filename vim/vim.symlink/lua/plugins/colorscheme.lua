@@ -1,4 +1,9 @@
 return {
+    -- {
+    --     dir = "/Users/panda/dotfiles/vim/vim.symlink/lua/lushpanda/",
+    --     priority = 1000,
+    --     dependencies = { "rktjmp/lush.nvim" },
+    -- },
     {
         dir = "/Users/kenny/dotfiles/neon-panda",
         dev = true,
@@ -10,7 +15,6 @@ return {
     },
     {
         "folke/tokyonight.nvim",
-        lazy = false,
         priority = 1000,
         config = function()
             require("tokyonight").setup({
