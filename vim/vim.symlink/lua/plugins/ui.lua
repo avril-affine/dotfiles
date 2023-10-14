@@ -114,6 +114,9 @@ return {
                     },
                 },
                 extensions = { "neo-tree", "lazy" },
+                presets = {
+                    bottom_search = true,
+                },
             }
         end,
     },
@@ -300,9 +303,5 @@ return {
                 -- diagnostic_selected = { underline = false },
             }
         end,
-    },
-    {
-        "norcalli/nvim-colorizer.lua",
-        lazy = true,
     },
 }
