@@ -134,7 +134,6 @@ return {
 	},
     {
         "echasnovski/mini.surround",
-        enabled = false,
         keys = {
             { "<leader>sa", desc = "Add surrounding", mode = { "n", "v" } },
             { "<leader>sd", desc = "Delete surrounding", mode = { "n", "v" } },
