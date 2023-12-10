@@ -38,16 +38,10 @@ return {
         event = { "BufReadPre", "BufNewFile" },
         dependencies = {
             "LazyVim/LazyVim",
-            { "folke/neodev.nvim", opts = {} },
+            "folke/neodev.nvim",
             "mason.nvim",
             "williamboman/mason-lspconfig.nvim",
-            {
-                "hrsh7th/cmp-nvim-lsp",
-                dependencies = { "LazyVim/LazyVim" },
-                cond = function()
-                    return require("lazyvim.util").has("nvim-cmp")
-                end,
-            },
+            "hrsh7th/cmp-nvim-lsp",
         },
         keys = {
             { "K", function() vim.lsp.buf.hover() end, desc = "LSP hover" },
@@ -149,10 +143,8 @@ return {
         },
         config = function(_, opts)
             local Util = require("lazyvim.util")
-            -- setup autoformat
-            require("lazyvim.plugins.lsp.format").autoformat = opts.autoformat
             -- setup formatting and keymaps
-            Util.on_attach(function(client, buffer)
+            require("lazyvim.util").lsp.on_attach(function(client, buffer)
                 -- require("lazyvim.plugins.lsp.format").on_attach(client, buffer)
                 require("lazyvim.plugins.lsp.keymaps").on_attach(client, buffer)
             end)
@@ -225,14 +217,6 @@ return {
 
             if have_mason then
                 mlsp.setup({ ensure_installed = ensure_installed, handlers = { setup } })
-            end
-
-            if Util.lsp_get_config("denols") and Util.lsp_get_config("tsserver") then
-                local is_deno = require("lspconfig.util").root_pattern("deno.json", "deno.jsonc")
-                Util.lsp_disable("tsserver", is_deno)
-                Util.lsp_disable("denols", function(root_dir)
-                    return not is_deno(root_dir)
-                end)
             end
         end,
     },

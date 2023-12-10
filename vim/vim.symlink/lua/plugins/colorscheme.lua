@@ -1,5 +1,13 @@
 return {
     {
+        dir = "/Users/kenny/dotfiles/neon-panda",
+        dev = true,
+        dependencies = { "rktjmp/lush.nvim" },
+        config = function()
+            vim.opt.rtp:prepend("/Users/kenny/dotfiles/neon-panda")
+        end,
+    },
+    {
         "folke/tokyonight.nvim",
         lazy = false,
         priority = 1000,
@@ -44,6 +52,8 @@ return {
 			-- },
             custom_highlights = function(c)
                 return {
+                    Visual = { fg = c.crust, bg = c.sapphire },
+
                     -- border
                     WinSeparator = { fg = c.surface0, bg = c.surface0 },
 
