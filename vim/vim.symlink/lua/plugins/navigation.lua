@@ -124,7 +124,8 @@ return {
             },
             -- context
             context = {
-                multiline_threshold = 80,
+                max_lines = 5,
+                separator = "-",
             },
             -- playground
             playground = {
