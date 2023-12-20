@@ -194,7 +194,6 @@ return {
             { "<leader>A", "<cmd>AerialNavToggle<CR>", desc = "Navigate blocks" },
         },
         opts = {
-            backends = { "treesitter" },
             default_direction = { "prefer_right" },
         },
     },
