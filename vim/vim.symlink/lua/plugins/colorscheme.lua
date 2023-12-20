@@ -5,6 +5,7 @@ return {
         dependencies = { "rktjmp/lush.nvim" },
         config = function()
             vim.opt.rtp:prepend("/Users/kenny/dotfiles/neon-panda")
+            vim.cmd.colorscheme("neon-panda")
         end,
     },
     {

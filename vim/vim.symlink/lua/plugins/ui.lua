@@ -13,7 +13,13 @@ return {
     },
     {
         "folke/todo-comments.nvim",
+        lazy = false,
         dependencies = { "nvim-lua/plenary.nvim" },
+        opts = {},
+        keys = {
+            { "<leader>tr", "<CMD>TodoTrouble<CR>", desc = "Todo trouble view" },
+            { "<leader>tt", "<CMD>TodoTelescope keywords=TODO,FIX<CR>", desc = "Todo telescope view" },
+        },
     },
     -- Better `vim.notify()`
     {
