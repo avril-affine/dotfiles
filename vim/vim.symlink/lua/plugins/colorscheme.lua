@@ -1,15 +1,14 @@
+local util = require("util")
+
+local neon_panda_path = util.project_dir() .. "/neon-panda"
 return {
-    -- {
-    --     dir = "/Users/panda/dotfiles/vim/vim.symlink/lua/lushpanda/",
-    --     priority = 1000,
-    --     dependencies = { "rktjmp/lush.nvim" },
-    -- },
     {
-        dir = "/Users/kenny/dotfiles/neon-panda",
+        dir = neon_panda_path,
         dev = true,
         dependencies = { "rktjmp/lush.nvim" },
         config = function()
-            vim.opt.rtp:prepend("/Users/kenny/dotfiles/neon-panda")
+            -- add to rtp... not sure why lazy isn't automatically adding it
+            vim.opt.rtp:prepend(neon_panda_path)
             vim.cmd.colorscheme("neon-panda")
         end,
     },

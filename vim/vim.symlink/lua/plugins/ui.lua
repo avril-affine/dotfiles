@@ -14,7 +14,11 @@ return {
     {
         "folke/todo-comments.nvim",
         lazy = false,
-        dependencies = { "nvim-lua/plenary.nvim" },
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "folke/trouble.nvim",
+            "nvim-tree/nvim-web-devicons",
+        },
         opts = {},
         keys = {
             { "<leader>tr", "<CMD>TodoTrouble<CR>", desc = "Todo trouble view" },
