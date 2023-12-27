@@ -9,8 +9,19 @@ if not vim.loop.fs_stat(lazypath) then
 		lazypath,
 	})
 end
-vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
+local lazyvim_path = vim.fn.stdpath("data") .. "/lazy/LazyVim"
+if not vim.loop.fs_stat(lazyvim_path) then
+	vim.fn.system({
+		"git",
+		"clone",
+		"--filter=blob:none",
+		"https://github.com/LazyVim/LazyVim.git",
+		"--branch=main",
+		lazyvim_path,
+	})
+end
 
+vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 require("lazy").setup("plugins", {
     install = { colorscheme = { "catpuccin" } },
 	defaults = {

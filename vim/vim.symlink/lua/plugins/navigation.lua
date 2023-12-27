@@ -74,11 +74,12 @@ return {
                 "rust",
                 "typescript",
                 "vimdoc",
+                "zig",
             },
             -- highlights
-            -- highlight = {
-            --     enable = true,
-            -- },
+            highlight = {
+                enable = true,
+            },
             query_linter = {
                 enable = true,
                 use_virtual_text = true,

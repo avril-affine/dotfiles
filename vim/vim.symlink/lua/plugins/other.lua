@@ -72,6 +72,7 @@ return {
         end,
     },
 
+    -- github
     {
         "pwntester/octo.nvim",
         lazy = false,
@@ -82,6 +83,8 @@ return {
         },
         opts = {},
     },
+
+    -- comment visual block
     {
         "numToStr/Comment.nvim",
         lazy = false,
