@@ -5,6 +5,7 @@ return {
     {
         dir = neon_panda_path,
         dev = true,
+        priority = 1000,
         dependencies = { "rktjmp/lush.nvim" },
         config = function()
             -- add to rtp... not sure why lazy isn't automatically adding it
@@ -47,13 +48,6 @@ return {
         opts = {
             flavour = "mocha",
             no_italic = true,
-            -- color_overrides = {
-			-- 	mocha = {
-			-- 		base = "#000000",
-			-- 		mantle = "#000000",
-			-- 		crust = "#000000",
-			-- 	},
-			-- },
             custom_highlights = function(c)
                 return {
                     Visual = { fg = c.crust, bg = c.sapphire },
@@ -90,7 +84,6 @@ return {
         },
         config = function(_, opts)
             require("catppuccin").setup(opts)
-            vim.cmd.colorscheme("catppuccin")
         end,
     },
 }
