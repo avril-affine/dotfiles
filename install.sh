@@ -15,6 +15,7 @@ BREW_PKGS=" \
     ripgrep \
     autojump \
     lazygit \
+    coreutils \
 "
 
 # build
