@@ -138,6 +138,7 @@ return {
                 },
                 vimls = {},
                 zls = {},
+                erlangls = {},
             },
             setup = {},
         },
