@@ -139,6 +139,13 @@ return {
                 vimls = {},
                 zls = {},
                 elixirls = {},
+                ccls = {
+                  init_options = {
+                    cache = {
+                      directory = ".ccls-cache";
+                    };
+                  },
+                },
             },
             setup = {},
         },
