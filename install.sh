@@ -15,6 +15,7 @@ BREW_PKGS=" \
     ripgrep \
     autojump \
     lazygit \
+    ccls \
 "
 
 # build
@@ -35,6 +36,7 @@ APT_PKGS=" \
     npm \
     ripgrep \
     zsh \
+    ccls \
     $APT_PKGS \
 "
 
