@@ -101,6 +101,9 @@ return {
                         Lua = {
                             workspace = {
                                 checkThirdParty = false,
+                                library = {
+                                    [vim.fn.expand("$HOME/.hammerspoon/Spoons/EmmyLua.spoon/annotations")] = true,
+                                },
                             },
                             completion = {
                                 workspaceWord = true,
@@ -179,11 +182,11 @@ return {
 
             local servers = opts.servers
             local capabilities = vim.tbl_deep_extend(
-            "force",
-            {},
-            vim.lsp.protocol.make_client_capabilities(),
-            require("cmp_nvim_lsp").default_capabilities(),
-            opts.capabilities or {}
+                "force",
+                {},
+                vim.lsp.protocol.make_client_capabilities(),
+                require("cmp_nvim_lsp").default_capabilities(),
+                opts.capabilities or {}
             )
 
             local function setup(server)
@@ -294,7 +297,13 @@ return {
                     end, { "i", "s" }),
                     ["<C-d>"] = cmp.mapping.scroll_docs(-4),
                     ["<C-u>"] = cmp.mapping.scroll_docs(4),
-                    -- ["<C-e>"] = cmp.mapping.abort(),
+                    ["<ESC>"] = cmp.mapping(function(fallback)
+                        if cmp.visible() then
+                            cmp.mapping.abort()
+                            cmp.close()
+                        end
+                        fallback()
+                    end),
                     ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
                     ["<S-CR>"] = cmp.mapping.confirm({
                         behavior = cmp.ConfirmBehavior.Replace,
