@@ -16,6 +16,7 @@ BREW_PKGS=" \
     autojump \
     lazygit \
     ccls \
+    wget \
 "
 
 # build
@@ -78,17 +79,17 @@ function install_neovim_config() {
     #     | tar -xz -C /etc/lua-language-server
     # ln -sf /etc/lua-language-server/bin/lua-language-server /usr/local/bin
 
-    git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
-
-    nvim +PackerInstall +PackerCompile +qall
-
     pip install neovim
+    nvim +UpdateRemotePlugins +TSInstall all +qall
 }
 
 function install_packages() {
     if [[ $OSTYPE == 'darwin'* ]]; then
         if ! command -v brew &> /dev/null; then
-            su $(logname) -c "/bin/bash -c $(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+            # FIXME: doesn't install brew correctly. fix quotes.
+            # su $(logname) -c "/bin/bash -c $(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+            echo "install homebrew"
+            exit 1
         fi
         su $(logname) -c "brew install $BREW_PKGS"
     else
@@ -108,7 +109,7 @@ function install_packages() {
 }
 
 function install_zsh() {
-    chsh -s $(which zsh)
+    # chsh -s $(which zsh)
 
     # install oh-my-zsh
     sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
@@ -130,7 +131,11 @@ function install_zsh() {
 
 function install_miniconda() {
     mkdir -p ~/miniconda3
-    wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh
+    if [[ $OSTYPE = 'darwin'* ]]; then
+        curl https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-arm64.sh -o ~/miniconda3/miniconda.sh
+    else
+        wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh
+    fi
     bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
     rm -rf ~/miniconda3/miniconda.sh
     ~/miniconda3/bin/conda init zsh
@@ -138,9 +143,12 @@ function install_miniconda() {
 }
 
 function install_fonts() {
-    su -c $(logname) -c "git clone https://github.com/Karmenzind/monaco-nerd-fonts ~/monaco-nerd-fonts"
+    if [ ! -d "$HOMEDIR/monaco-nerd-fonts" ]; then
+        su $(logname) -c "git clone https://github.com/Karmenzind/monaco-nerd-fonts ~/monaco-nerd-fonts"
+    fi
+
     if [[ $OSTYPE = 'darwin'* ]]; then
-        su -c $(logname) -c ' \
+        su $(logname) -c ' \
             mkdir -p ~/Library/Fonts; \
             cp ~/monaco-nerd-fonts/fonts/* ~/Library/Fonts/;
         '
@@ -152,7 +160,7 @@ function install_fonts() {
 # install
 su $(logname) -c "$(declare -f install_symlinks); install_symlinks"
 
-install_packages
+# install_packages
 install_fonts
 
 if ! [ -d "$HOMEDIR/.oh-my-zsh" ]; then
@@ -162,7 +170,7 @@ else
 fi
 
 if ! command -v conda; then
-    su $(logname) -c "$(declare -f install_miniconda); install_miniconda"
+    su $(logname) -c "set -ex; $(declare -f install_miniconda); install_miniconda"
 else
     echo "miniconda is installed. skipping..."
 fi
@@ -171,4 +179,9 @@ if ! [ -d "$HOMEDIR/.config/nvim" ]; then
     su $(logname) -c "$(declare -f install_neovim_config); install_neovim_config"
 else
     echo "neovim config is installed. skipping..."
+fi
+
+if [[ $OSTYPE = 'darwin'* ]]; then
+    echo "Finish installing nerd fonts: Preferences -> Profiles -> Text -> Monaco Nerd Font Mono"
+    echo "Finish installing iterm colors: Preferences -> Profiles -> Colors -> Color Presets... -> Import"
 fi
