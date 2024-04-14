@@ -71,23 +71,26 @@ return {
             opts.weeklies_create_nonexisting = true
         end,
     },
-
-    {
-        "pwntester/octo.nvim",
-        lazy = false,
-        requires = {
-            "nvim-lua/plenary.nvim",
-            "nvim-telescope/telescope.nvim",
-            "nvim-tree/nvim-web-devicons",
-        },
-        opts = {},
-    },
+    -- {
+    --     "pwntester/octo.nvim",
+    --     lazy = false,
+    --     requires = {
+    --         "nvim-lua/plenary.nvim",
+    --         "nvim-telescope/telescope.nvim",
+    --         "nvim-tree/nvim-web-devicons",
+    --     },
+    --     opts = {},
+    -- },
     {
         "numToStr/Comment.nvim",
-        lazy = false,
         opts = {
             mappings = { basic = false, extra = false },
         },
+        config = function(_, opts)
+            require("Comment").setup(opts)
+            local ft = require("Comment.ft")
+            ft.set("python", { "#%s", '"""\n%s\n"""' })
+        end,
         keys = {
             {
                 "/",
@@ -98,6 +101,16 @@ return {
                 end,
                 mode = "v",
                 { desc = "Comment toggle linewise (visual)" },
+            },
+            {
+                "\\",
+                function()
+                    local esc = vim.api.nvim_replace_termcodes("<ESC>", true, false, true)
+                    vim.api.nvim_feedkeys(esc, "nx", false)
+                    require("Comment.api").toggle.blockwise(vim.fn.visualmode())
+                end,
+                mode = "v",
+                { desc = "Comment toggle blockwise (visual)" },
             },
         }
     },
