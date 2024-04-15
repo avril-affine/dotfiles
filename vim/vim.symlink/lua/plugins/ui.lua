@@ -115,19 +115,20 @@ return {
     -- indent guides for Neovim
     {
         "lukas-reineke/indent-blankline.nvim",
+        main = "ibl",
         event = { "BufReadPost", "BufNewFile" },
         opts = {
             indent = {
-                char = "│",
-            },
-            exclude = {
-                filetypes = { "help", "alpha", "dashboard", "neo-tree", "Trouble", "lazy", "mason" },
+                char = "▎",
             },
             scope = {
                 enabled = false,
             },
             whitespace = {
                 remove_blankline_trail = false,
+            },
+            exclude = {
+                filetypes = { "help", "alpha", "dashboard", "neo-tree", "Trouble", "lazy", "mason" },
             },
         },
     },
