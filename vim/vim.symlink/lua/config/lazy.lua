@@ -11,6 +11,11 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 
+-- use conda prefix if it exists
+if vim.env.CONDA_PREFIX then
+    vim.g.python3_host_prog = vim.env.CONDA_PREFIX .. '/bin/python'
+end
+
 require("lazy").setup("plugins", {
 	defaults = {
 		lazy = false,
