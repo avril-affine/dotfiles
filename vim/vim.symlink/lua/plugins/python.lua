@@ -1,15 +1,14 @@
 return {
 	{
 		"numirias/semshi",
-        lazy = false,
-		ft = "python",
+        ft = "python",
 	},
 	{
 		"psf/black",
-		ft = "python",
+        ft = "python",
 	},
 	{
 		"stsewd/isort.nvim",
-		ft = "python",
+        ft = "python",
 	},
 }
