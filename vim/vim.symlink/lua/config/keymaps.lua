@@ -31,3 +31,5 @@ set_keymap({ "i", "n", "v" }, "¬", ":vertical resize +1<cr>", { nowait = true, 
 
 set_keymap("n", "<leader>n", ":cnext<cr>", { nowait = true, silent = true }) -- move to next item in quickfix list
 set_keymap("n", "<leader>p", ":cprevious<cr>", { nowait = true, silent = true }) -- move to previous item in quickfix list
+
+set_keymap("n", "<F16>", ":cclose<cr>")
