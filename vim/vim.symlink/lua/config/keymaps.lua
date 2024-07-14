@@ -33,3 +33,9 @@ set_keymap("n", "<leader>n", ":cnext<cr>", { nowait = true, silent = true }) -- 
 set_keymap("n", "<leader>p", ":cprevious<cr>", { nowait = true, silent = true }) -- move to previous item in quickfix list
 
 set_keymap("n", "<F16>", ":cclose<cr>")
+
+-- delete to void register
+set_keymap({"n", "v"}, "D", '"_d', { nowait = true, silent = true })
+set_keymap({"n", "v"}, "X", '"_x', { nowait = true, silent = true })
+set_keymap({"n", "v"}, "S", '"_s', { nowait = true, silent = true })
+set_keymap({"n", "v"}, "C", '"_c', { nowait = true, silent = true })
