@@ -8,6 +8,7 @@ fi
 HOMEDIR=$( getent passwd "$(logname)" | cut -d: -f6 )
 
 BREW_PKGS=" \
+    stow \
     tmux \
     neovim \
     npm \
@@ -29,6 +30,7 @@ APT_PKGS=" \
 "
 
 APT_PKGS=" \
+    stow \
     autojump \
     curl \
     fontconfig \
@@ -44,22 +46,11 @@ APT_PKGS=" \
 set -ex
 
 function install_symlinks() {
-    for SRC in $(find ~+ -name \*.symlink); do 
-	local TARGET="$HOME/.$(echo $SRC | sed 's/.*\/\(.*\)\.symlink$/\1/')"
-	if [[ -L $TARGET && -d $TARGET ]]; then
-            rm $TARGET
-	fi
-        ln -sf "$SRC" "$TARGET"
-    done
+    stow -D .
+    stow .
 }
 
 function install_neovim_config() {
-    mkdir -p ~/.config
-    if [[ -L ~/.config/nvim && -d ~/.config/nvim ]]; then
-        rm ~/.config/nvim
-    fi
-    ln -sf ~/.vim ~/.config/nvim
-
     # nonicons
     git clone https://github.com/yamatsum/nonicons ~/nonicons
     mkdir -p ~/.local/share/fonts
@@ -104,7 +95,6 @@ function install_packages() {
         rm lazygit.tar.gz
     fi
 
-    npm install -g pyright
     npm install -g pure-prompt
 }
 
@@ -115,7 +105,7 @@ function install_zsh() {
     sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
     echo "[ -f ~/.zshrc.global ] && source ~/.zshrc.global" >> ~/.zshrc
 
-    # zsh plugins
+    # zsh. plugins
     if [ $? -eq 0 ]; then
         git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
         git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
@@ -157,11 +147,12 @@ function install_fonts() {
     fi
 }
 
+install_packages
+install_fonts
+
 # install
 su $(logname) -c "$(declare -f install_symlinks); install_symlinks"
 
-# install_packages
-install_fonts
 
 if ! [ -d "$HOMEDIR/.oh-my-zsh" ]; then
     su $(logname) -c "$(declare -f install_zsh); install_zsh"

@@ -1,2 +1,8 @@
+\.git
+\.gitignore
+^/misc
+^/util\.py
+^/install\.sh
+
 nonicons
 monaco-nerd-fonts
