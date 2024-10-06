@@ -77,8 +77,7 @@ function install_neovim_config() {
 function install_packages() {
     if [[ $OSTYPE == 'darwin'* ]]; then
         if ! command -v brew &> /dev/null; then
-            # FIXME: doesn't install brew correctly. fix quotes.
-            # su $(logname) -c "/bin/bash -c $(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+            sudo -u $(logname) bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
             echo "install homebrew"
             exit 1
         fi
