@@ -9,10 +9,7 @@ plugins=(
 )
 
 DISABLE_UNTRACKED_FILES_DIRTY=true
-source $ZSH/oh-my-zsh.sh
-
-autoload -U promptinit; promptinit
-autoload -U compinit; compinit
+source $HOME/.oh-my-zsh/oh-my-zsh.sh
 
 PURE_GIT_UNTRACKED_DIRTY=0  # ignore untracked files in git
 
@@ -21,6 +18,9 @@ PURE_GIT_UNTRACKED_DIRTY=0  # ignore untracked files in git
 
 fpath=( "$HOME/.zfunctions" $fpath )
 autoload -U $fpath[1]/*(.:t)
+
+autoload -U promptinit; promptinit
+autoload -U compinit; compinit
 
 autoload -U conda-activate
 
