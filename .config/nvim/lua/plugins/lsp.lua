@@ -68,13 +68,11 @@ return {
                                 pyflakes = { enabled = false },
                                 mccabe = { enabled = false },
                                 yapf = { enabled = false },
+                                flake8 = { enabled = true },
+                                pylsp_mypy = { enabled = true },
                                 rope_completion = {
                                     enabled = true,
                                     eager = true,
-                                },
-                                flake8 = {
-                                    enabled = true,
-                                    maxLineLength = 100,
                                 },
                             },
                         },
@@ -283,28 +281,33 @@ return {
                         luasnip.lsp_expand(args.body)
                     end,
                 },
-                mapping = cmp.mapping.preset.insert({
-                    ["<Tab>"] = cmp.mapping(function(fallback)
-                        if cmp.visible() then
-                            cmp.select_next_item()
-                        elseif luasnip.expand_or_jumpable() then
-                            luasnip.expand_or_jump()
-                        elseif has_words_before() then
-                            print("complete")
-                            cmp.complete()
-                        else
-                            fallback()
-                        end
-                    end, {"i", "s"}),
-                    ["<S-Tab>"] = cmp.mapping(function(fallback)
-                        if cmp.visible() then
-                            cmp.select_prev_item()
-                        elseif luasnip.jumpable(-1) then
-                            luasnip.jump(-1)
-                        else
-                            fallback()
-                        end
-                    end, { "i", "s" }),
+                mapping = {
+                    ["<Tab>"] = cmp.mapping(
+                        function(fallback)
+                            if cmp.visible() then
+                                cmp.select_next_item()
+                            elseif luasnip.expand_or_jumpable() then
+                                luasnip.expand_or_jump()
+                            elseif has_words_before() then
+                                cmp.complete()
+                            else
+                                fallback()
+                            end
+                        end,
+                        {"i", "s"}
+                    ),
+                    ["<S-Tab>"] = cmp.mapping(
+                        function(fallback)
+                            if cmp.visible() then
+                                cmp.select_prev_item()
+                            elseif luasnip.jumpable(-1) then
+                                luasnip.jump(-1)
+                            else
+                                fallback()
+                            end
+                        end,
+                        { "i", "s" }
+                    ),
                     ["<C-d>"] = cmp.mapping.scroll_docs(4),
                     ["<C-u>"] = cmp.mapping.scroll_docs(-4),
                     ["<ESC>"] = cmp.mapping(function(fallback)
@@ -327,7 +330,19 @@ return {
                         behavior = cmp.ConfirmBehavior.Replace,
                         select = true,
                     }),
-                }),
+                    ["<C-o>"] = cmp.mapping(  -- <C-i> maps to <Tab> on iterm2  https://github.com/neovim/neovim/issues/24877
+                        function(fallback)
+                            print("C_O")
+                            local resolved_key = vim.fn["copilot#Accept"]()
+                            if resolved_key ~= vim.NIL then
+                                vim.api.nvim_feedkeys(resolved_key, "n", true)
+                            else
+                                fallback()
+                            end
+                        end,
+                        {"i", "s"}
+                    ),
+                },
                 sources = cmp.config.sources({
                     { name = "nvim_lsp" },
                     { name = "nvim_lsp_signature_help" },
@@ -401,5 +416,8 @@ return {
                 },
             },
         },
-    }
+    },
+    {
+        "github/copilot.vim",
+    },
 }

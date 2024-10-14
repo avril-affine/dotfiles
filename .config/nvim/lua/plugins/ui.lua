@@ -1,16 +1,16 @@
 return {
-    {
-        "karb94/neoscroll.nvim",
-        config = function()
-            require("neoscroll").setup({
-                mappings = { "<C-u>", "<C-d>" },
-            })
-            require("neoscroll.config").set_mappings({
-                ["<C-u>"] = {"scroll", {"-vim.wo.scroll", "true", "75"}},
-                ["<C-d>"] = {"scroll", { "vim.wo.scroll", "true", "75"}},
-            })
-        end,
-    },
+    -- {
+    --     "karb94/neoscroll.nvim",
+    --     config = function()
+    --         require("neoscroll").setup({
+    --             mappings = { "<C-u>", "<C-d>" },
+    --         })
+    --         require("neoscroll.config").set_mappings({
+    --             ["<C-u>"] = {"scroll", {"-vim.wo.scroll", "true", "75"}},
+    --             ["<C-d>"] = {"scroll", { "vim.wo.scroll", "true", "75"}},
+    --         })
+    --     end,
+    -- },
     {
         "folke/todo-comments.nvim",
         dependencies = { "nvim-lua/plenary.nvim" },
@@ -232,10 +232,10 @@ return {
         event = "VeryLazy",
         keys = {
             { "<leader>bb", "<cmd>BufferLineTogglePin<CR>", desc = "Toggle pin" },
-            { "<leader>bb", "<cmd>bd<CR>", desc = "Delete current buffer" },
-            { "<leader>bD", "<cmd>BufferLineCloseRight<CR>", desc = "Delete all buffers to the right" },
+            { "<leader>bd", "<cmd>bd<CR>", desc = "Delete current buffer" },
+            { "<leader>bD", "<cmd>BufferLineCloseOthers<CR>", desc = "Delete all buffers to the right" },
             { "<leader>bn", "<cmd>BufferLineCycleNext<CR>", desc = "move to next buffer" },
-            { "<leader>bp", "<cmd>bBufferLineCyclePrevious<CR>", desc = "move to previous buffer" },
+            { "<leader>bN", "<cmd>BufferLineCyclePrevious<CR>", desc = "move to previous buffer" },
             { "<leader>1", "<cmd>BufferLineGoToBuffer 1<CR>", desc = "Go to buffer #" },
             { "<leader>2", "<cmd>BufferLineGoToBuffer 2<CR>", desc = "Go to buffer #" },
             { "<leader>3", "<cmd>BufferLineGoToBuffer 3<CR>", desc = "Go to buffer #" },
