@@ -90,7 +90,7 @@ return {
                         },
                     },
                 },
-                tsserver = {},
+                ts_ls = {},
                 html = {},
                 lua_ls = {
                     -- enabled = false,
