@@ -14,3 +14,20 @@ vim.opt.ttimeout = true
 vim.opt.timeoutlen = 10
 vim.opt.clipboard = "unnamedplus" -- global clipboard
 vim.opt.backspace = "indent,eol,start" -- fix backspace
+
+-- relative line number *only* in current window
+vim.api.nvim_create_autocmd({ "VimEnter", "WinEnter", "BufWinEnter" }, {
+    command = "setlocal relativenumber",
+})
+vim.api.nvim_create_autocmd("WinLeave", {
+    command = "setlocal norelativenumber",
+})
+
+-- highlight cursorline
+vim.cmd.set("cursorline")
+vim.api.nvim_create_autocmd({ "VimEnter", "WinEnter", "BufWinEnter" }, {
+    command = "setlocal cursorline",
+})
+vim.api.nvim_create_autocmd("WinLeave", {
+    command = "setlocal nocursorline",
+})
