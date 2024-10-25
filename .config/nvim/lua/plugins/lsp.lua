@@ -407,7 +407,6 @@ return {
                     view = "hover",
                     ---@type NoiceViewOptions
                     opts = {
-                        lang = "markdown",
                         replace = true,
                         render = "plain",
                         format = { "{message}" },
