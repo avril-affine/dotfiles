@@ -11,6 +11,7 @@ config.window_padding = {
     top = 0,
     bottom = 0,
 }
+config.harfbuzz_features = { "calt=0", "clig=0", "liga=0" }
 
 wezterm.on("update-right-status", function(window, pane)
     local name = window:active_key_table()
@@ -39,6 +40,8 @@ config.keys = {
         mods = "LEADER",
         action = wezterm.action.SplitVertical({ domain = "CurrentPaneDomain" }),
     },
+
+    -- move pane
     { key = "h", mods = "LEADER", action = act.ActivatePaneDirection("Left") },
     { key = "j", mods = "LEADER", action = act.ActivatePaneDirection("Down") },
     { key = "k", mods = "LEADER", action = act.ActivatePaneDirection("Up") },
@@ -47,6 +50,9 @@ config.keys = {
     { key = "J", mods = "LEADER", action = act.AdjustPaneSize({ "Down", 2 }) },
     { key = "K", mods = "LEADER", action = act.AdjustPaneSize({ "Up", 2 }) },
     { key = "L", mods = "LEADER", action = act.AdjustPaneSize({ "Right", 2 }) },
+
+    -- zoom pane
+    { key = "z", mods = "LEADER", action = act.TogglePaneZoomState },
 }
 
 config.key_tables = {
