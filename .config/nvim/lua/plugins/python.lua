@@ -1,6 +1,6 @@
 return {
 	{
-		"numirias/semshi",
+		"wookayin/semshi",
 		ft = "python",
 	},
 	{
