@@ -3,6 +3,7 @@ local act = wezterm.action
 local config = wezterm.config_builder()
 
 config.leader = { key = "F13", timeout_milliseconds = 400 }
+-- config.leader = { key = "`", timeout_milliseconds = 400 }
 
 config.scrollback_lines = 50000
 config.window_padding = {
@@ -21,6 +22,12 @@ wezterm.on("update-right-status", function(window, pane)
     window:set_right_status(name or "")
 end)
 
+local action_resize_pane = act.ActivateKeyTable({
+    name = "resize_pane",
+    timeout_milliseconds = 400,
+    until_unknown = true,
+})
+
 config.keys = {
     {
         key = "[",
@@ -30,6 +37,8 @@ config.keys = {
             act.ActivateCopyMode,
         }),
     },
+
+    -- split pane
     {
         key = "|",
         mods = "LEADER",
@@ -46,20 +55,114 @@ config.keys = {
     { key = "j", mods = "LEADER", action = act.ActivatePaneDirection("Down") },
     { key = "k", mods = "LEADER", action = act.ActivatePaneDirection("Up") },
     { key = "l", mods = "LEADER", action = act.ActivatePaneDirection("Right") },
-    { key = "H", mods = "LEADER", action = act.AdjustPaneSize({ "Left", 2 }) },
-    { key = "J", mods = "LEADER", action = act.AdjustPaneSize({ "Down", 2 }) },
-    { key = "K", mods = "LEADER", action = act.AdjustPaneSize({ "Up", 2 }) },
-    { key = "L", mods = "LEADER", action = act.AdjustPaneSize({ "Right", 2 }) },
+
+    -- resize pane
+    {
+        key = "H",
+        mods = "LEADER",
+        action = act.Multiple({
+            act.AdjustPaneSize({ "Left", 1 }),
+            action_resize_pane,
+        }),
+    },
+    {
+        key = "J",
+        mods = "LEADER",
+        action = act.Multiple({
+            act.AdjustPaneSize({ "Down", 1 }),
+            action_resize_pane,
+        }),
+    },
+    {
+        key = "K",
+        mods = "LEADER",
+        action = act.Multiple({
+            act.AdjustPaneSize({ "Up", 1 }),
+            action_resize_pane,
+        }),
+    },
+    {
+        key = "L",
+        mods = "LEADER",
+        action = act.Multiple({
+            act.AdjustPaneSize({ "Right", 1 }),
+            action_resize_pane,
+        }),
+    },
 
     -- zoom pane
     { key = "z", mods = "LEADER", action = act.TogglePaneZoomState },
 }
 
 config.key_tables = {
+    resize_pane = {
+        { key = "Escape", mods = "NONE", action = act.PopKeyTable },
+        {
+            key = "H",
+            mods = "NONE",
+            action = act.Multiple({
+                act.AdjustPaneSize({ "Left", 1 }),
+                action_resize_pane, -- hack since AdjustPaneSize pops key table?
+            }),
+        },
+        {
+            key = "J",
+            mods = "NONE",
+            action = act.Multiple({
+                act.AdjustPaneSize({ "Down", 1 }),
+                action_resize_pane,
+            }),
+        },
+        {
+            key = "K",
+            mods = "NONE",
+            action = act.Multiple({
+                act.AdjustPaneSize({ "Up", 1 }),
+                action_resize_pane,
+            }),
+        },
+        {
+            key = "L",
+            mods = "NONE",
+            action = act.Multiple({
+                act.AdjustPaneSize({ "Right", 1 }),
+                action_resize_pane,
+            }),
+        },
+    },
+    search_mode = {
+        { key = "Enter", mods = "NONE", action = act.ActivateCopyMode },
+        -- TODO: how to default to regex match type?
+        { key = "Escape", mods = "NONE", action = act.CopyMode("CycleMatchType") },
+    },
     copy_mode = {
-        { key = "Escape", mods = "NONE", action = act.CopyMode("Close") },
-        { key = "i", mods = "NONE", action = act.CopyMode("EditPattern") },
-        { key = "Enter", mods = "NONE", action = act.CopyMode("AcceptPattern") },
+        {
+            key = "Escape",
+            mods = "NONE",
+            action = act.Multiple({
+                act.CopyMode("Close"),
+                act.PopKeyTable,
+            }),
+        },
+        {
+            key = "?",
+            mods = "NONE",
+            action = act.Multiple({
+                act.CopyMode("ClearPattern"),
+                act.CopyMode("EditPattern"),
+            }),
+        },
+        -- { key = "Enter", mods = "NONE", action = act.CopyMode("AcceptPattern") },
+        -- {
+        --     key = "Enter",
+        --     mods = "NONE",
+        --     action = act.Multiple({
+        --         act.CopyMode("AcceptPattern"),
+        --         act.CopyMode("ClearSelectionMode"),
+        --         -- act.CopyMode("Close"),
+        --         -- act.ActivateCopyMode,
+        --     }),
+        -- },
 
         -- copy_mode selection
         { key = "v", mods = "NONE", action = act.CopyMode({ SetSelectionMode = "Block" }) },
