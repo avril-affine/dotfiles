@@ -35,6 +35,8 @@ config.keys = {
         action = act.Multiple({
             act.ActivateKeyTable({ name = "copy_mode" }),
             act.ActivateCopyMode,
+            act.CopyMode("ClearSelectionMode"),      -- TODO: doesn't seem to work
+            act.CopyMode("MoveToScrollbackBottom"),  -- TODO: doesn't seem to work
         }),
     },
 
@@ -131,9 +133,16 @@ config.key_tables = {
         },
     },
     search_mode = {
-        { key = "Enter", mods = "NONE", action = act.ActivateCopyMode },
+        {
+            key = "Enter",
+            mods = "NONE",
+            action = act.Multiple({
+                act.ActivateCopyMode,
+                act.CopyMode("ClearSelectionMode"),
+            }),
+        },
         -- TODO: how to default to regex match type?
-        { key = "Escape", mods = "NONE", action = act.CopyMode("CycleMatchType") },
+        { key = "Tab", mods = "NONE", action = act.CopyMode("CycleMatchType") },
     },
     copy_mode = {
         {
@@ -145,9 +154,10 @@ config.key_tables = {
             }),
         },
         {
-            key = "?",
+            key = "/",
             mods = "NONE",
             action = act.Multiple({
+                act.CopyMode("MoveToScrollbackBottom"),
                 act.CopyMode("ClearPattern"),
                 act.CopyMode("EditPattern"),
             }),
@@ -178,8 +188,22 @@ config.key_tables = {
         },
 
         -- copy_mode next/prev
-        { key = "n", mods = "NONE", action = act.CopyMode("NextMatch") },
-        { key = "N", mods = "NONE", action = act.CopyMode("PriorMatch") },
+        {
+            key = "n",
+            mods = "NONE",
+            action = act.Multiple({
+                act.CopyMode("NextMatch"),
+                act.CopyMode("ClearSelectionMode"),
+            }),
+        },
+        {
+            key = "N",
+            mods = "NONE",
+            action = act.Multiple({
+                act.CopyMode("PriorMatch"),
+                act.CopyMode("ClearSelectionMode"),
+            }),
+        },
 
         -- copy_mode movement
         { key = "h", mods = "NONE", action = act.CopyMode("MoveLeft") },
