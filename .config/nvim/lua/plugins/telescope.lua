@@ -1,8 +1,9 @@
 local multi_ripgrep = function(opts)
     local conf = require("telescope.config").values
-    local finders = require "telescope.finders"
-    local make_entry = require "telescope.make_entry"
-    local pickers = require "telescope.pickers"
+    local finders = require("telescope.finders")
+    local make_entry = require("telescope.make_entry")
+    local pickers = require("telescope.pickers")
+    local themes = require("telescope.themes")
 
     local opts = opts or {}
     opts.cwd = opts.cwd and vim.fn.expand(opts.cwd) or vim.loop.cwd()
@@ -46,7 +47,7 @@ local multi_ripgrep = function(opts)
     }
 
     pickers
-        .new(opts, {
+        .new(themes.get_ivy(opts), {
             debounce = 100,
             prompt_title = "Multi Ripgrep",
             finder = custom_grep,
