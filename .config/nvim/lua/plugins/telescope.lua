@@ -52,7 +52,7 @@ local multi_ripgrep = function(opts)
             prompt_title = "Multi Ripgrep",
             finder = custom_grep,
             previewer = conf.grep_previewer(opts),
-            sorter = require("telescope.sorters").empty(),
+            sorter = require("telescope.sorters").highlighter_only(opts),
         })
         :find()
 end
