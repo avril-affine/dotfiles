@@ -27,6 +27,7 @@ return {
             "rust",
             "typescript",
             "vimdoc",
+            "gleam",
         },
         -- highlights
         highlight = {

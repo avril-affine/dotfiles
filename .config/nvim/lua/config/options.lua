@@ -23,6 +23,7 @@ vim.api.nvim_create_autocmd({ "VimEnter", "WinEnter", "BufWinEnter" }, {
         vim.opt_local.cursorline = true  -- highlight cursorline
     end,
 })
+
 vim.api.nvim_create_autocmd("WinLeave", {
     callback = function()
         vim.opt_local.relativenumber = false
@@ -31,10 +32,17 @@ vim.api.nvim_create_autocmd("WinLeave", {
 })
 
 vim.api.nvim_create_autocmd({ "FileType" }, {
-    pattern = "json",
+    pattern = "*.json",
     callback = function()
         vim.opt_local.foldmethod = "expr"
         vim.opt_local.foldexpr = "nvim_treesitter#foldexpr()"
         vim.opt_local.foldlevel = 2
+    end,
+})
+
+vim.api.nvim_create_autocmd("BufEnter", {
+    pattern = "*.gleam",
+    callback = function()
+        vim.cmd("TSBufEnable highlight")
     end,
 })
