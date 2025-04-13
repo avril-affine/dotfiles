@@ -159,6 +159,7 @@ return {
                   },
                 },
                 sourcekit = {},
+                gleam = {},
             },
             setup = {},
         },
