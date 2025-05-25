@@ -1,19 +1,53 @@
+local step_over = function()
+    local dap = require("dap")
+    dap.step_over()
+    vim.cmd("normal! zz")
+end
+
+local step_into = function()
+    local dap = require("dap")
+    dap.step_into()
+    vim.cmd("normal! zz")
+end
+
+local current_program = nil
+local get_rerunnable_file = function()
+    if current_program == nil then
+        current_program = vim.api.nvim_buf_get_name(0)
+    end
+    return current_program
+end
+
+local reset_program = function()
+    current_program = nil
+end
+
 return {
     {
         "mfussenegger/nvim-dap",
         config = function(_, opts)
-            -- local dap = require("dap")
-            -- local cwd = vim.fn.getcwd()
+            local dap = require("dap")
             vim.fn.sign_define("DapBreakpoint", {text="🛑", texthl="", linehl="", numhl=""})
+            local configs = dap.configurations.python or {}
+            dap.configurations.python = configs
+            table.insert(configs, {
+                type = "python",
+                request = "launch",
+                name = "Current file with rerun",
+                program = get_rerunnable_file,
+            })
         end,
         keys = function()
             local dap = require("dap")
             return {
                 { "<leader>tc", function() dap.continue() end, desc = "[DAP] continue" },
+                { "<leader>tC", reset_program, desc = "[DAP] reset program" },
                 { "<leader>tl", function() dap.run_last() end, desc = "[DAP] run last" },
                 { "<leader>tD", function() dap.terminate() end, desc = "[DAP] terminate" },
-                { "<F17>", function() dap.step_over() end, desc = "[DAP] next" },
-                { "<F18>", function() dap.step_into() end, desc = "[DAP] step" },
+                { "<F17>", step_over, desc = "[DAP] next" },
+                { "<leader>tn", step_over, desc = "[DAP] next" },
+                { "<F18>", step_into, desc = "[DAP] step" },
+                { "<leader>ti", step_into, desc = "[DAP] step" },
                 { "<leader>b", function() dap.toggle_breakpoint() end, desc = "[DAP] toggle breakpoint" },
             }
         end
@@ -24,7 +58,20 @@ return {
         config = function(_, opts)
             local dap = require("dap")
             local dapui = require("dapui")
-            dapui.setup()
+            dapui.setup({
+                layouts = {
+                    {
+                        elements = {
+                            { id = "stacks", size = 0.1 },
+                            { id = "breakpoints", size = 0.1 },
+                            { id = "scopes", size = 0.1 },
+                            { id = "watches", size = 0.7 },
+                        },
+                        position = "left",
+                        size = 0.25,
+                    },
+                },
+            })
             dap.listeners.before.attach.dapui_config = function() dapui.open() end
             dap.listeners.before.launch.dapui_config = function() dapui.open() end
             dap.listeners.before.event_terminated.dapui_config = function() dapui.close() end
