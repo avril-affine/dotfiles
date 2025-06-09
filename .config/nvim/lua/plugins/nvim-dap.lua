@@ -27,7 +27,10 @@ return {
         "mfussenegger/nvim-dap",
         config = function(_, opts)
             local dap = require("dap")
-            vim.fn.sign_define("DapBreakpoint", {text="🛑", texthl="", linehl="", numhl=""})
+            vim.fn.sign_define("DapBreakpoint", { text="🛑" })
+            vim.api.nvim_set_hl(0, "DapStoppedText", { fg = "#a6e3a1", bg = "#625252" })
+            vim.api.nvim_set_hl(0, "DapStoppedLine", { bg = "#625252" })
+            vim.fn.sign_define("DapStopped", {text="→", texthl="DapStoppedText", linehl="DapStoppedLine", numhl="DapStoppedText"})
             local configs = dap.configurations.python or {}
             dap.configurations.python = configs
             table.insert(configs, {

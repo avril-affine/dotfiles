@@ -16,10 +16,18 @@ vim.opt.timeoutlen = 10
 vim.opt.clipboard = "unnamedplus" -- global clipboard
 vim.opt.backspace = "indent,eol,start" -- fix backspace
 
+local use_relative_number = true
+local function toggle_relative_number()
+    use_relative_number = not use_relative_number
+    vim.opt.relativenumber = use_relative_number
+end
+vim.api.nvim_create_user_command("ToggleRelativeNumber", toggle_relative_number, {
+    desc = "Toggle relative line number",
+})
 
 vim.api.nvim_create_autocmd({ "VimEnter", "WinEnter", "BufWinEnter" }, {
     callback = function()
-        vim.opt_local.relativenumber = true  -- relative line number *only* in current window
+        vim.opt_local.relativenumber = use_relative_number  -- relative line number *only* in current window
         vim.opt_local.cursorline = true  -- highlight cursorline
     end,
 })
