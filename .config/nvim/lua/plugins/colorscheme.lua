@@ -4,17 +4,17 @@ return {
         lazy = false,
         priority = 1000,
         opts = {
-             style = "night",
-             dim_inactive = true,
-             on_highlights = function(hl, c)
-                 hl.Normal = { fg = "#ffffff" , bg = c.bg }
-                 hl.Comment = { fg = "#ffdfaf" }
-                 hl.LineNr = { fg = "#ffffff", bg = "#4c4e52" }
-                 hl.CursorLineNr = { fg = c.cyan, bg = "#4c4e52", bold = true }
-                 hl.SignColumn = { bg = "#4c4e52" }
-                 hl.DiagnosticUnnecessary = { fg = c.none, underline = true }
-                 hl.WinSeparator = hl.LineNr
-             end,
+            style = "night",
+            dim_inactive = true,
+            on_highlights = function(hl, c)
+                hl.Normal = { fg = "#ffffff" , bg = c.bg }
+                hl.Comment = { fg = "#ffdfaf" }
+                hl.LineNr = { fg = "#ffffff", bg = "#4c4e52" }
+                hl.CursorLineNr = { fg = c.cyan, bg = "#4c4e52", bold = true }
+                hl.SignColumn = { bg = "#4c4e52" }
+                hl.DiagnosticUnnecessary = { fg = c.none, underline = true }
+                hl.WinSeparator = hl.LineNr
+            end,
         },
     },
     {
@@ -24,13 +24,6 @@ return {
         opts = {
             flavour = "mocha",
             no_italic = true,
-            -- color_overrides = {
-			-- 	mocha = {
-			-- 		base = "#000000",
-			-- 		mantle = "#000000",
-			-- 		crust = "#000000",
-			-- 	},
-			-- },
             custom_highlights = function(c)
                 return {
                     Visual = { fg = c.crust, bg = c.sapphire },
@@ -62,6 +55,15 @@ return {
                     ["@constructor"] = { fg = c.peach, bold = true },
                     ["@type"] = { link = "@constructor" },
                     ["@function.builtin"] = { fg = c.pink },
+
+                    -- Snacks.indent
+                    SnacksIndent = { fg = c.surface0, bold = true },
+                    SnacksIndentScope = { fg = c.blue, bold = true },
+
+                    -- treesitter context
+                    TreeSitterContext = { bg = "#3c3d52" },
+                    TreeSitterContextLineNumber = { fg = "#cdd6f4", bg = "#3c3d52" },
+                    TreesitterContextSeparator = { fg = "#89b4fa", bg = "#3c3d52" },
                 }
             end
         },
