@@ -2,6 +2,7 @@ return {
     "renerocksai/telekasten.nvim",
     dependencies = {
         "nvim-telescope/telescope.nvim",
+        "nvim-treesitter/nvim-treesitter",
     },
     opts = function(_, opts)
         -- mkdir if not exists
@@ -28,6 +29,10 @@ return {
         opts.follow_creates_nonexisting = true
         opts.dailies_create_nonexisting = true
         opts.weeklies_create_nonexisting = true
+    end,
+    config = function(_, opts)
+        require("telekasten").setup(opts)
+        require("vim.treesitter.language").register("markdown", "telekasten")
     end,
     keys = {
         -- Launch panel if nothing is typed after <leader>z

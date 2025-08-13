@@ -1,6 +1,7 @@
 return {
     {
         "nvim-treesitter/nvim-treesitter",
+        lazy = false,
         dependencies = {
             "nvim-treesitter/nvim-treesitter-textobjects",
             "nvim-treesitter/playground",
@@ -103,7 +104,7 @@ return {
         },
         opts = {
             enable = true,
-            max_lines = 5,
+            max_lines = 8,
             trim_scope = "outer",
             separator = "━",
         },
