@@ -1,0 +1,32 @@
+-- git/fugitive
+vim.api.nvim_set_hl(0, "gitHead", { link="String" })
+vim.api.nvim_set_hl(0, "DiffAdd", { bg="#3d6b4f" })
+vim.api.nvim_set_hl(0, "DiffDelete", { bg="#6b3d57" })
+vim.api.nvim_set_hl(0, "DiffChange", { bg="#6b6b3d" })
+vim.api.nvim_set_hl(0, "DiffText", { bg="#4f6b8a", bold=true })
+
+-- render-markdown
+vim.api.nvim_set_hl(0, "RenderMarkdownCustomH1Bg", { fg="#00ffaf", bg="#252535", bold=true })
+vim.api.nvim_set_hl(0, "RenderMarkdownCustomH1Fg", { fg="#00ffaf", bold=true })
+vim.api.nvim_set_hl(0, "RenderMarkdownCustomH2Bg", { fg="#ffaf00", bg="#2a2a3a", bold=true })
+vim.api.nvim_set_hl(0, "RenderMarkdownCustomH2Fg", { fg="#ffaf00", bold=true })
+vim.api.nvim_set_hl(0, "RenderMarkdownCustomH3Bg", { fg="#5fafff", bg="#262636", bold=true })
+vim.api.nvim_set_hl(0, "RenderMarkdownCustomH3Fg", { fg="#5fafff", bold=true })
+vim.api.nvim_set_hl(0, "RenderMarkdownCustomH4Bg", { fg="#ff5f87", bg="#2a2a3a", bold=true })
+vim.api.nvim_set_hl(0, "RenderMarkdownCustomH4Fg", { fg="#ff5f87", bold=true })
+vim.api.nvim_set_hl(0, "RenderMarkdownCustomH5Bg", { fg="#ffafd7", bg="#23232f", bold=true })
+vim.api.nvim_set_hl(0, "RenderMarkdownCustomH5Fg", { fg="#ffafd7", bold=true })
+vim.api.nvim_set_hl(0, "RenderMarkdownCustomH6Bg", { fg="#b2b2b2", bg="#1e1e2e", bold=true })
+vim.api.nvim_set_hl(0, "RenderMarkdownCustomH6Fg", { fg="#b2b2b2", bold=true })
+vim.api.nvim_set_hl(0, "markdownH1", { link="RenderMarkdownCustomH1Fg" })
+vim.api.nvim_set_hl(0, "markdownH2", { link="RenderMarkdownCustomH2Fg" })
+vim.api.nvim_set_hl(0, "markdownH3", { link="RenderMarkdownCustomH3Fg" })
+vim.api.nvim_set_hl(0, "markdownH4", { link="RenderMarkdownCustomH4Fg" })
+vim.api.nvim_set_hl(0, "markdownH5", { link="RenderMarkdownCustomH5Fg" })
+vim.api.nvim_set_hl(0, "markdownH6", { link="RenderMarkdownCustomH6Fg" })
+
+-- nvim-dap
+vim.api.nvim_set_hl(0, "DapStoppedText", { fg="#a6e3a1", bg="#625252" })
+vim.api.nvim_set_hl(0, "DapStoppedLine", { bg="#625252" })
+vim.fn.sign_define("DapBreakpoint", { text="🛑" })
+vim.fn.sign_define("DapStopped", {text="→", texthl="DapStoppedText", linehl="DapStoppedLine", numhl="DapStoppedText"})

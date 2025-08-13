@@ -19,6 +19,7 @@
     rbc = rebase --continue
     lol = log --graph --decorate --pretty=oneline --abbrev-commit
     lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
+    wab = worktree add --track -b
 [color]
     branch = auto
     diff = auto
@@ -31,3 +32,5 @@
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge --skip -- %f
 	process = git-lfs filter-process --skip
+[push]
+    autoSetupRemote = true

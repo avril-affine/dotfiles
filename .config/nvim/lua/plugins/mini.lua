@@ -42,7 +42,7 @@ return {
             },
         },
         keys = {
-            { "<leader>k", function() MiniFiles.open() end, desc = "mini.files" },
+            { "<leader>k", function() MiniFiles.open(vim.api.nvim_buf_get_name(0)) end, desc = "mini.files" },
         },
     },
     {
