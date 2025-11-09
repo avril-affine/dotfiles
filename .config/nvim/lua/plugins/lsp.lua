@@ -1,35 +1,41 @@
 return {
-    -- tools
+    -- mason: portable package manager for LSP servers, DAP servers, linters, and formatters
     {
-        "williamboman/mason.nvim",
+        "mason-org/mason.nvim",
+        config = function()
+            require("mason").setup({
+                ui = {
+                    icons = {
+                        package_installed = "✓",
+                        package_pending = "➜",
+                        package_uninstalled = "✗"
+                    }
+                }
+            })
+        end,
+    },
+
+    -- mason-lspconfig: bridge between mason and lspconfig
+    {
+        "mason-org/mason-lspconfig.nvim",
+        dependencies = { "mason-org/mason.nvim" },
         opts = {
             ensure_installed = {
-                "stylua",
-                "luacheck",
-                "shellcheck",
-                "shfmt",
-                "black",
-                "isort",
-                "flake8",
+                "lua_ls",
+                "ts_ls",
+                "html",
+                "pylsp",
+                "rust_analyzer",
+                "vimls",
+                "zls",
+                "elixirls",
+                "ccls",
+                "sourcekit",
+                "gleam",
+                "pyrefly",
             },
+            automatic_installation = true,
         },
-        config = function(_, opts)
-            require("mason").setup(opts)
-            local mr = require("mason-registry")
-            local function ensure_installed()
-                for _, tool in ipairs(opts.ensure_installed) do
-                    local p = mr.get_package(tool)
-                    if not p:is_installed() then
-                        p:install()
-                    end
-                end
-            end
-            if mr.refresh then
-                mr.refresh(ensure_installed)
-            else
-                ensure_installed()
-            end
-        end,
     },
 
     -- lsp servers
@@ -50,8 +56,8 @@ return {
                     },
                 },
             },
-            "mason.nvim",
-            "williamboman/mason-lspconfig.nvim",
+            "mason-org/mason.nvim",
+            "mason-org/mason-lspconfig.nvim",
             "hrsh7th/cmp-nvim-lsp",
         },
         keys = {
@@ -89,6 +95,8 @@ return {
                         },
                     },
                 },
+                -- pyrefly = {},
+                -- ty = {},
                 rust_analyzer = {
                     settings = {
                         ["rust-analyzer"] = {
@@ -164,6 +172,129 @@ return {
             setup = {},
         },
         config = function(_, opts)
+            -- Add custom pyrefly LSP configuration
+            local lspconfig = require("lspconfig")
+            local configs = require("lspconfig.configs")
+
+            if not configs.pyrefly then
+                configs.pyrefly = {
+                    default_config = {
+                        cmd = { "pyrefly", "lsp" },
+                        filetypes = { "python" },
+                        root_dir = lspconfig.util.root_pattern("pyproject.toml", "setup.py", ".git"),
+                        settings = {},
+                        on_attach = function(client, bufnr)
+                            -- Disable all capabilities except semantic tokens
+                            client.server_capabilities.hoverProvider = false
+                            client.server_capabilities.definitionProvider = false
+                            client.server_capabilities.declarationProvider = false
+                            client.server_capabilities.implementationProvider = false
+                            client.server_capabilities.typeDefinitionProvider = false
+                            client.server_capabilities.referencesProvider = false
+                            client.server_capabilities.documentSymbolProvider = false
+                            client.server_capabilities.workspaceSymbolProvider = false
+                            client.server_capabilities.codeActionProvider = false
+                            client.server_capabilities.codeLensProvider = false
+                            client.server_capabilities.documentFormattingProvider = false
+                            client.server_capabilities.documentRangeFormattingProvider = false
+                            client.server_capabilities.renameProvider = false
+                            client.server_capabilities.completionProvider = false
+                            client.server_capabilities.signatureHelpProvider = false
+                            client.server_capabilities.documentHighlightProvider = false
+
+                            -- Keep semantic tokens only
+                            if client.server_capabilities.semanticTokensProvider then
+                                vim.lsp.semantic_tokens.start(bufnr, client.id)
+
+                                -- Refresh semantic tokens after a delay to allow pyrefly to finish indexing
+                                vim.defer_fn(function()
+                                    vim.lsp.semantic_tokens.force_refresh(bufnr)
+                                end, 15000) -- 15 second delay to allow indexing to complete
+                            end
+                        end,
+                    },
+                }
+            end
+
+            if not configs.ty then
+                configs.ty = {
+                    default_config = {
+                        cmd = { "ty", "server" },
+                        filetypes = { "python" },
+                        root_dir = lspconfig.util.root_pattern("pyproject.toml", "setup.py", ".git"),
+                        settings = {},
+                        on_attach = function(client, bufnr)
+                            -- Disable all capabilities except highlighting (semantic tokens & document highlight)
+                            client.server_capabilities.hoverProvider = false
+                            client.server_capabilities.definitionProvider = false
+                            client.server_capabilities.declarationProvider = false
+                            client.server_capabilities.implementationProvider = false
+                            client.server_capabilities.typeDefinitionProvider = false
+                            client.server_capabilities.referencesProvider = false
+                            client.server_capabilities.documentSymbolProvider = false
+                            client.server_capabilities.workspaceSymbolProvider = false
+                            client.server_capabilities.codeActionProvider = false
+                            client.server_capabilities.codeLensProvider = false
+                            client.server_capabilities.documentFormattingProvider = false
+                            client.server_capabilities.documentRangeFormattingProvider = false
+                            client.server_capabilities.renameProvider = false
+                            client.server_capabilities.completionProvider = false
+                            client.server_capabilities.signatureHelpProvider = false
+
+                            -- Keep document highlight and semantic tokens (highlighting features)
+                            if client.server_capabilities.semanticTokensProvider then
+                                vim.lsp.semantic_tokens.start(bufnr, client.id)
+
+                                -- Refresh semantic tokens after a delay to allow ty to finish indexing
+                                vim.defer_fn(function()
+                                    vim.lsp.semantic_tokens.force_refresh(bufnr)
+                                end, 15000) -- 15 second delay to allow indexing to complete
+                            end
+
+                            -- Set up document highlight
+                            if client.server_capabilities.documentHighlightProvider then
+                                vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+                                    buffer = bufnr,
+                                    callback = vim.lsp.buf.document_highlight,
+                                })
+                                vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
+                                    buffer = bufnr,
+                                    callback = vim.lsp.buf.clear_references,
+                                })
+                            end
+                        end,
+                    },
+                }
+            end
+
+            -- Setup semshi-like semantic highlighting colors
+            local function setup_semantic_highlights()
+                -- Semshi-inspired highlight groups for semantic tokens
+                vim.api.nvim_set_hl(0, '@lsp.type.variable.python', { fg = '#ff875f' })  -- Local variables (orange)
+                vim.api.nvim_set_hl(0, '@lsp.type.parameter.python', { fg = '#5fafff' })  -- Parameters (blue)
+                vim.api.nvim_set_hl(0, '@lsp.type.function.python', { fg = '#00ffaf' })  -- Functions (cyan)
+                vim.api.nvim_set_hl(0, '@lsp.type.method.python', { fg = '#00ffaf' })  -- Methods (cyan)
+                vim.api.nvim_set_hl(0, '@lsp.type.class.python', { fg = '#ffaf00', bold = true })  -- Classes (gold, bold)
+                vim.api.nvim_set_hl(0, '@lsp.type.property.python', { fg = '#00ffaf' })  -- Attributes (cyan)
+                vim.api.nvim_set_hl(0, '@lsp.type.namespace.python', { fg = '#ffaf00', bold = true })  -- Imports (gold, bold)
+                vim.api.nvim_set_hl(0, '@lsp.mod.builtin.python', { fg = '#ff5fff' })  -- Builtins (magenta)
+                vim.api.nvim_set_hl(0, '@lsp.mod.global.python', { fg = '#ffaf00' })  -- Globals (gold)
+
+                -- Self/cls highlighting
+                vim.api.nvim_set_hl(0, '@lsp.typemod.parameter.selfParameter.python', { fg = '#b2b2b2' })  -- self (gray)
+
+                -- Unused parameters
+                vim.api.nvim_set_hl(0, '@lsp.typemod.parameter.unused.python', { fg = '#87d7ff', underline = true })  -- Unused params
+            end
+
+            -- Apply semantic highlights on ColorScheme changes
+            vim.api.nvim_create_autocmd("ColorScheme", {
+                callback = setup_semantic_highlights,
+            })
+
+            -- Apply highlights now
+            setup_semantic_highlights()
+
             local Util = require("lazyvim.util")
             -- setup formatting and keymaps
             require("lazyvim.util").lsp.on_attach(function(client, buffer)
@@ -344,7 +475,6 @@ return {
                     }),
                     ["<C-o>"] = cmp.mapping(  -- <C-i> maps to <Tab> on iterm2  https://github.com/neovim/neovim/issues/24877
                         function(fallback)
-                            print("C_O")
                             local resolved_key = vim.fn["copilot#Accept"]()
                             if resolved_key ~= vim.NIL then
                                 vim.api.nvim_feedkeys(resolved_key, "n", true)
