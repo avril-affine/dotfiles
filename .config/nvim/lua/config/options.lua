@@ -9,12 +9,13 @@ vim.opt.expandtab = true
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.cursorline = true
-vim.opt.ruler = true -- row/col number
+vim.opt.ruler = true                    -- row/col number
 vim.opt.timeout = false
 vim.opt.ttimeout = true
 vim.opt.timeoutlen = 10
-vim.opt.clipboard = "unnamedplus" -- global clipboard
-vim.opt.backspace = "indent,eol,start" -- fix backspace
+vim.opt.clipboard = "unnamedplus"       -- global clipboard
+vim.opt.backspace = "indent,eol,start"  -- fix backspace
+            vim.opt.updatetime = 250    -- Set updatetime for better document highlight responsiveness
 
 local use_relative_number = true
 local function toggle_relative_number()
