@@ -61,9 +61,10 @@ return {
             function()
                 Snacks.picker.grep({
                     exclude = {
+                        "*.csv",
+                        "*.dot",
                         "*.json",
                         "*.jsonl",
-                        "*.dot",
                         "*.log",
                     },
                 })
