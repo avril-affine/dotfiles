@@ -1,8 +1,8 @@
 return {
-	{
-		"wookayin/semshi",
-		ft = "python",
-	},
+	-- {
+	-- 	"wookayin/semshi",
+	-- 	ft = "python",
+	-- },
 	{
 		"psf/black",
         ft = "python",

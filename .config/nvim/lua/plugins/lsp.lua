@@ -24,7 +24,8 @@ return {
                 "lua_ls",
                 "ts_ls",
                 "html",
-                "pylsp",
+                -- "pylsp",
+                "basedpyright",
                 "rust_analyzer",
                 "vimls",
                 "zls",
@@ -76,20 +77,36 @@ return {
                 severity_sort = true,
             },
             servers = {
-                pylsp = {
+                -- pylsp = {
+                --     settings = {
+                --         pylsp = {
+                --             configurationSources = { "flake8" },
+                --             plugins = {
+                --                 pycodestyle = { enabled = false },
+                --                 pyflakes = { enabled = false },
+                --                 mccabe = { enabled = false },
+                --                 yapf = { enabled = false },
+                --                 flake8 = { enabled = true },
+                --                 pylsp_mypy = { enabled = true },
+                --                 rope_completion = {
+                --                     enabled = true,
+                --                     eager = true,
+                --                 },
+                --             },
+                --         },
+                --     },
+                -- },
+                basedpyright = {
                     settings = {
-                        pylsp = {
-                            configurationSources = { "flake8" },
-                            plugins = {
-                                pycodestyle = { enabled = false },
-                                pyflakes = { enabled = false },
-                                mccabe = { enabled = false },
-                                yapf = { enabled = false },
-                                flake8 = { enabled = true },
-                                pylsp_mypy = { enabled = true },
-                                rope_completion = {
-                                    enabled = true,
-                                    eager = true,
+                        basedpyright = {
+                            analysis = {
+                                -- Type checking mode: "off", "basic", "standard", "strict", "all"
+                                -- typeCheckingMode = "basic",
+                                -- Disable specific diagnostics
+                                diagnosticSeverityOverrides = {
+                                    reportUnknownArgumentType = "none",
+                                    reportUnknownVariableType = "none",
+                                    reportUnusedCallResult = "none",
                                 },
                             },
                         },
@@ -270,15 +287,18 @@ return {
             -- Setup semshi-like semantic highlighting colors
             local function setup_semantic_highlights()
                 -- Semshi-inspired highlight groups for semantic tokens
-                vim.api.nvim_set_hl(0, '@lsp.type.variable.python', { fg = '#ff875f' })  -- Local variables (orange)
+                -- vim.api.nvim_set_hl(0, '@lsp.type.variable.python', { fg = '#ff875f' })  -- Local variables (orange)
                 vim.api.nvim_set_hl(0, '@lsp.type.parameter.python', { fg = '#5fafff' })  -- Parameters (blue)
                 vim.api.nvim_set_hl(0, '@lsp.type.function.python', { fg = '#00ffaf' })  -- Functions (cyan)
                 vim.api.nvim_set_hl(0, '@lsp.type.method.python', { fg = '#00ffaf' })  -- Methods (cyan)
                 vim.api.nvim_set_hl(0, '@lsp.type.class.python', { fg = '#ffaf00', bold = true })  -- Classes (gold, bold)
                 vim.api.nvim_set_hl(0, '@lsp.type.property.python', { fg = '#00ffaf' })  -- Attributes (cyan)
                 vim.api.nvim_set_hl(0, '@lsp.type.namespace.python', { fg = '#ffaf00', bold = true })  -- Imports (gold, bold)
-                vim.api.nvim_set_hl(0, '@lsp.mod.builtin.python', { fg = '#ff5fff' })  -- Builtins (magenta)
                 vim.api.nvim_set_hl(0, '@lsp.mod.global.python', { fg = '#ffaf00' })  -- Globals (gold)
+                vim.api.nvim_set_hl(0, 'pythonBuiltin', { fg = '#ff5fff' })  -- Builtins (magenta)
+                vim.api.nvim_set_hl(0, '@lsp.mod.builtin.python', { link = 'pythonBuiltin' })
+                vim.api.nvim_set_hl(0, '@lsp.typemod.class.defaultLibrary.python', { link = 'pythonBuiltin' })
+                vim.api.nvim_set_hl(0, '@lsp.typemod.function.defaultLibrary.python', { link = 'pythonBuiltin' })
 
                 -- Self/cls highlighting
                 vim.api.nvim_set_hl(0, '@lsp.typemod.parameter.selfParameter.python', { fg = '#b2b2b2' })  -- self (gray)
