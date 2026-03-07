@@ -1,0 +1,33 @@
+if [ -z "$1" ]; then
+  echo "Usage: gwb <branch-name>"
+  return 1
+fi
+
+local name="$1"
+local current_branch
+current_branch=$(git rev-parse --abbrev-ref HEAD) || return 1
+local worktree_path="../${name}"
+
+# create worktree
+git worktree add "${worktree_path}" -b "kk/${name}" "${current_branch}" || return 1
+
+# copy venv if one exists
+if [ -d .venv ]; then
+  local frozen
+  frozen=$(uv pip freeze --python .venv/bin/python)
+  uv venv "${worktree_path}/.venv" || return 1
+  if [ -n "${frozen}" ]; then
+    echo "${frozen}" | uv pip install --python "${worktree_path}/.venv/bin/python" -r - || return 1
+  fi
+fi
+
+# deactivate current venv if active
+if typeset -f deactivate > /dev/null 2>&1; then
+  deactivate
+fi
+
+# move to new worktree and activate venv
+cd "${worktree_path}" || return 1
+if [ -d .venv ]; then
+  source .venv/bin/activate
+fi

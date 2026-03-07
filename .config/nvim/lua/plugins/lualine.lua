@@ -1,13 +1,14 @@
 return {
     "nvim-lualine/lualine.nvim",
     dependencies = {
-        "LazyVim/LazyVim",
         "folke/noice.nvim",
     },
-    -- event = "VeryLazy",
     opts = function()
-        local icons = require("lazyvim.config").icons
-        local ui = require("lazyvim.util").ui
+        local function fg(name)
+            local hl = vim.api.nvim_get_hl(0, { name = name, link = false })
+            local color = hl and (hl.fg or hl.foreground)
+            return color and { fg = string.format("#%06x", color) } or nil
+        end
 
         return {
             options = {
@@ -22,16 +23,16 @@ return {
                     {
                         "diagnostics",
                         symbols = {
-                            error = icons.diagnostics.Error,
-                            warn = icons.diagnostics.Warn,
-                            info = icons.diagnostics.Info,
-                            hint = icons.diagnostics.Hint,
+                            error = " ",
+                            warn = " ",
+                            info = " ",
+                            hint = " ",
                         },
                     },
                     { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
-                    { "filename", path = 1, separator = "", symbols = { modified = "  ", readonly = "", unnamed = "" } },
+                    { "filename", path = 1, separator = "", symbols = { modified = "  ", readonly = "", unnamed = "" } },
                     {
-                        function() 
+                        function()
                             local zoomtext = vim.fn["zoom#statusline"]()
                             if zoomtext ~= nil then
                                 return zoomtext
@@ -51,27 +52,27 @@ return {
                     {
                         function() return require("noice").api.status.command.get() end,
                         cond = function() return package.loaded["noice"] and require("noice").api.status.command.has() end,
-                        color = ui.fg("Statement"),
+                        color = fg("Statement"),
                     },
                     -- stylua: ignore
                     {
                         function() return require("noice").api.status.mode.get() end,
                         cond = function() return package.loaded["noice"] and require("noice").api.status.mode.has() end,
-                        color = ui.fg("Constant"),
+                        color = fg("Constant"),
                     },
                     -- stylua: ignore
                     {
-                        function() return "  " .. require("dap").status() end,
+                        function() return "  " .. require("dap").status() end,
                         cond = function () return package.loaded["dap"] and require("dap").status() ~= "" end,
-                        color = ui.fg("Debug"),
+                        color = fg("Debug"),
                     },
-                    { require("lazy.status").updates, cond = require("lazy.status").has_updates, color = ui.fg("Special") },
+                    { require("lazy.status").updates, cond = require("lazy.status").has_updates, color = fg("Special") },
                     {
                         "diff",
                         symbols = {
-                            added = icons.git.added,
-                            modified = icons.git.modified,
-                            removed = icons.git.removed,
+                            added = " ",
+                            modified = " ",
+                            removed = " ",
                         },
                     },
                 },
@@ -81,7 +82,7 @@ return {
                 },
                 lualine_z = {
                     function()
-                        return " " .. os.date("%R")
+                        return " " .. os.date("%R")
                     end,
                 },
             },
