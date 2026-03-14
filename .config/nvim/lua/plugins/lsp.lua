@@ -268,10 +268,14 @@ return {
                 },
                 hover = {
                     enabled = true,
-                    silent = false,
                     view = nil,
                     ---@type NoiceViewOptions
-                    opts = {},
+                    opts = {
+                        size = {
+                            -- force width since sometimes lsp doesn't give the full message length
+                            width = 40,
+                        },
+                    },
                 },
                 signature = {
                     enabled = true,
