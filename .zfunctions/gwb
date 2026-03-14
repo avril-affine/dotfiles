@@ -3,6 +3,11 @@ if [ -z "$1" ]; then
   return 1
 fi
 
+if [[ "$1" == *"/"* ]]; then
+  echo "Error: branch name cannot contain '/'"
+  return 1
+fi
+
 local name="$1"
 local current_branch
 current_branch=$(git rev-parse --abbrev-ref HEAD) || return 1
@@ -19,15 +24,21 @@ if [ -d .venv ]; then
   if [ -n "${frozen}" ]; then
     echo "${frozen}" | uv pip install --python "${worktree_path}/.venv/bin/python" -r - || return 1
   fi
+else
+  echo "No .venv found in current worktree, skipping venv setup"
 fi
 
 # deactivate current venv if active
 if typeset -f deactivate > /dev/null 2>&1; then
   deactivate
+else
+  echo "No active venv to deactivate"
 fi
 
 # move to new worktree and activate venv
 cd "${worktree_path}" || return 1
 if [ -d .venv ]; then
   source .venv/bin/activate
+else
+  echo "No .venv found in new worktree, skipping venv activation"
 fi
