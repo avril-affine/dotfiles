@@ -40,28 +40,6 @@ return {
         config = function(_, opts)
             require("mason-lspconfig").setup(opts)
 
-            -- Setup semshi-like semantic highlighting colors
-            local function setup_semantic_highlights()
-                vim.api.nvim_set_hl(0, '@lsp.type.parameter.python', { fg = '#5fafff' })
-                vim.api.nvim_set_hl(0, '@lsp.type.function.python', { fg = '#00ffaf' })
-                vim.api.nvim_set_hl(0, '@lsp.type.method.python', { fg = '#00ffaf' })
-                vim.api.nvim_set_hl(0, '@lsp.type.class.python', { fg = '#ffaf00', bold = true })
-                vim.api.nvim_set_hl(0, '@lsp.type.property.python', { fg = '#00ffaf' })
-                vim.api.nvim_set_hl(0, '@lsp.type.namespace.python', { fg = '#ffaf00', bold = true })
-                vim.api.nvim_set_hl(0, '@lsp.mod.global.python', { fg = '#ffaf00' })
-                vim.api.nvim_set_hl(0, 'pythonBuiltin', { fg = '#ff5fff' })
-                vim.api.nvim_set_hl(0, '@lsp.mod.builtin.python', { link = 'pythonBuiltin' })
-                vim.api.nvim_set_hl(0, '@lsp.typemod.class.defaultLibrary.python', { link = 'pythonBuiltin' })
-                vim.api.nvim_set_hl(0, '@lsp.typemod.function.defaultLibrary.python', { link = 'pythonBuiltin' })
-                vim.api.nvim_set_hl(0, '@lsp.typemod.parameter.selfParameter.python', { fg = '#b2b2b2' })
-                vim.api.nvim_set_hl(0, '@lsp.typemod.parameter.unused.python', { fg = '#87d7ff', underline = true })
-            end
-
-            vim.api.nvim_create_autocmd("ColorScheme", {
-                callback = setup_semantic_highlights,
-            })
-            setup_semantic_highlights()
-
             -- Diagnostics
             vim.diagnostic.config({
                 underline = true,

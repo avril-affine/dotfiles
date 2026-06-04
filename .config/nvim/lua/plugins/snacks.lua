@@ -33,7 +33,7 @@ return {
             scope = {
                 enabled = true,
                 priority = 200,
-                underline = true,
+                underline = false,
                 only_current = true,
             },
         },
