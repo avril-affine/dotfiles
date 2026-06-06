@@ -1,0 +1,7 @@
+theme = Snazzy
+
+# Make F13 emit the xterm S-F1 sequence to make it visible in tmux
+keybind = f13=text:\xb[1;2P
+
+# Disable ligatures
+font-feature = -calt
