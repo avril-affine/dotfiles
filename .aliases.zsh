@@ -23,4 +23,3 @@ alias pcp="peco --exec \"xclip -selection c\""
 # env
 alias ca="conda-activate"
 alias cad="conda activate dev"
-alias tmux="conda deactivate; tmux"  # fixes conda PATH in tmux
