@@ -20,7 +20,7 @@ return {
     Keyword = { fg = p.keyword },
     Exception = { fg = p.keyword },
 
-    PreProc = { fg = p.global },
+    PreProc = { fg = p.none },
     Include = { fg = p.keyword, bold = true },
     Define = { link = "PreProc" },
     Macro = { fg = p.keyword },

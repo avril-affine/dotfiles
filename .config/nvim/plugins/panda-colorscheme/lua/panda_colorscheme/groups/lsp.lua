@@ -86,6 +86,7 @@ return {
     ["@lsp.type.typeParameter"] = { link = "@type.definition" },
     ["@lsp.type.variable"] = {},
     ["@lsp.type.selfKeyword"] = { fg = p.self },
+    ["@lsp.type.builtinAttribute"] = { link = "@type.builtin" },
     ["@lsp.type.builtinType"] = { link = "@type.builtin" },
     ["@lsp.type.escapeSequence"] = { link = "@string.escape" },
     ["@lsp.mod.deprecated"] = { link = "DiagnosticDeprecated" },
@@ -112,4 +113,6 @@ return {
     ["@lsp.typemod.function.defaultLibrary.python"] = { link = "pythonBuiltin" },
     ["@lsp.typemod.parameter.selfParameter.python"] = { fg = p.self },
     ["@lsp.typemod.parameter.unused.python"] = { fg = p.parameter_unused, underline = true },
+
+    ["@lsp.typemod.method.defaultLibrary.rust"] = { fg = p.none },
 }

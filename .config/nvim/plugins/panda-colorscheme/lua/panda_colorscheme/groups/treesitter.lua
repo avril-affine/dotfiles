@@ -30,7 +30,7 @@ return {
     ["@number.float"] = { link = "Float" },
 
     ["@type"] = { link = "Type" },
-    ["@type.builtin"] = { fg = p.imported },
+    ["@type.builtin"] = { fg = p.builtin },
     ["@type.definition"] = { link = "Type" },
     ["@type.qualifier"] = { link = "Keyword" },
     ["@attribute"] = { fg = p.attribute },
