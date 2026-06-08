@@ -3,5 +3,8 @@ theme = Snazzy
 # Make F13 emit the xterm S-F1 sequence to make it visible in tmux
 keybind = f13=text:\x1b[1;2P
 
-# Disable ligatures
+# Font / ligatures
+font-family  = Monaco Nerd Font Complete Mono
 font-feature = -calt
+font-feature = -liga
+font-feature = -dlig
