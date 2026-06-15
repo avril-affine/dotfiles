@@ -34,7 +34,7 @@ return {
     StatusLineNC = { fg = p.surface1, bg = p.bg_dark },
     StatusLineTerm = { link = "StatusLine" },
     StatusLineTermNC = { link = "StatusLineNC" },
-    WinSeparator = { fg = p.surface, bg = p.surface },
+    WinSeparator = { fg = p.surface2, bg = p.bg },
     VertSplit = { link = "WinSeparator" },
     WinBar = { fg = p.free, bg = p.bg },
     WinBarNC = { fg = p.self, bg = p.bg },

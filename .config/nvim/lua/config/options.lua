@@ -10,6 +10,12 @@ vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.cursorline = true
 vim.opt.ruler = true                    -- row/col number
+vim.opt.fillchars:append({
+    horiz = "═",
+    horizup = "╩",
+    horizdown = "╦",
+    verthoriz = "╬",
+})
 vim.opt.timeout = false
 vim.opt.ttimeout = true
 vim.opt.timeoutlen = 10
