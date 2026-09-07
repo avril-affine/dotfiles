@@ -75,6 +75,7 @@ return {
                 "ccls",
                 "sourcekit",
                 "gleam",
+                "ocamllsp",
                 -- "pyrefly",
                 -- "ty",
             })
