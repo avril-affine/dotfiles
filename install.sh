@@ -46,8 +46,8 @@ APT_PKGS=" \
 set -ex
 
 function install_symlinks() {
-    stow -D .
-    stow .
+    mkdir -p "$HOME/.config/herdr-app/layouts" "$HOME/.config/herdr-app/mods"
+    stow --target="$HOME" .
 }
 
 function install_neovim_config() {

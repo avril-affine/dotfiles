@@ -1,0 +1,7 @@
+# Herdr writes editor support files and runtime diagnostics into custom mods.
+mods/*/gpui-kit.d.ts
+mods/*/herdr.d.ts
+mods/*/jsconfig.json
+mods/*/node_modules/
+*.error
+mods/*/*.error

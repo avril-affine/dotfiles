@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400">
+  <rect width="640" height="400" rx="12" fill="#17191f"/>
+  <path d="M0 40H640M160 0V400M160 370H640" stroke="#353943"/>
+  <g fill="#272b34"><rect x="12" y="55" width="136" height="28" rx="6"/><rect x="28" y="90" width="120" height="24" rx="6"/><rect x="172" y="52" width="280" height="306" rx="8"/><rect x="464" y="52" width="164" height="306" rx="8"/></g>
+  <g fill="#aeb6c7" font-family="monospace" font-size="13"><text x="18" y="26">Spaces</text><text x="20" y="74">⌄ dotfiles</text><text x="42" y="107">worktree</text><text x="186" y="78">$EDITOR</text><text x="478" y="78">Changes</text><text x="180" y="390">Prefix: `</text></g>
+</svg>

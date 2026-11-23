@@ -1,8 +1,11 @@
 \.git
 \.gitignore
 ^/misc
+^/tests
 ^/util\.py
 ^/install\.sh
+
+^/\.config/herdr-app/mods/[^/]+/(gpui-kit\.d\.ts|herdr\.d\.ts|jsconfig\.json|node_modules)(/|$)
 
 nonicons
 monaco-nerd-fonts

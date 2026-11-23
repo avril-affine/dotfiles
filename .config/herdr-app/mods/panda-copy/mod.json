@@ -1,0 +1,8 @@
+{
+  "place": "none",
+  "title": "Pane header and copy mode",
+  "cloned_from": {
+    "name": "pane",
+    "version": "0.1.16"
+  }
+}
