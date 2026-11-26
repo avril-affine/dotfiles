@@ -156,9 +156,12 @@ export class NativeSelection {
   }
 
   async lastCell(cx) {
+    const offset = this.viewport().offset;
     await this.batch([["terminal.select", { at: this.cursor }], ["terminal.adjust_selection", { direction: "end" }]], cx);
     const last = { ...this.selection().end };
     await this.paint(cx);
+    const lines = offset - this.viewport().offset;
+    if (lines) await this.batch([["terminal.scroll", { lines }]], cx);
     return last;
   }
 

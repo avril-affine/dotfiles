@@ -79,6 +79,7 @@ export default class Pane extends View {
   stop(cx, refocus = true) {
     this.jobs = [];
     this.searching = false;
+    this.textIndex = null;
     this.copy.exit(refocus);
     cx.notify();
   }
@@ -127,6 +128,7 @@ export default class Pane extends View {
   }
 
   async index(cx) {
+    if (this.textIndex) return this.textIndex;
     const p = this.me();
     // Never ask hc to stitch an alternate-screen app by scrolling it. --lines 0
     // reads its displayed screen without sending any input to the program.
@@ -136,7 +138,38 @@ export default class Pane extends View {
     if (!this.copy.active) throw new Error("Copy mode ended");
     const text = JSON.parse(result.stdout).text;
     const last = await this.copy.lastCell(cx);
-    return new TerminalText(text, this.copy.cols, last);
+    this.textIndex = new TerminalText(text, this.copy.cols, last);
+    return this.textIndex;
+  }
+
+  reflowIndex() {
+    const previous = this.textIndex;
+    const cols = this.copy.viewport().cols ?? this.copy.cols;
+    if (!previous || previous.cols === cols) return;
+    const selected = this.copy.selection();
+    if (!selected) throw new Error("This terminal has no attached selection view");
+    // Native selections follow reflow. Match the snapshot's logical positions
+    // to that existing selection instead of measuring the terminal end again.
+    const logical = point => {
+      previous.at(point);
+      return { ...previous.buffer.cursor };
+    };
+    const cursor = logical(this.copy.cursor);
+    const anchor = this.copy.anchor ? logical(this.copy.anchor) : null;
+    const end = logical(this.copy.mode === "line"
+      ? { row: this.copy.cursor.row, col: this.copy.cursor.row >= this.copy.anchor.row ? previous.cols - 1 : 0 }
+      : this.copy.cursor);
+    const next = new TerminalText(previous.buffer.text, cols);
+    next.buffer.cursor = end;
+    next.base = selected.end.row - next.point().row;
+    next.buffer.cursor = cursor;
+    this.copy.cursor = next.point() ?? { ...selected.end };
+    if (anchor) {
+      next.buffer.cursor = anchor;
+      this.copy.anchor = next.point() ?? { ...selected.start };
+    }
+    this.copy.cols = cols;
+    this.textIndex = next;
   }
 
   async command(key, cx) {
@@ -144,10 +177,16 @@ export default class Pane extends View {
     if (key === "enter") {
       const f = focused();
       if (f?.pane !== props().pane || !f.terminal) return;
+      this.textIndex = null;
       await this.copy.enter(f.terminal, cx);
+      // Align one snapshot before accepting motions. Re-probing the terminal's
+      // last text cell on every word/search motion briefly selects and scrolls
+      // to the bottom, then restores the cursor.
+      await this.index(cx);
       return;
     }
     if (!this.copy.active) return;
+    this.reflowIndex();
     if (["H", "M", "L"].includes(key)) return this.copy.screen(key, cx);
     if (key === "v" || key === "V") return this.copy.select(key === "V" ? "line" : "character", cx);
     if (key === "y") { this.message = this.copy.copy() ? "Copied · selection kept" : "Press v or V to select"; return; }
@@ -205,6 +244,7 @@ export default class Pane extends View {
       this.copy.exit(false);
       this.jobs = [];
       this.searching = false;
+      this.textIndex = null;
     }
     if (!p) return div();
     const name = ((p.program?.agent || p.program?.shell) && p.program.name) || p.title || p.program?.name || "shell";
@@ -228,6 +268,12 @@ export default class Pane extends View {
       .on_click((_e, cx) => { if (this.copy.active) this.stop(cx); else run("pane.focus", { pane }); })
       .when(Boolean(pic), (el) => el.child(pic))
       .child(div().flex_none().truncate().max_w(260).font_medium().text_color(t.foreground).child(name))
+      .when(p.zoomed, el => el.child(h_flex().id(`pane-zoomed-${pane}`).flex_none().h(20).px(6).gap(4).items_center()
+        .rounded(4).bg(t.selected).text_color(t.accent).text_size(10).font_semibold().cursor_pointer()
+        .tooltip("Pane zoomed · click to restore the split")
+        .on_mouse_down("left", (_e, cx) => cx.stop_propagation())
+        .on_click((_e, cx) => { cx.stop_propagation(); run("pane.zoom", { pane }); })
+        .child(svg("mods/pane/unzoom.svg").size(12)).child("ZOOMED")))
       .when(!this.copy.active, el => el.child(div().flex_1().truncate().text_color(t.dim).child(folder(p.cwd))))
       .when(this.copy.active, el => el
         .child(div().flex_none().px(6).py(1).rounded(4).bg(t.selected).text_color(t.accent).font_semibold()

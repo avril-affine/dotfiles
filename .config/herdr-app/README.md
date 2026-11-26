@@ -1,7 +1,7 @@
 # Herdr
 
 Personal layout and mods for Herdr 0.1.16, cloned from `main`, `spaces`, `changes`,
-and `pane`. Shipped files and generated app state stay in `~/.config/herdr-app`.
+`pane`, and `agents`. Shipped files and generated app state stay in `~/.config/herdr-app`.
 
 Install from this dotfiles checkout:
 
@@ -35,6 +35,8 @@ Use the `panda` layout. Press backtick, release it, then press the shortcut:
 | b / g | Toggle spaces sidebar / changes panel |
 | h / j / k / l | Focus left / down / up / right |
 | \| / - / z | Split right / down / toggle pane zoom |
+| u | Floating URL list for the focused terminal, newest first |
+| U | Open the newest URL directly in the browser |
 | n | New space |
 | Tab / Shift+Tab | Next / previous space |
 | a / A | Next / previous agent |
@@ -49,12 +51,13 @@ Copy mode selects text directly in the currently selected terminal pane, keeping
 its colors, contents, and scrollback. The pane header shows `COPY` and receives
 copy-mode keys so they do not reach the program. Regex input appears in that same
 header. Exiting clears the selection and returns typing to the same pane.
-The copy cursor and native text selections use a bright blue highlight (`#2563eb`)
-for stronger contrast against the terminal background.
+The copy cursor and native text selections use a muted slate blue highlight
+(`#4c5c72`) that fits the Graphite palette while standing out against its background.
 
 Cursor movement, selection highlighting, scrolling, and copying use Herdr's native
-terminal view. Word/paragraph movement and regex search use a read-only text index
-(up to 100,000 history lines), mapped back to terminal cells. Alternate-screen
+terminal view. Word/paragraph movement and regex search use a read-only text snapshot
+captured on entry (up to 100,000 history lines), mapped back to terminal cells.
+Re-enter copy mode to refresh that snapshot. Alternate-screen
 programs are read with `--lines 0`, which reads their screen without scrolling the
 program. Switching panes or clicking back into terminal input ends copy mode.
 
@@ -83,6 +86,22 @@ The Changes panel keeps its diff preview and commit controls.
 Spaces that have nested worktree spaces show a chevron before the name. Click
 it to collapse/expand their children; the choice persists. Folding changes the
 sidebar display, so prefix+Tab can still select a folded worktree.
+
+Click the status dot beside an agent's pin in the sidebar to mark that agent
+unread without opening its pane. Both the idle ring and the filled **Done** dot
+support this action; the tooltip says **Mark as unread**. The agent returns to
+**Done** until revisited. Working or blocked status takes priority.
+
+Zoomed panes show a persistent **ZOOMED** badge in their header. Click it to
+restore the split, or use prefix+z.
+
+Prefix+u opens a floating list of HTTP/HTTPS URLs from the focused terminal,
+newest first with duplicates removed. It reads at most 2,000 history lines plus
+the current screen, and shows the latest 100 distinct URLs. Alternate-screen
+programs are read without scrolling them. Use arrows or j/k and Enter, or click
+a URL, to open it in the browser; Esc closes the list. Prefix+U opens the newest
+URL directly without showing the list. Invoke either shortcut again to read
+the latest output.
 
 Validate with `node --test tests/herdr-app.test.mjs` and
 `herdr-app check .config/herdr-app/mods/<name>` for each custom mod. If the checker

@@ -9,6 +9,8 @@ import { CopyBuffer } from "../.config/herdr-app/mods/panda-copy/buffer.js";
 import { NativeSelection } from "../.config/herdr-app/mods/panda-copy/selection.js";
 import { TerminalText } from "../.config/herdr-app/mods/panda-copy/grid.js";
 import { EDITOR_SCRIPT, editorArgv } from "../.config/herdr-app/mods/panda-changes/editor.js";
+import { recentUrls, readArgs, LOOKBACK_LINES, MAX_URLS } from "../.config/herdr-app/mods/panda-shortcuts/urls.js";
+import { markUnread } from "../.config/herdr-app/mods/panda-agents/unread.js";
 
 // Exercise event handlers with their host boundaries stubbed; native rendering
 // is checked separately by herdr-app check and in the running window.
@@ -19,6 +21,197 @@ function loadView(name, exports) {
   const className = /class (\w+) extends View/.exec(source)[1];
   return runInNewContext(source + `\n${className};`, { View: class {}, ...exports });
 }
+
+function sidebarFixture({ status = "idle", turn = 7, reply } = {}) {
+  const calls = [], commands = [], notices = [], jobs = [], nodes = new Map();
+  const element = () => {
+    const node = { parent: null, click: null };
+    const result = new Proxy({}, { get(_object, key) {
+      if (key === "node") return node;
+      if (key === "id") return id => { nodes.set(id, node); return result; };
+      if (key === "when") return (on, apply) => on ? apply(result) : result;
+      if (key === "on_click") return handler => { node.click = handler; return result; };
+      if (key === "child") return child => { if (child?.node) child.node.parent = node; return result; };
+      if (key === "children") return children => { for (const child of children) if (child?.node) child.node.parent = node; return result; };
+      return () => result;
+    } });
+    return result;
+  };
+  const list = [
+    { address: "remote/t7", pane: "clicked-pane", tab: "clicked-tab", space: "space", space_name: "Project", status, seq: 1, program: { agent: true, name: "Codex", key: "codex" } },
+    { address: "t8", pane: "focused-pane", tab: "other-tab", space: "space", space_name: "Project", status: "idle", seq: 2, focused: true, program: { agent: true, name: "Codex", key: "codex" } },
+  ];
+  const Agents = loadView("panda-agents", {
+    div: element, h_flex: element, v_flex: element, svg: element, image: element,
+    markUnread, checking: () => false, props: () => ({}), agents: () => list,
+    panes: () => list.map(a => ({ ...a, terminal: a.address })),
+    terminals: () => list.map(a => ({ ...a, state: "live" })),
+    spaces: () => [{ id: "space", tabs: list.map(a => ({ id: a.tab, name: "Agent" })) }],
+    focused: () => ({ agent: "t8", pane: "focused-pane" }),
+    layout: () => ({ id: "sidebar", size: { px: 268 } }),
+    shared: () => null, setAgentOrder() {},
+    theme: () => ({ dim: "#777777", idle: "#888888", done: "#96b2d7" }),
+    localStorage: { getItem: () => null, setItem() {}, removeItem() {} },
+    hc: async args => {
+      calls.push(Array.from(args));
+      return reply ? reply(args) : { code: 0, stdout: JSON.stringify({ turn }), stderr: "" };
+    },
+    run: (name, args) => commands.push([name, structuredClone(args)]), notify: value => notices.push(structuredClone(value)),
+  });
+  const cx = {
+    notify() {}, timer: { every() {} },
+    spawn: fn => { const job = fn(cx); jobs.push(job); return job; },
+  };
+  const view = new Agents();
+  view.init({}, cx);
+  view.hovered = "remote/t7";
+  view.render(cx);
+  const click = id => {
+    let node = nodes.get(id), stopped = false;
+    assert.ok(node, `Missing sidebar control ${id}`);
+    const clickCx = { ...cx, stop_propagation: () => { stopped = true; } };
+    while (node) {
+      node.click?.({}, clickCx);
+      if (stopped) break;
+      node = node.parent;
+    }
+  };
+  return { view, calls, commands, notices, click, flush: () => Promise.all(jobs.splice(0)) };
+}
+
+test("clicking a sidebar status dot marks only that agent unread without opening its pane", async () => {
+  for (const status of ["idle", "done"]) {
+    const f = sidebarFixture({ status, turn: 12 });
+    f.click("agent-unread-remote/t7");
+    f.click("agent-unread-remote/t7"); // Ignore duplicate clicks while the write is pending.
+    await f.flush();
+    assert.deepEqual(f.calls, [["get", "remote/t7", "--json"], ["label", "remote/t7", "herdr.seen=11"]]);
+    assert.deepEqual(f.commands, [], "the dot click must not bubble into pane focus or pinning");
+    assert.equal(f.view.markingUnread.size, 0);
+    assert.deepEqual(f.notices, []);
+  }
+});
+
+test("sidebar row and pin clicks keep their own actions", () => {
+  const f = sidebarFixture();
+  f.click("ag-remote/t7");
+  f.click("pin-remote/t7");
+  assert.deepEqual(f.commands, [["pane.focus", { pane: "clicked-pane" }], ["terminal.pin", { terminal: "remote/t7", pinned: true }]]);
+  assert.deepEqual(f.calls, []);
+});
+
+test("sidebar unread failures show an error without opening the agent", async () => {
+  const f = sidebarFixture({
+    reply: args => args[0] === "get" ? { code: 0, stdout: '{"turn":3}' } : { code: 1, stderr: "Machine disconnected" },
+  });
+  f.click("agent-unread-remote/t7");
+  await f.flush();
+  assert.equal(f.notices[0].body, "Machine disconnected");
+  assert.equal(f.view.markingUnread.size, 0);
+  assert.deepEqual(f.commands, []);
+});
+
+test("an agent with no finished turn is not assigned an invalid unread label", async () => {
+  const f = sidebarFixture({ turn: 0 });
+  f.click("agent-unread-remote/t7");
+  await f.flush();
+  assert.deepEqual(f.calls, [["get", "remote/t7", "--json"]]);
+  assert.equal(f.notices[0].title, "Nothing to mark unread");
+});
+
+test("recent URLs are newest first and deduplicated by normalized address", () => {
+  assert.deepEqual(recentUrls("https://example.com/older\nhttps://example.com/newer\nHTTPS://EXAMPLE.COM/older"),
+    ["HTTPS://EXAMPLE.COM/older", "https://example.com/newer"]);
+  assert.deepEqual(recentUrls("http://localhost:3000/a https://example.com/b"),
+    ["https://example.com/b", "http://localhost:3000/a"]);
+});
+
+test("URL extraction trims prose and Markdown wrappers while preserving balanced URL punctuation", () => {
+  assert.deepEqual(recentUrls("[docs](https://example.com/docs). See https://example.com/Foo_(bar). `http://[::1]:3000/a?q=1#x`"),
+    ["http://[::1]:3000/a?q=1#x", "https://example.com/Foo_(bar)", "https://example.com/docs"]);
+  assert.deepEqual(recentUrls("ftp://example.com javascript:alert(1) https://[invalid"), []);
+});
+
+test("URL collection and terminal lookback remain bounded without scrolling alternate-screen programs", () => {
+  const urls = recentUrls(Array.from({ length: 500 }, (_, i) => `https://example.com/${i}`).join("\n"));
+  assert.equal(urls.length, MAX_URLS);
+  assert.equal(urls[0], "https://example.com/499");
+  assert.equal(urls.at(-1), "https://example.com/400");
+  assert.deepEqual(readArgs("remote/t7", { total: 1000000, len: 40 }), ["read", "remote/t7", "--json", "--lines", String(LOOKBACK_LINES)]);
+  assert.deepEqual(readArgs("t1", { total: 60, len: 40 }), ["read", "t1", "--json", "--lines", "20"]);
+  assert.deepEqual(readArgs("t1", null), ["read", "t1", "--json", "--lines", "0"]);
+});
+
+async function urlShortcut(command, { text = "https://example.com/older\nhttps://example.com/newer", code = 0 } = {}) {
+  const opened = [], overlays = [], notices = [], reads = [];
+  let delivered = false, focus = { pane: "source-pane", terminal: "remote/t7" };
+  let complete, fail;
+  const done = new Promise((resolve, reject) => { complete = resolve; fail = reject; });
+  const Shortcuts = loadView("panda-shortcuts", {
+    recentUrls, readArgs, LOOKBACK_LINES, MAX_URLS, checking: () => false,
+    nextCommand: () => {
+      if (delivered) return new Promise(() => {});
+      delivered = true; return Promise.resolve(command);
+    },
+    focused: () => focus,
+    panes: () => [{ pane: "source-pane", terminal: "remote/t7", scroll: { total: 10000, len: 40 } }],
+    hc: async args => {
+      reads.push(Array.from(args));
+      focus = { pane: "other-pane", terminal: "t9" }; // Focus may change while reading.
+      return { code, stdout: JSON.stringify({ text }), stderr: code ? "Cannot reach machine" : "" };
+    },
+    openOverlay: value => overlays.push(structuredClone(value)), notify: value => notices.push(structuredClone(value)),
+  });
+  const cx = { notify: () => complete(), open_url: url => opened.push(url), spawn: fn => fn(cx).catch(fail) };
+  new Shortcuts().init({}, cx);
+  await done;
+  return { opened, overlays, notices, reads };
+}
+
+test("prefix+u opens a URL window for the original terminal with latest URLs first", async () => {
+  const f = await urlShortcut("urls");
+  assert.deepEqual(f.opened, []);
+  assert.equal(f.overlays[0].mod, "panda-urls");
+  assert.equal(f.overlays[0].kind, "window");
+  assert.equal(f.overlays[0].props.terminal, "remote/t7");
+  assert.deepEqual(f.overlays[0].props.urls, ["https://example.com/newer", "https://example.com/older"]);
+  assert.deepEqual(f.reads, [["read", "remote/t7", "--json", "--lines", "2000"]]);
+});
+
+test("prefix+U opens only the newest URL and never opens a floating window", async () => {
+  const f = await urlShortcut("url-last");
+  assert.deepEqual(f.opened, ["https://example.com/newer"]);
+  assert.deepEqual(f.overlays, []);
+  assert.deepEqual(f.notices, []);
+});
+
+test("the direct URL shortcut reports missing URLs or read errors without opening anything", async () => {
+  for (const options of [{ text: "No links here" }, { code: 1 }]) {
+    const f = await urlShortcut("url-last", options);
+    assert.deepEqual(f.opened, []);
+    assert.deepEqual(f.overlays, []);
+    assert.equal(f.notices.length, 1);
+  }
+});
+
+test("the floating URL list opens the keyboard-selected URL and Escape closes without opening", () => {
+  for (const cancel of [false, true]) {
+    const opened = [], closed = [];
+    const Urls = loadView("panda-urls", {
+      props: () => ({ overlay: "url-window", urls: ["https://example.com/new", "https://example.com/old"] }),
+      closeOverlay: id => closed.push(id), ScrollHandle: { new: () => ({ scroll_to_item() {} }) },
+    });
+    const cx = { focus_handle: () => ({ focus() {} }), open_url: url => opened.push(url), notify() {}, stop_propagation() {} };
+    const view = new Urls();
+    view.init({}, cx);
+    view.key({ key: "j" }, cx);
+    view.key({ key: "down" }, cx); // Stop at the final URL.
+    assert.equal(view.at, 1);
+    view.key({ key: cancel ? "escape" : "enter" }, cx);
+    assert.deepEqual(opened, cancel ? [] : ["https://example.com/old"]);
+    assert.deepEqual(closed, ["url-window"]);
+  }
+});
 
 test("motions clamp to rows and preserve Unicode characters", () => {
   const b = new CopyBuffer("a😀c\nxy\n");
@@ -200,7 +393,7 @@ test("folding worktrees hides only children and keeps the space order", () => {
 function nativeFixture({ cols = 12, rows = 20, height = 4, offset = 0, alternate = false, cursor = { row: 5, col: 4 }, bottom = rows - 1, text = "one two\nalpha beta\nlast" } = {}) {
   let selection = null, focused = false, inputValue = "";
   const viewport = { offset, len: height, total: rows };
-  const queued = [], calls = [], copied = [], jobs = [], focusedPanes = [], frames = [];
+  const queued = [], calls = [], copied = [], jobs = [], focusedPanes = [], frames = [], reads = [];
   const run = (name, args) => { calls.push([name, args]); queued.push([name, args]); };
   const cx = {
     notify() {}, stop_propagation() {},
@@ -246,6 +439,7 @@ function nativeFixture({ cols = 12, rows = 20, height = 4, offset = 0, alternate
     panes: () => [{ pane: "current-pane", scroll: alternate ? null : { ...viewport } }],
     hc: async args => {
       assert.equal(args[0], "read", "text navigation must never send input to the program");
+      reads.push(args);
       return { code: 0, stdout: JSON.stringify({ text, how: "history", complete: true }) };
     },
     InputState: { new: () => ({ on() {}, value: () => inputValue, set_value: value => { inputValue = value; }, focus() {} }) },
@@ -258,7 +452,11 @@ function nativeFixture({ cols = 12, rows = 20, height = 4, offset = 0, alternate
     view.key({ key, key_char: key.length === 1 ? key : undefined, keystroke: key, modifiers: { shift: false } }, cx);
     await flush();
   };
-  return { view, cx, press, flush, calls, copied, focusedPanes, frames, viewport, selection: () => selection };
+  return {
+    view, cx, press, flush, calls, copied, focusedPanes, frames, viewport, reads,
+    setText: value => { text = value; }, selection: () => selection,
+    resize: (nextCols, nextRows, selected) => { cols = nextCols; rows = nextRows; viewport.total = nextRows; selection = structuredClone(selected); },
+  };
 }
 
 test("copy mode moves and selects in the original native terminal view", async () => {
@@ -403,6 +601,88 @@ test("word navigation and regex search map text back to native cells", async () 
   assert.deepEqual(f.selection(), { start: { row: 1, col: 6 }, end: { row: 2, col: 0 } });
   assert.equal(f.view.copy.active, true);
   assert.equal(f.copied.length, 0);
+});
+
+test("word motions keep the viewport and never flash a range or probe the terminal end", async () => {
+  const f = nativeFixture({ rows: 200, height: 5, offset: 100, cursor: { row: 102, col: 0 }, text: Array(200).fill("one two").join("\n") });
+  await f.view.command("enter", f.cx);
+  assert.equal(f.viewport.offset, 100, "preparing the snapshot must preserve the viewport");
+  f.calls.length = 0; f.frames.length = 0;
+  for (const [key, col] of [["w", 4], ["b", 0], ["w", 4], ["b", 0]]) {
+    await f.press(key);
+    assert.deepEqual(f.view.copy.cursor, { row: 102, col });
+  }
+  assert.equal(f.reads.length, 1, "motions reuse the entry snapshot");
+  assert.equal(f.calls.some(([name]) => name === "terminal.adjust_selection"), false);
+  for (const frame of f.frames) {
+    assert.deepEqual(frame.selection.start, frame.selection.end, "word navigation must not display an intermediate range");
+    assert.equal(frame.viewport.offset, 100, "word navigation must not jump to the bottom and back");
+  }
+});
+
+test("word motions scroll only when the destination crosses the viewport edge", async () => {
+  const f = nativeFixture({ rows: 200, height: 4, offset: 100, cursor: { row: 103, col: 4 }, text: Array(200).fill("one two").join("\n") });
+  await f.view.command("enter", f.cx);
+  f.frames.length = 0;
+  await f.press("w");
+  assert.deepEqual(f.view.copy.cursor, { row: 104, col: 0 });
+  for (const frame of f.frames) assert.equal(frame.viewport.offset, 101);
+  f.frames.length = 0;
+  await f.press("b");
+  assert.deepEqual(f.view.copy.cursor, { row: 103, col: 4 });
+  for (const frame of f.frames) assert.equal(frame.viewport.offset, 101);
+});
+
+test("visual word motions retain their anchor without collapsing or selecting unrelated rows", async () => {
+  for (const mode of ["v", "V"]) {
+    const f = nativeFixture({ rows: 200, height: 5, offset: 100, cursor: { row: 102, col: 0 }, text: Array(200).fill("one two").join("\n") });
+    await f.view.command("enter", f.cx);
+    await f.press(mode);
+    f.frames.length = 0; f.calls.length = 0;
+    await f.press("w");
+    const selection = f.selection();
+    assert.deepEqual(selection.start, { row: 102, col: 0 });
+    assert.deepEqual(selection.end, { row: 102, col: mode === "v" ? 4 : 11 });
+    for (const frame of f.frames) {
+      assert.deepEqual(frame.selection.start, selection.start);
+      assert.equal(frame.selection.end.row, 102);
+      assert.notDeepEqual(frame.selection.start, frame.selection.end);
+      assert.equal(frame.viewport.offset, 100);
+    }
+    assert.equal(f.calls.some(([, args]) => args.direction === "end"), false);
+  }
+});
+
+test("word motions use a fresh snapshot after leaving and re-entering copy mode", async () => {
+  const f = nativeFixture({ rows: 3, height: 3, cursor: { row: 1, col: 0 }, text: "one two\nalpha beta\nlast" });
+  await f.view.command("enter", f.cx);
+  await f.press("w");
+  assert.deepEqual(f.view.copy.cursor, { row: 1, col: 6 });
+  await f.press("q");
+  f.setText("one two\none two\nlast");
+  f.view.handle.focus();
+  await f.view.command("enter", f.cx);
+  await f.press("w");
+  assert.deepEqual(f.view.copy.cursor, { row: 1, col: 4 });
+  assert.equal(f.reads.length, 2);
+});
+
+test("word motions reflow the snapshot around the native selection after resizing", async () => {
+  for (const visual of [false, true]) {
+    const f = nativeFixture({ cols: 20, rows: 5, height: 5, cursor: { row: 1, col: 0 }, bottom: 2, text: "first\nalpha beta gamma\nlast" });
+    await f.view.command("enter", f.cx);
+    if (visual) await f.press("v");
+    await f.press("w");
+    assert.deepEqual(f.view.copy.cursor, { row: 1, col: 6 });
+    f.resize(6, 5, { start: { row: visual ? 1 : 2, col: 0 }, end: { row: 2, col: 0 } });
+    f.calls.length = 0; f.frames.length = 0;
+    await f.press("w");
+    assert.deepEqual(f.view.copy.cursor, { row: 2, col: 5 });
+    assert.deepEqual(f.selection().start, { row: visual ? 1 : 2, col: visual ? 0 : 5 });
+    assert.equal(f.reads.length, 1, "resizing must not re-probe the buffer");
+    assert.equal(f.calls.some(([, args]) => args.direction === "end"), false);
+    for (const frame of f.frames) assert.equal(frame.viewport.offset, 0);
+  }
 });
 
 test("text indexes account for soft wraps, history offsets, and wide glyphs", () => {

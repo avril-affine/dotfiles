@@ -82,6 +82,8 @@
     "` |": "pane.split:right",
     "` -": "pane.split:down",
     "` z": "pane.zoom",
+    "` u": "panda-shortcuts.urls",
+    "` shift-u": "panda-shortcuts.url-last",
     "` n": "space.new",
     "` tab": "space.next",
     "` shift-tab": "space.prev",

@@ -34,6 +34,7 @@ function width(chars) {
 // motions, while the native terminal remains the source of cursor and selection.
 export class TerminalText {
   constructor(text, cols, last) {
+    this.cols = cols;
     this.buffer = new CopyBuffer(text);
     this.points = [];
     this.ends = [];
@@ -52,7 +53,7 @@ export class TerminalText {
       this.ends.push(row);
       row++;
     }
-    this.base = last.row - (row - 1);
+    this.base = last ? last.row - (row - 1) : 0;
   }
 
   at(point) {

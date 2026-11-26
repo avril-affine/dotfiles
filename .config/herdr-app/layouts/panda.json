@@ -40,7 +40,7 @@
               "id": "agents",
               "type": "block",
               "content": {
-                "mod": "agents"
+                "mod": "panda-agents"
               },
               "size": {
                 "weight": 1
@@ -189,7 +189,7 @@
   ],
   "background": "canvas",
   "colors": {
-    "selection": "#2563eb"
+    "selection": "#4c5c72"
   },
   "terminal_padding": [
     14,
